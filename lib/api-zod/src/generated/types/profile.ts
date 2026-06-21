@@ -11,6 +11,12 @@ export interface Profile {
   name: string;
   email: string;
   /** @nullable */
+  age?: number | null;
+  /** @nullable */
+  country?: string | null;
+  /** @nullable */
+  curriculum?: string | null;
+  /** @nullable */
   gradeLevel?: string | null;
   academicInterests?: string[];
   strongestSubjects?: string[];

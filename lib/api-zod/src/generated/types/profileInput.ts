@@ -9,6 +9,9 @@
 export interface ProfileInput {
   name: string;
   email: string;
+  age?: number;
+  country?: string;
+  curriculum?: string;
   gradeLevel?: string;
   academicInterests?: string[];
   strongestSubjects?: string[];

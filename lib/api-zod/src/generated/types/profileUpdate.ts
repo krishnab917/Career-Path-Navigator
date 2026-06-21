@@ -8,6 +8,9 @@
 
 export interface ProfileUpdate {
   name?: string;
+  age?: number;
+  country?: string;
+  curriculum?: string;
   gradeLevel?: string;
   academicInterests?: string[];
   strongestSubjects?: string[];

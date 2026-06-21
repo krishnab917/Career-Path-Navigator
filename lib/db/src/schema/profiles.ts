@@ -1,4 +1,4 @@
-import { pgTable, text, serial, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, boolean, integer, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
@@ -6,6 +6,9 @@ export const profilesTable = pgTable("profiles", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
+  age: integer("age"),
+  country: text("country"),
+  curriculum: text("curriculum"),
   gradeLevel: text("grade_level"),
   academicInterests: text("academic_interests").array().notNull().default([]),
   strongestSubjects: text("strongest_subjects").array().notNull().default([]),

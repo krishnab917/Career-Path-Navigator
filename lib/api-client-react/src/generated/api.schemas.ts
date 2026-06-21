@@ -14,6 +14,12 @@ export interface Profile {
   name: string;
   email: string;
   /** @nullable */
+  age?: number | null;
+  /** @nullable */
+  country?: string | null;
+  /** @nullable */
+  curriculum?: string | null;
+  /** @nullable */
   gradeLevel?: string | null;
   academicInterests?: string[];
   strongestSubjects?: string[];
@@ -29,6 +35,9 @@ export interface Profile {
 export interface ProfileInput {
   name: string;
   email: string;
+  age?: number;
+  country?: string;
+  curriculum?: string;
   gradeLevel?: string;
   academicInterests?: string[];
   strongestSubjects?: string[];
@@ -41,6 +50,9 @@ export interface ProfileInput {
 
 export interface ProfileUpdate {
   name?: string;
+  age?: number;
+  country?: string;
+  curriculum?: string;
   gradeLevel?: string;
   academicInterests?: string[];
   strongestSubjects?: string[];

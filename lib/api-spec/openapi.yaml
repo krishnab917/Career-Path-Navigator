@@ -327,6 +327,12 @@ components:
           type: string
         email:
           type: string
+        age:
+          type: ["integer", "null"]
+        country:
+          type: ["string", "null"]
+        curriculum:
+          type: ["string", "null"]
         gradeLevel:
           type: ["string", "null"]
         academicInterests:
@@ -370,6 +376,12 @@ components:
           type: string
         email:
           type: string
+        age:
+          type: integer
+        country:
+          type: string
+        curriculum:
+          type: string
         gradeLevel:
           type: string
         academicInterests:
@@ -405,6 +417,12 @@ components:
       type: object
       properties:
         name:
+          type: string
+        age:
+          type: integer
+        country:
+          type: string
+        curriculum:
           type: string
         gradeLevel:
           type: string
