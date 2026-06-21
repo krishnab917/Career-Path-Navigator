@@ -221,6 +221,63 @@ export interface Opportunity {
   careerCategories?: string[];
 }
 
+export type UserRoadmapItemStatus = typeof UserRoadmapItemStatus[keyof typeof UserRoadmapItemStatus];
+
+
+export const UserRoadmapItemStatus = {
+  accepted: 'accepted',
+  custom: 'custom',
+  skipped: 'skipped',
+} as const;
+
+export interface UserRoadmapItem {
+  id: number;
+  profileId: number;
+  title: string;
+  type: string;
+  phase: string;
+  description: string;
+  /** @nullable */
+  notes?: string | null;
+  status: UserRoadmapItemStatus;
+  isCompleted: boolean;
+  isUserCreated: boolean;
+  /** @nullable */
+  aiMilestoneId?: number | null;
+  sortOrder: number;
+  resources: string[];
+  createdAt: string;
+}
+
+export interface CreateRoadmapItemInput {
+  title: string;
+  type: string;
+  phase: string;
+  description: string;
+  notes?: string;
+  isUserCreated?: boolean;
+  aiMilestoneId?: number;
+  resources?: string[];
+}
+
+export type UpdateRoadmapItemInputStatus = typeof UpdateRoadmapItemInputStatus[keyof typeof UpdateRoadmapItemInputStatus];
+
+
+export const UpdateRoadmapItemInputStatus = {
+  accepted: 'accepted',
+  custom: 'custom',
+  skipped: 'skipped',
+} as const;
+
+export interface UpdateRoadmapItemInput {
+  title?: string;
+  description?: string;
+  notes?: string;
+  isCompleted?: boolean;
+  status?: UpdateRoadmapItemInputStatus;
+  sortOrder?: number;
+}
+
 export type RoadmapMilestoneType = typeof RoadmapMilestoneType[keyof typeof RoadmapMilestoneType];
 
 
@@ -247,9 +304,12 @@ export interface RoadmapMilestone {
   title: string;
   type: RoadmapMilestoneType;
   timeframe: string;
+  phase: string;
   description: string;
   priority: RoadmapMilestonePriority;
   resources?: string[];
+  accepted?: boolean;
+  skipped?: boolean;
 }
 
 export type CareerRoadmapPhasesItem = {

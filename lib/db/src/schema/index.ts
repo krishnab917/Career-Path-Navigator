@@ -5,3 +5,4 @@ export * from "./decisions";
 export * from "./career-analyses";
 export * from "./opportunities";
 export * from "./roadmap-milestones";
+export * from "./user-roadmap-items";

@@ -66,7 +66,6 @@ router.get("/dashboard", async (req, res): Promise<void> => {
         leadership: metrics.leadership,
         adaptability: metrics.adaptability,
       },
-      currentScenario: null,
       createdAt: session.createdAt.toISOString(),
       completedAt: session.completedAt?.toISOString() ?? null,
     };

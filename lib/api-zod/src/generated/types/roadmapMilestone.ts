@@ -13,7 +13,10 @@ export interface RoadmapMilestone {
   title: string;
   type: RoadmapMilestoneType;
   timeframe: string;
+  phase: string;
   description: string;
   priority: RoadmapMilestonePriority;
   resources?: string[];
+  accepted?: boolean;
+  skipped?: boolean;
 }

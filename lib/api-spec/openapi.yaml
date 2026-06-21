@@ -285,14 +285,84 @@ paths:
     get:
       operationId: getRoadmap
       tags: [roadmap]
-      summary: Get personalized career roadmap
+      summary: Get AI-suggested milestones for the user's career roadmap
       responses:
         "200":
-          description: Career roadmap
+          description: Career roadmap with AI suggestions
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/CareerRoadmap"
+
+  /roadmap/items:
+    get:
+      operationId: listRoadmapItems
+      tags: [roadmap]
+      summary: List user's accepted and custom roadmap items
+      responses:
+        "200":
+          description: User roadmap items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserRoadmapItem"
+    post:
+      operationId: createRoadmapItem
+      tags: [roadmap]
+      summary: Accept an AI suggestion or create a custom milestone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoadmapItemInput"
+      responses:
+        "201":
+          description: Created roadmap item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRoadmapItem"
+
+  /roadmap/items/{itemId}:
+    patch:
+      operationId: updateRoadmapItem
+      tags: [roadmap]
+      summary: Update a roadmap item (complete, skip, edit)
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRoadmapItemInput"
+      responses:
+        "200":
+          description: Updated item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRoadmapItem"
+    delete:
+      operationId: deleteRoadmapItem
+      tags: [roadmap]
+      summary: Remove a roadmap item
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
 
   /dashboard:
     get:
@@ -656,9 +726,85 @@ components:
           items:
             type: string
 
+    UserRoadmapItem:
+      type: object
+      required: [id, profileId, title, type, phase, description, status, isCompleted, isUserCreated, sortOrder, resources, createdAt]
+      properties:
+        id:
+          type: integer
+        profileId:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+        phase:
+          type: string
+        description:
+          type: string
+        notes:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [accepted, custom, skipped]
+        isCompleted:
+          type: boolean
+        isUserCreated:
+          type: boolean
+        aiMilestoneId:
+          type: ["integer", "null"]
+        sortOrder:
+          type: integer
+        resources:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+
+    CreateRoadmapItemInput:
+      type: object
+      required: [title, type, phase, description]
+      properties:
+        title:
+          type: string
+        type:
+          type: string
+        phase:
+          type: string
+        description:
+          type: string
+        notes:
+          type: string
+        isUserCreated:
+          type: boolean
+        aiMilestoneId:
+          type: integer
+        resources:
+          type: array
+          items:
+            type: string
+
+    UpdateRoadmapItemInput:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        notes:
+          type: string
+        isCompleted:
+          type: boolean
+        status:
+          type: string
+          enum: [accepted, custom, skipped]
+        sortOrder:
+          type: integer
+
     RoadmapMilestone:
       type: object
-      required: [id, title, type, timeframe, description, priority]
+      required: [id, title, type, timeframe, phase, description, priority]
       properties:
         id:
           type: integer
@@ -669,6 +815,8 @@ components:
           enum: [course, skill, project, certification, competition, experience]
         timeframe:
           type: string
+        phase:
+          type: string
         description:
           type: string
         priority:
@@ -678,6 +826,10 @@ components:
           type: array
           items:
             type: string
+        accepted:
+          type: boolean
+        skipped:
+          type: boolean
 
     CareerRoadmap:
       type: object

@@ -414,7 +414,7 @@ export const GetOpportunityResponse = zod.object({
 
 
 /**
- * @summary Get personalized career roadmap
+ * @summary Get AI-suggested milestones for the user's career roadmap
  */
 export const GetRoadmapResponse = zod.object({
   "targetCareer": zod.string(),
@@ -424,15 +424,97 @@ export const GetRoadmapResponse = zod.object({
   "title": zod.string(),
   "type": zod.enum(['course', 'skill', 'project', 'certification', 'competition', 'experience']),
   "timeframe": zod.string(),
+  "phase": zod.string(),
   "description": zod.string(),
   "priority": zod.enum(['essential', 'recommended', 'optional']),
-  "resources": zod.array(zod.string()).optional()
+  "resources": zod.array(zod.string()).optional(),
+  "accepted": zod.boolean().optional(),
+  "skipped": zod.boolean().optional()
 })),
   "phases": zod.array(zod.object({
   "name": zod.string(),
   "timeframe": zod.string(),
   "focus": zod.string()
 }))
+})
+
+
+/**
+ * @summary List user's accepted and custom roadmap items
+ */
+export const ListRoadmapItemsResponseItem = zod.object({
+  "id": zod.number(),
+  "profileId": zod.number(),
+  "title": zod.string(),
+  "type": zod.string(),
+  "phase": zod.string(),
+  "description": zod.string(),
+  "notes": zod.string().nullish(),
+  "status": zod.enum(['accepted', 'custom', 'skipped']),
+  "isCompleted": zod.boolean(),
+  "isUserCreated": zod.boolean(),
+  "aiMilestoneId": zod.number().nullish(),
+  "sortOrder": zod.number(),
+  "resources": zod.array(zod.string()),
+  "createdAt": zod.string()
+})
+export const ListRoadmapItemsResponse = zod.array(ListRoadmapItemsResponseItem)
+
+
+/**
+ * @summary Accept an AI suggestion or create a custom milestone
+ */
+export const CreateRoadmapItemBody = zod.object({
+  "title": zod.string(),
+  "type": zod.string(),
+  "phase": zod.string(),
+  "description": zod.string(),
+  "notes": zod.string().optional(),
+  "isUserCreated": zod.boolean().optional(),
+  "aiMilestoneId": zod.number().optional(),
+  "resources": zod.array(zod.string()).optional()
+})
+
+
+/**
+ * @summary Update a roadmap item (complete, skip, edit)
+ */
+export const UpdateRoadmapItemParams = zod.object({
+  "itemId": zod.coerce.number()
+})
+
+export const UpdateRoadmapItemBody = zod.object({
+  "title": zod.string().optional(),
+  "description": zod.string().optional(),
+  "notes": zod.string().optional(),
+  "isCompleted": zod.boolean().optional(),
+  "status": zod.enum(['accepted', 'custom', 'skipped']).optional(),
+  "sortOrder": zod.number().optional()
+})
+
+export const UpdateRoadmapItemResponse = zod.object({
+  "id": zod.number(),
+  "profileId": zod.number(),
+  "title": zod.string(),
+  "type": zod.string(),
+  "phase": zod.string(),
+  "description": zod.string(),
+  "notes": zod.string().nullish(),
+  "status": zod.enum(['accepted', 'custom', 'skipped']),
+  "isCompleted": zod.boolean(),
+  "isUserCreated": zod.boolean(),
+  "aiMilestoneId": zod.number().nullish(),
+  "sortOrder": zod.number(),
+  "resources": zod.array(zod.string()),
+  "createdAt": zod.string()
+})
+
+
+/**
+ * @summary Remove a roadmap item
+ */
+export const DeleteRoadmapItemParams = zod.object({
+  "itemId": zod.coerce.number()
 })
 
 
