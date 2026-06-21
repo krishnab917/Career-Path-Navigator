@@ -1,22 +1,33 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: PathPilot API - Career exploration platform
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: profile
+    description: Student profile and onboarding
+  - name: simulations
+    description: Career simulation catalog and sessions
+  - name: analysis
+    description: Post-simulation career analysis
+  - name: opportunities
+    description: Personalized opportunity recommendations
+  - name: roadmap
+    description: Career roadmap generation
+  - name: dashboard
+    description: Dashboard summary and activity
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +35,278 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get current user profile
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "404":
+          description: Profile not found
+    post:
+      operationId: createProfile
+      tags: [profile]
+      summary: Create or update user profile (onboarding)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileInput"
+      responses:
+        "201":
+          description: Profile created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+    patch:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Partially update user profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileUpdate"
+      responses:
+        "200":
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+
+  /simulations:
+    get:
+      operationId: listSimulations
+      tags: [simulations]
+      summary: List available career simulations
+      responses:
+        "200":
+          description: List of simulations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Simulation"
+
+  /simulations/{simulationId}:
+    get:
+      operationId: getSimulation
+      tags: [simulations]
+      summary: Get simulation details
+      parameters:
+        - name: simulationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Simulation details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Simulation"
+        "404":
+          description: Not found
+
+  /simulation-sessions:
+    get:
+      operationId: listSimulationSessions
+      tags: [simulations]
+      summary: List user's simulation sessions
+      responses:
+        "200":
+          description: Session list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SimulationSession"
+    post:
+      operationId: createSimulationSession
+      tags: [simulations]
+      summary: Start a new simulation session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulationSessionInput"
+      responses:
+        "201":
+          description: Session started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationSession"
+
+  /simulation-sessions/{sessionId}:
+    get:
+      operationId: getSimulationSession
+      tags: [simulations]
+      summary: Get simulation session state
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Session state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationSession"
+        "404":
+          description: Not found
+
+  /simulation-sessions/{sessionId}/decisions:
+    post:
+      operationId: submitDecision
+      tags: [simulations]
+      summary: Submit a decision in the simulation
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DecisionInput"
+      responses:
+        "200":
+          description: Decision recorded and next scenario returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationSession"
+
+  /simulation-sessions/{sessionId}/complete:
+    post:
+      operationId: completeSimulationSession
+      tags: [simulations]
+      summary: Complete the simulation session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Session completed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimulationSession"
+
+  /simulation-sessions/{sessionId}/analysis:
+    get:
+      operationId: getSessionAnalysis
+      tags: [analysis]
+      summary: Get career analysis for a completed session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Career analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CareerAnalysis"
+        "404":
+          description: Not found
+
+  /opportunities:
+    get:
+      operationId: listOpportunities
+      tags: [opportunities]
+      summary: List personalized opportunity recommendations
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: ["string", "null"]
+          description: Filter by category (internship, research, scholarship, competition, hackathon, mentorship, summer_program)
+      responses:
+        "200":
+          description: List of opportunities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Opportunity"
+
+  /opportunities/{opportunityId}:
+    get:
+      operationId: getOpportunity
+      tags: [opportunities]
+      summary: Get opportunity details
+      parameters:
+        - name: opportunityId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Opportunity details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Opportunity"
+        "404":
+          description: Not found
+
+  /roadmap:
+    get:
+      operationId: getRoadmap
+      tags: [roadmap]
+      summary: Get personalized career roadmap
+      responses:
+        "200":
+          description: Career roadmap
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CareerRoadmap"
+
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [dashboard]
+      summary: Get dashboard summary for the current user
+      responses:
+        "200":
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +317,396 @@ components:
       required:
         - status
 
+    Profile:
+      type: object
+      required: [id, name, email, onboardingComplete, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        gradeLevel:
+          type: ["string", "null"]
+        academicInterests:
+          type: array
+          items:
+            type: string
+        strongestSubjects:
+          type: array
+          items:
+            type: string
+        activities:
+          type: array
+          items:
+            type: string
+        competitions:
+          type: array
+          items:
+            type: string
+        projects:
+          type: array
+          items:
+            type: string
+        goals:
+          type: array
+          items:
+            type: string
+        careerInterests:
+          type: array
+          items:
+            type: string
+        onboardingComplete:
+          type: boolean
+        createdAt:
+          type: string
+
+    ProfileInput:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        gradeLevel:
+          type: string
+        academicInterests:
+          type: array
+          items:
+            type: string
+        strongestSubjects:
+          type: array
+          items:
+            type: string
+        activities:
+          type: array
+          items:
+            type: string
+        competitions:
+          type: array
+          items:
+            type: string
+        projects:
+          type: array
+          items:
+            type: string
+        goals:
+          type: array
+          items:
+            type: string
+        careerInterests:
+          type: array
+          items:
+            type: string
+
+    ProfileUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        gradeLevel:
+          type: string
+        academicInterests:
+          type: array
+          items:
+            type: string
+        strongestSubjects:
+          type: array
+          items:
+            type: string
+        activities:
+          type: array
+          items:
+            type: string
+        careerInterests:
+          type: array
+          items:
+            type: string
+
+    Simulation:
+      type: object
+      required: [id, title, careerCategory, difficulty, estimatedMinutes, description, skills, stages]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        careerCategory:
+          type: string
+        difficulty:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        estimatedMinutes:
+          type: integer
+        description:
+          type: string
+        tagline:
+          type: ["string", "null"]
+        skills:
+          type: array
+          items:
+            type: string
+        stages:
+          type: integer
+        completionCount:
+          type: integer
+        coverColor:
+          type: ["string", "null"]
+
+    SimulationSession:
+      type: object
+      required: [id, simulationId, status, currentStage, totalStages, score, decisions, metrics, createdAt]
+      properties:
+        id:
+          type: integer
+        simulationId:
+          type: integer
+        simulationTitle:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [active, completed, abandoned]
+        currentStage:
+          type: integer
+        totalStages:
+          type: integer
+        score:
+          type: number
+        decisions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Decision"
+        metrics:
+          type: object
+          properties:
+            analyticalThinking:
+              type: number
+            communication:
+              type: number
+            problemSolving:
+              type: number
+            leadership:
+              type: number
+            adaptability:
+              type: number
+        currentScenario:
+          $ref: "#/components/schemas/Scenario"
+        createdAt:
+          type: string
+        completedAt:
+          type: ["string", "null"]
+
+    SimulationSessionInput:
+      type: object
+      required: [simulationId]
+      properties:
+        simulationId:
+          type: integer
+
+    Decision:
+      type: object
+      required: [id, sessionId, stageNumber, choiceId, choiceText, consequence, scoreImpact]
+      properties:
+        id:
+          type: integer
+        sessionId:
+          type: integer
+        stageNumber:
+          type: integer
+        choiceId:
+          type: string
+        choiceText:
+          type: string
+        consequence:
+          type: string
+        scoreImpact:
+          type: number
+
+    DecisionInput:
+      type: object
+      required: [choiceId, stageNumber]
+      properties:
+        choiceId:
+          type: string
+        stageNumber:
+          type: integer
+
+    Scenario:
+      type: object
+      required: [stageNumber, title, description, context, choices]
+      properties:
+        stageNumber:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        context:
+          type: string
+        timeLimit:
+          type: ["integer", "null"]
+        choices:
+          type: array
+          items:
+            $ref: "#/components/schemas/Choice"
+
+    Choice:
+      type: object
+      required: [id, text, risk]
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        risk:
+          type: string
+          enum: [low, medium, high]
+        hint:
+          type: ["string", "null"]
+
+    CareerAnalysis:
+      type: object
+      required: [id, sessionId, primaryCareer, secondaryCareer, confidenceScore, behavioralInsights, strengths, growthAreas, summary]
+      properties:
+        id:
+          type: integer
+        sessionId:
+          type: integer
+        primaryCareer:
+          type: string
+        primaryCareerCategory:
+          type: string
+        secondaryCareer:
+          type: string
+        secondaryCareerCategory:
+          type: string
+        confidenceScore:
+          type: number
+        behavioralInsights:
+          type: array
+          items:
+            type: string
+        strengths:
+          type: array
+          items:
+            type: string
+        growthAreas:
+          type: array
+          items:
+            type: string
+        summary:
+          type: string
+        decisionPatterns:
+          type: array
+          items:
+            type: string
+
+    Opportunity:
+      type: object
+      required: [id, title, organization, category, relevanceScore, whyItMatches, difficulty, applicationDeadline, description]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        organization:
+          type: string
+        category:
+          type: string
+          enum: [internship, research, scholarship, competition, hackathon, mentorship, summer_program]
+        relevanceScore:
+          type: number
+        whyItMatches:
+          type: string
+        difficulty:
+          type: string
+          enum: [low, medium, high]
+        applicationDeadline:
+          type: string
+        description:
+          type: string
+        stipend:
+          type: ["string", "null"]
+        location:
+          type: ["string", "null"]
+        url:
+          type: ["string", "null"]
+        careerCategories:
+          type: array
+          items:
+            type: string
+
+    RoadmapMilestone:
+      type: object
+      required: [id, title, type, timeframe, description, priority]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+          enum: [course, skill, project, certification, competition, experience]
+        timeframe:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+          enum: [essential, recommended, optional]
+        resources:
+          type: array
+          items:
+            type: string
+
+    CareerRoadmap:
+      type: object
+      required: [targetCareer, milestones, phases]
+      properties:
+        targetCareer:
+          type: string
+        targetCareerCategory:
+          type: string
+        milestones:
+          type: array
+          items:
+            $ref: "#/components/schemas/RoadmapMilestone"
+        phases:
+          type: array
+          items:
+            type: object
+            required: [name, timeframe, focus]
+            properties:
+              name:
+                type: string
+              timeframe:
+                type: string
+              focus:
+                type: string
+
+    Dashboard:
+      type: object
+      required: [profileComplete, simulationsCompleted, topCareerMatch, activeOpportunities, roadmapProgress, recentSessions]
+      properties:
+        profileComplete:
+          type: boolean
+        simulationsCompleted:
+          type: integer
+        topCareerMatch:
+          type: ["string", "null"]
+        topCareerConfidence:
+          type: ["number", "null"]
+        activeOpportunities:
+          type: integer
+        roadmapProgress:
+          type: number
+        recentSessions:
+          type: array
+          items:
+            $ref: "#/components/schemas/SimulationSession"
+        currentStreak:
+          type: integer
+        totalScore:
+          type: number

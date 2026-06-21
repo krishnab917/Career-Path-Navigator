@@ -1,0 +1,149 @@
+You are building PathPilot, a next-generation career exploration platform that helps students discover careers through immersive simulations, behavioral analysis, and personalized opportunity recommendations.
+
+This product should feel like a premium, venture-backed technology platform, not a student project, educational worksheet, generic dashboard, or template-generated SaaS.
+
+Core Product Concept
+
+Most students choose careers based on assumptions, social media, quizzes, or secondhand advice.
+
+PathPilot allows students to experience realistic career scenarios before making decisions about their future.
+
+Students progress through simulations, make decisions under realistic constraints, experience consequences, and receive career recommendations based on observed behavior rather than self-reported preferences.
+
+Product Flow
+Landing Page
+
+Create a visually striking landing page that immediately communicates the problem and solution.
+
+The messaging should focus on:
+
+Students choosing careers without experiencing them
+Career decisions carrying long-term consequences
+Simulations as a better alternative to quizzes
+
+The page should feel premium, memorable, and category-defining.
+
+Discovery Intake
+
+Create a polished onboarding experience that collects:
+
+Academic interests
+Strongest subjects
+Activities
+Competitions
+Projects
+Goals
+Career interests
+
+The onboarding should feel sophisticated and personalized.
+
+Career Simulation
+
+This is the centerpiece of the product.
+
+Design a highly immersive simulation environment.
+
+The experience should feel closer to:
+
+a management simulator
+a strategic decision platform
+a live operating environment
+
+than a form, survey, or quiz.
+
+Include:
+
+evolving scenarios
+multiple decision paths
+visible consequences
+live performance metrics
+state changes after decisions
+progression through multiple stages
+
+Example simulations:
+
+Software Engineer
+Doctor
+Entrepreneur
+
+Simulation outcomes should influence future events.
+
+Career Analysis
+
+After simulation completion, generate:
+
+Primary career recommendation
+Secondary recommendation
+Confidence score
+Behavioral analysis
+Strengths
+Growth areas
+
+The analysis should clearly explain how simulation performance influenced recommendations.
+
+Opportunities Engine
+
+Create a personalized opportunities platform.
+
+Recommended opportunities should dynamically align with career recommendations.
+
+Include:
+
+Internships
+Research programs
+Competitions
+Scholarships
+Summer programs
+Hackathons
+Mentorship opportunities
+
+Each opportunity should include:
+
+relevance score
+why it matches the user
+difficulty level
+application timeline
+Career Roadmap
+
+Generate a long-term roadmap showing:
+
+courses
+skills
+projects
+certifications
+competitions
+experiences
+
+organized as a progression toward the recommended career.
+
+Design Direction
+
+Create a premium, design-forward experience.
+
+Inspiration:
+
+Linear
+Arc Browser
+Stripe
+Apple
+Perplexity
+
+Prioritize:
+
+exceptional visual hierarchy
+bold typography
+strong composition
+premium interactions
+memorable product identity
+sophisticated component design
+immersive experiences
+
+Avoid:
+
+generic educational websites
+cookie-cutter dashboards
+template-like layouts
+simplistic card grids
+obvious AI-generated design patterns
+
+The final result should feel like a serious technology startup that could be presented to investors, major entrepreneurship competitions, school districts, and admissions officers.
