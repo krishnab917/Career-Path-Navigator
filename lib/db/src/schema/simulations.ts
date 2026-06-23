@@ -16,9 +16,35 @@ export const simulationsTable = pgTable("simulations", {
   coverColor: text("cover_color"),
   // JSON blob with all scenario definitions
   scenariosData: jsonb("scenarios_data").notNull().default([]),
+  // JSON array of career-specific metrics definitions
+  metricsDefinition: jsonb("metrics_definition").notNull().default([]),
+  // Starting scenario key for this simulation
+  startingScenarioKey: text("starting_scenario_key").notNull().default("start"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const insertSimulationSchema = createInsertSchema(simulationsTable).omit({ id: true, createdAt: true });
 export type InsertSimulation = z.infer<typeof insertSimulationSchema>;
 export type Simulation = typeof simulationsTable.$inferSelect;
+
+// Branching scenario data structure
+export const branchingScenarioSchema = z.object({
+  scenarioKey: z.string(),
+  title: z.string(),
+  description: z.string(),
+  stageNumber: z.number(),
+  choices: z.array(z.object({
+    id: z.string(),
+    text: z.string(),
+    nextScenarioKey: z.string(),
+    consequence: z.string().optional(),
+    riskLevel: z.enum(["low", "medium", "high"]).optional(),
+    metricsImpact: z.record(z.number()).optional(),
+  })),
+  metricsImpact: z.record(z.number()).optional(),
+  consequence: z.string().optional(),
+  citation: z.string().optional(),
+  timeLimit: z.number().optional(),
+});
+
+export type BranchingScenario = z.infer<typeof branchingScenarioSchema>;
