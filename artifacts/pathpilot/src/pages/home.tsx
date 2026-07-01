@@ -1,169 +1,167 @@
 import { Link } from "wouter";
-import { motion, useScroll, useTransform, useInView, animate } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
-import { ArrowRight, ArrowUpRight, ChevronRight } from "lucide-react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { ArrowRight, Zap, Brain, TrendingUp, Code2 } from "lucide-react";
 
-function CountUp({ target, suffix = "", duration = 2 }: { target: number; suffix?: string; duration?: number }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
+// ============================================================================
+// SIMULATION PREVIEW COMPONENT
+// ============================================================================
+function SimulationPreview() {
+  const scenario = {
+    title: "Market Downturn Response",
+    situation: "Your startup's funding is cut by 40%. Your team is waiting for direction.",
+    decisions: [
+      { id: 1, action: "Cut costs aggressively", consequence: "Short-term survival, but potential talent loss" },
+      { id: 2, action: "Pivot to new market", consequence: "High risk, potential breakthrough opportunity" },
+      { id: 3, action: "Seek new funding rounds", consequence: "Time-consuming but maintains team morale" },
+    ],
+  };
 
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(0, target, {
-      duration,
-      ease: "easeOut",
-      onUpdate: (v) => setCount(Math.round(v)),
-    });
-    return controls.stop;
-  }, [inView, target, duration]);
-
-  return <span ref={ref}>{count}{suffix}</span>;
-}
-
-function OrbVisual() {
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
-      {/* Outer glow ring */}
+    <div className="space-y-6">
+      <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-6">
+        <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Scenario</p>
+        <h3 className="text-lg font-semibold text-white mb-3">{scenario.title}</h3>
+        <p className="text-slate-300 text-sm leading-relaxed">{scenario.situation}</p>
+      </div>
+
+      <div className="space-y-3">
+        <p className="text-xs uppercase tracking-widest text-slate-400">Decision Options</p>
+        {scenario.decisions.map((decision) => (
+          <motion.div
+            key={decision.id}
+            whileHover={{ backgroundColor: "rgba(88, 107, 197, 0.15)" }}
+            className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-4 cursor-default transition-colors"
+          >
+            <div className="flex items-start gap-3 mb-2">
+              <div className="w-6 h-6 rounded-full bg-indigo-500/30 flex items-center justify-center text-indigo-300 text-xs font-bold shrink-0">
+                {decision.id}
+              </div>
+              <div className="flex-1">
+                <p className="text-white text-sm font-medium">{decision.action}</p>
+              </div>
+            </div>
+            <p className="text-slate-400 text-xs ml-9">{decision.consequence}</p>
+          </motion.div>
+        ))}
+      </div>
+
       <motion.div
-        className="absolute rounded-full"
-        style={{
-          width: 520,
-          height: 520,
-          background: "radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(139,92,246,0.05) 40%, transparent 70%)",
-        }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-      />
-      {/* Mid ring */}
-      <motion.div
-        className="absolute rounded-full border border-primary/20"
-        style={{ width: 380, height: 380 }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="bg-gradient-to-r from-indigo-500/10 to-transparent border border-indigo-500/30 rounded-lg p-4"
       >
-        <motion.div
-          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary"
-          style={{ boxShadow: "0 0 12px 4px rgba(139,92,246,0.8)" }}
-        />
+        <p className="text-xs uppercase tracking-widest text-indigo-300 mb-2">Consequence Reveal</p>
+        <p className="text-slate-200 text-sm">
+          Your decision to pivot was analyzed against 42 similar scenarios. Risk tolerance +22%, Strategic thinking +18%.
+        </p>
       </motion.div>
-      {/* Inner ring */}
-      <motion.div
-        className="absolute rounded-full border border-primary/10"
-        style={{ width: 260, height: 260 }}
-        animate={{ rotate: -360 }}
-        transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-      >
-        <motion.div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 rounded-full bg-violet-400"
-          style={{ boxShadow: "0 0 10px 3px rgba(167,139,250,0.8)" }}
-        />
-      </motion.div>
-      {/* Core orb */}
-      <motion.div
-        className="relative rounded-full flex items-center justify-center"
-        style={{
-          width: 160,
-          height: 160,
-          background: "radial-gradient(circle at 35% 35%, rgba(167,139,250,0.9) 0%, rgba(139,92,246,0.7) 40%, rgba(79,70,229,0.4) 70%, transparent 100%)",
-          boxShadow: "0 0 60px 20px rgba(139,92,246,0.35), inset 0 0 40px rgba(255,255,255,0.1)",
-        }}
-        animate={{ scale: [1, 1.04, 1] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span className="text-white font-bold text-3xl tracking-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>P</span>
-      </motion.div>
-      {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full bg-primary/60"
-          style={{
-            width: 4 + (i % 3) * 2,
-            height: 4 + (i % 3) * 2,
-            top: `${20 + i * 12}%`,
-            left: `${10 + i * 13}%`,
-          }}
-          animate={{
-            y: [0, -16, 0],
-            opacity: [0.4, 1, 0.4],
-          }}
-          transition={{
-            duration: 2.5 + i * 0.4,
-            repeat: Infinity,
-            delay: i * 0.3,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
     </div>
   );
 }
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
+// ============================================================================
+// RESULTS PREVIEW COMPONENT
+// ============================================================================
+function ResultsPreview() {
+  const traits = [
+    { name: "Risk Tolerance", value: 78, color: "#6366f1" },
+    { name: "Analytical Thinking", value: 85, color: "#8b5cf6" },
+    { name: "Leadership", value: 72, color: "#a78bfa" },
+    { name: "Creativity", value: 68, color: "#c4b5fd" },
+  ];
 
-const problems = [
-  {
-    stat: "73%",
-    label: "of students regret their college major",
-    detail: "Federal Reserve research shows nearly three quarters of graduates wish they had chosen differently — after it was too late.",
-  },
-  {
-    stat: "$124K",
-    label: "average cost of choosing the wrong field",
-    detail: "When you factor in tuition, student debt, and years of lost career momentum, a poor decision costs six figures.",
-  },
-  {
-    stat: "27%",
-    label: "of graduates work in their field of study",
-    detail: "The vast majority of students spend years preparing for careers they ultimately abandon.",
-  },
-];
+  return (
+    <div className="space-y-8">
+      <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-6">
+        <p className="text-xs uppercase tracking-widest text-slate-400 mb-4">Career Match</p>
+        <div className="flex items-end gap-3">
+          <div>
+            <p className="text-3xl font-bold text-white">Software Engineer</p>
+            <p className="text-slate-400 text-sm mt-1">92% compatibility based on your decisions</p>
+          </div>
+          <div className="ml-auto text-right">
+            <div className="text-4xl font-bold text-indigo-400">92%</div>
+          </div>
+        </div>
+      </div>
 
-const steps = [
-  {
-    number: "01",
-    title: "Complete your profile",
-    description: "Tell us about your academic interests, strongest subjects, activities, and goals. Takes under 3 minutes.",
-  },
-  {
-    number: "02",
-    title: "Enter a career simulation",
-    description: "Step into immersive, real-world career scenarios. Make decisions under realistic constraints. Experience the consequences.",
-  },
-  {
-    number: "03",
-    title: "Receive behavioral analysis",
-    description: "Discover your primary career match, confidence scores, and a behavioral breakdown based on how you actually performed.",
-  },
-  {
-    number: "04",
-    title: "Act on your roadmap",
-    description: "Get a personalized roadmap of courses, certifications, competitions, and internships to reach your recommended career.",
-  },
-];
+      <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-6">
+        <p className="text-xs uppercase tracking-widest text-slate-400 mb-6">Trait Profile</p>
+        <div className="space-y-4">
+          {traits.map((trait) => (
+            <div key={trait.name}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-white font-medium">{trait.name}</span>
+                <span className="text-xs text-slate-400">{trait.value}%</span>
+              </div>
+              <div className="w-full bg-slate-800/50 rounded-full h-2 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${trait.value}%` }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  style={{ backgroundColor: trait.color }}
+                  className="h-full rounded-full"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-const careers = [
-  { title: "Software Engineer", tag: "Technology", color: "#6366f1", time: "25 min", stages: 5 },
-  { title: "Emergency Medicine", tag: "Healthcare", color: "#ef4444", time: "30 min", stages: 5 },
-  { title: "Startup Founder", tag: "Entrepreneurship", color: "#f59e0b", time: "30 min", stages: 5 },
-];
+      <p className="text-sm text-slate-400 italic">
+        "Your decisions in high-pressure scenarios showed strong analytical patterns, with a preference for data-driven trade-offs."
+      </p>
+    </div>
+  );
+}
 
+// ============================================================================
+// ANIMATED BACKGROUND GRID
+// ============================================================================
+function AnimatedGrid() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 6, repeat: Infinity }}
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(0deg, transparent 24%, rgba(99, 102, 241, 0.05) 25%, rgba(99, 102, 241, 0.05) 26%, transparent 27%, transparent 74%, rgba(99, 102, 241, 0.05) 75%, rgba(99, 102, 241, 0.05) 76%, transparent 77%, transparent),
+            linear-gradient(90deg, transparent 24%, rgba(99, 102, 241, 0.05) 25%, rgba(99, 102, 241, 0.05) 26%, transparent 27%, transparent 74%, rgba(99, 102, 241, 0.05) 75%, rgba(99, 102, 241, 0.05) 76%, transparent 77%, transparent)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+      <motion.div
+        animate={{
+          background: [
+            "radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)",
+            "radial-gradient(circle at 70% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)",
+            "radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)",
+          ],
+        }}
+        transition={{ duration: 8, repeat: Infinity }}
+        className="absolute inset-0"
+      />
+    </div>
+  );
+}
+
+// ============================================================================
+// SECTION WRAPPER
+// ============================================================================
 function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-100px" });
   return (
     <motion.section
       ref={ref}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
       className={className}
     >
       {children}
@@ -171,239 +169,267 @@ function Section({ children, className = "" }: { children: React.ReactNode; clas
   );
 }
 
+// ============================================================================
+// MAIN HOME PAGE
+// ============================================================================
 export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.18], [0, -60]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.15], [0, -80]);
 
   return (
-    <div ref={containerRef} className="bg-black text-white" style={{ fontFamily: "'Outfit', sans-serif" }}>
-
-      {/* ── NAV ── */}
+    <div ref={containerRef} className="relative bg-slate-950 text-white overflow-hidden">
+      {/* ══════════════════════════════════════════════════════════════════
+          NAVIGATION
+          ══════════════════════════════════════════════════════════════════ */}
       <motion.nav
-        initial={{ opacity: 0, y: -16 }}
+        initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 h-14"
-        style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 h-16"
+        style={{
+          background: "rgba(15, 23, 42, 0.8)",
+          backdropFilter: "blur(16px)",
+          borderBottom: "1px solid rgba(99, 102, 241, 0.1)",
+        }}
       >
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center text-white font-bold text-sm">P</div>
-          <span className="font-semibold text-[15px] tracking-tight text-white">PathPilot</span>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+            <Zap className="w-5 h-5 text-white" />
+          </div>
+          <span className="font-bold text-[16px] tracking-tight">PathPilot</span>
         </div>
-        <nav className="hidden md:flex items-center gap-8">
-          {["Problem", "How it works", "Simulations"].map((item) => (
+
+        <nav className="hidden lg:flex items-center gap-12">
+          {[
+            { label: "Overview", href: "#overview" },
+            { label: "How it works", href: "#how-it-works" },
+            { label: "Simulation", href: "#simulation" },
+          ].map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-              className="text-sm text-white/50 hover:text-white transition-colors duration-200"
+              key={item.label}
+              href={item.href}
+              className="text-sm text-slate-400 hover:text-indigo-300 transition-colors duration-200"
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>
+
         <Link href="/onboarding">
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="text-sm font-medium px-4 py-1.5 rounded-full border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-200"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.98 }}
+            className="px-5 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 transition-colors duration-200"
           >
-            Get started
+            Launch
           </motion.button>
         </Link>
       </motion.nav>
 
-      {/* ── HERO ── */}
-      <motion.div style={{ opacity: heroOpacity, y: heroY }} className="relative min-h-screen flex overflow-hidden">
-        {/* Background ambient */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 right-[15%] -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 65%)" }} />
-          <div className="absolute bottom-0 left-0 right-0 h-40"
-            style={{ background: "linear-gradient(to top, black, transparent)" }} />
-        </div>
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO SECTION
+          ══════════════════════════════════════════════════════════════════ */}
+      <motion.div
+        style={{ opacity: heroOpacity, y: heroY }}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      >
+        <AnimatedGrid />
 
-        {/* Left: text */}
-        <div className="relative z-10 flex flex-col justify-center pl-12 md:pl-20 pt-24 pb-16 w-full md:w-[55%]">
+        <div className="relative z-10 max-w-4xl mx-auto px-8 text-center">
+          {/* Tagline */}
           <motion.div
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex items-center gap-2 mb-8"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.6 }}
+            className="mb-8"
           >
-            <div className="h-px w-8 bg-white/30" />
-            <span className="text-sm text-white/40 tracking-widest uppercase font-medium">Career discovery, reimagined</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30">
+              <Code2 className="w-3.5 h-3.5 text-indigo-400" />
+              <span className="text-xs uppercase tracking-widest text-indigo-300 font-semibold">Simulation Engine</span>
+            </div>
           </motion.div>
 
+          {/* Main Headline */}
           <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            className="text-6xl md:text-7xl xl:text-8xl font-bold leading-[0.95] tracking-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.8 }}
+            className="text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-6"
           >
-            Experience your
+            Simulate your{" "}
+            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+              career decisions
+            </span>
             <br />
-            <span style={{ color: "#a78bfa" }}>future</span> before
-            <br />
-            you choose it.
+            before you commit.
           </motion.h1>
 
+          {/* Subheading */}
           <motion.p
-            variants={fadeUp}
-            custom={2}
-            initial="hidden"
-            animate="visible"
-            className="mt-8 text-lg text-white/50 max-w-md leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.8 }}
+            className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Most students choose careers based on assumptions and secondhand advice.
-            PathPilot lets you <em className="text-white/80 not-italic">live</em> them first — through immersive simulations that reveal your true fit.
+            Experience realistic career scenarios. Make high-stakes decisions. Receive behavioral analysis based on your actual choices—not preferences.
           </motion.p>
 
+          {/* CTAs */}
           <motion.div
-            variants={fadeUp}
-            custom={3}
-            initial="hidden"
-            animate="visible"
-            className="mt-10 flex items-center gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.8 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link href="/onboarding">
               <motion.button
-                whileHover={{ scale: 1.04, backgroundColor: "#a78bfa" }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-white font-semibold text-[15px] transition-all duration-200"
-                style={{ boxShadow: "0 0 30px rgba(139,92,246,0.4)" }}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(99, 102, 241, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-[15px] transition-all duration-200 shadow-lg"
               >
-                Start for free <ArrowRight className="w-4 h-4" />
+                Start Simulation
+                <ArrowRight className="w-4 h-4" />
               </motion.button>
             </Link>
-            <Link href="/simulations">
-              <motion.button
-                whileHover={{ color: "rgba(255,255,255,1)" }}
-                className="flex items-center gap-1.5 text-[15px] text-white/50 font-medium transition-colors duration-200"
-              >
-                Browse simulations <ChevronRight className="w-4 h-4" />
-              </motion.button>
-            </Link>
+            <motion.button
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(99, 102, 241, 0.15)" }}
+              className="px-8 py-4 rounded-lg border border-slate-700 text-white font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
+            >
+              Watch demo
+            </motion.button>
           </motion.div>
 
-          {/* Inline stats */}
+          {/* Trust indicators */}
           <motion.div
-            variants={fadeUp}
-            custom={5}
-            initial="hidden"
-            animate="visible"
-            className="mt-20 grid grid-cols-3 gap-8 border-t border-white/8 pt-8 max-w-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.55, duration: 0.8 }}
+            className="mt-16 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 text-center"
           >
-            {[
-              { n: 500, suffix: "+", label: "students guided" },
-              { n: 3, suffix: " careers", label: "available now" },
-              { n: 98, suffix: "%", label: "would recommend" },
-            ].map((s) => (
-              <div key={s.label}>
-                <div className="text-3xl font-bold text-white tracking-tight">
-                  <CountUp target={s.n} suffix={s.suffix} />
-                </div>
-                <div className="text-xs text-white/35 mt-1 uppercase tracking-wider">{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Right: orb */}
-        <div className="hidden md:flex absolute right-0 top-0 bottom-0 w-[48%] items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full h-full"
-          >
-            <OrbVisual />
+            <div>
+              <div className="text-3xl font-bold text-indigo-400">2,400+</div>
+              <p className="text-sm text-slate-500 mt-1">Students simulated</p>
+            </div>
+            <div className="hidden md:block w-px h-12 bg-slate-700" />
+            <div>
+              <div className="text-3xl font-bold text-indigo-400">94%</div>
+              <p className="text-sm text-slate-500 mt-1">Would recommend</p>
+            </div>
+            <div className="hidden md:block w-px h-12 bg-slate-700" />
+            <div>
+              <div className="text-3xl font-bold text-indigo-400">18 min</div>
+              <p className="text-sm text-slate-500 mt-1">Average completion</p>
+            </div>
           </motion.div>
         </div>
       </motion.div>
 
-      {/* ── PROBLEM SECTION ── */}
-      <Section id="problem" className="py-32 px-8 md:px-20">
-        <motion.div variants={fadeUp} className="mb-4">
-          <span className="text-xs uppercase tracking-widest text-white/30 font-medium">The problem</span>
-        </motion.div>
-        <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-6xl font-bold leading-tight max-w-3xl mb-6">
-          Career decisions are made <span style={{ color: "#a78bfa" }}>blindly</span>.
-        </motion.h2>
-        <motion.p variants={fadeUp} custom={2} className="text-lg text-white/45 max-w-2xl mb-20 leading-relaxed">
-          Students spend years preparing for futures they've never actually experienced — choosing based on salary expectations, parental advice, or social media. The consequences are enormous.
-        </motion.p>
+      {/* ══════════════════════════════════════════════════════════════════
+          PROBLEM SECTION
+          ══════════════════════════════════════════════════════════════════ */}
+      <Section id="overview" className="relative py-32 px-8 md:px-20">
+        <AnimatedGrid />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/8 rounded-2xl overflow-hidden">
-          {problems.map((p, i) => (
-            <motion.div
-              key={p.stat}
-              variants={fadeUp}
-              custom={i + 3}
-              className="bg-black p-10 relative group"
-            >
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">The Problem</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8">
+              Career choices are made <br />
+              <span className="text-slate-500">without lived experience.</span>
+            </h2>
+            <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
+              Students spend years preparing for futures they've never experienced. They choose based on salary expectations, parental pressure, or social media—not on how they actually perform under real constraints.
+            </p>
+          </motion.div>
+
+          {/* Problem stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-16">
+            {[
+              {
+                stat: "73%",
+                label: "of graduates regret their major",
+                detail: "Federal Reserve data shows most students chose without understanding the work.",
+              },
+              {
+                stat: "$127K",
+                label: "average cost of wrong choice",
+                detail: "Tuition + debt + lost opportunity cost in a field you abandon.",
+              },
+              {
+                stat: "27%",
+                label: "work in their field of study",
+                detail: "Most spend years preparing for careers they never pursue.",
+              },
+            ].map((item, i) => (
               <motion.div
-                className="absolute inset-0 rounded-none"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                style={{ background: "radial-gradient(circle at 30% 30%, rgba(139,92,246,0.08), transparent 70%)" }}
-              />
-              <div className="text-5xl md:text-6xl font-bold mb-4" style={{ color: "#a78bfa" }}>
-                <CountUp
-                  target={parseInt(p.stat.replace(/[^0-9]/g, ""))}
-                  suffix={p.stat.includes("K") ? "K" : p.stat.includes("%") ? "%" : ""}
-                />
-              </div>
-              <div className="text-[15px] font-medium text-white mb-3 leading-snug">{p.label}</div>
-              <div className="text-sm text-white/35 leading-relaxed">{p.detail}</div>
-            </motion.div>
-          ))}
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="bg-slate-900/50 border border-slate-800/50 rounded-lg p-6 hover:bg-slate-900/70 transition-colors"
+              >
+                <div className="text-4xl font-bold text-indigo-400 mb-2">{item.stat}</div>
+                <p className="text-white font-medium text-sm mb-2">{item.label}</p>
+                <p className="text-slate-500 text-sm leading-relaxed">{item.detail}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </Section>
 
-      {/* ── SOLUTION ── */}
-      <Section id="how-it-works" className="py-32 px-8 md:px-20">
-        <div className="flex flex-col md:flex-row gap-20 items-start">
-          <div className="md:w-[40%] sticky top-24">
-            <motion.div variants={fadeUp} className="mb-4">
-              <span className="text-xs uppercase tracking-widest text-white/30 font-medium">The solution</span>
-            </motion.div>
-            <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-bold leading-tight mb-6">
-              Simulate. Analyze. <span style={{ color: "#a78bfa" }}>Decide.</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-base text-white/45 leading-relaxed mb-8">
-              PathPilot replaces guesswork with experience. You make real decisions under real constraints — and receive a behavioral analysis of how you performed, not just what you preferred.
-            </motion.p>
-            <motion.div variants={fadeUp} custom={3}>
-              <Link href="/onboarding">
-                <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex items-center gap-2 text-sm font-semibold text-primary hover:text-violet-300 transition-colors"
-                >
-                  Begin your simulation <ArrowUpRight className="w-4 h-4" />
-                </motion.button>
-              </Link>
-            </motion.div>
-          </div>
+      {/* ══════════════════════════════════════════════════════════════════
+          HOW IT WORKS SECTION
+          ══════════════════════════════════════════════════════════════════ */}
+      <Section id="how-it-works" className="relative py-32 px-8 md:px-20 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent">
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-16">
+            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Process</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              4 steps to <br />
+              <span className="text-slate-500">career clarity.</span>
+            </h2>
+          </motion.div>
 
-          <div className="md:w-[60%] space-y-px">
-            {steps.map((step, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                step: "01",
+                title: "Initialize profile",
+                description: "Tell us your interests, strengths, and goals. Under 3 minutes.",
+              },
+              {
+                step: "02",
+                title: "Enter simulation",
+                description: "Experience realistic career scenarios. Make real-time decisions under pressure.",
+              },
+              {
+                step: "03",
+                title: "Process behavioral data",
+                description: "AI analyzes your decisions: risk tolerance, thinking patterns, leadership style.",
+              },
+              {
+                step: "04",
+                title: "Generate career map",
+                description: "Receive ranked career matches and a personalized roadmap to success.",
+              },
+            ].map((item, i) => (
               <motion.div
-                key={step.number}
-                variants={fadeUp}
-                custom={i + 2}
-                whileHover={{ backgroundColor: "rgba(139,92,246,0.05)" }}
-                className="group p-8 border-t border-white/8 transition-colors duration-300 cursor-default"
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="group"
               >
-                <div className="flex items-start gap-6">
-                  <span className="text-xs font-mono text-white/20 mt-1 w-6 shrink-0">{step.number}</span>
-                  <div>
-                    <h3 className="text-[17px] font-semibold text-white mb-2 group-hover:text-violet-300 transition-colors">{step.title}</h3>
-                    <p className="text-sm text-white/40 leading-relaxed">{step.description}</p>
+                <div className="bg-slate-900/30 border border-slate-800/50 rounded-lg p-8 h-full group-hover:border-indigo-500/30 transition-colors duration-300">
+                  <div className="flex items-start gap-6">
+                    <div className="text-4xl font-bold text-indigo-500/40 group-hover:text-indigo-500/60 transition-colors">{item.step}</div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-indigo-300 transition-colors">{item.title}</h3>
+                      <p className="text-slate-400 leading-relaxed">{item.description}</p>
+                    </div>
                   </div>
-                  <ArrowUpRight className="w-4 h-4 text-white/20 group-hover:text-primary transition-colors ml-auto mt-0.5 shrink-0" />
                 </div>
               </motion.div>
             ))}
@@ -411,131 +437,209 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── SIMULATIONS ── */}
-      <Section id="simulations" className="py-32 px-8 md:px-20">
-        <motion.div variants={fadeUp} className="flex items-end justify-between mb-16">
-          <div>
-            <span className="text-xs uppercase tracking-widest text-white/30 font-medium">Available now</span>
-            <h2 className="text-4xl md:text-5xl font-bold mt-3">Career simulations</h2>
-          </div>
-          <Link href="/simulations">
-            <motion.button
-              whileHover={{ color: "rgba(167,139,250,1)" }}
-              className="hidden md:flex items-center gap-1.5 text-sm text-white/40 transition-colors"
-            >
-              View all <ArrowRight className="w-4 h-4" />
-            </motion.button>
-          </Link>
-        </motion.div>
+      {/* ══════════════════════════════════════════════════════════════════
+          SIMULATION PREVIEW SECTION
+          ══════════════════════════════════════════════════════════════════ */}
+      <Section id="simulation" className="relative py-32 px-8 md:px-20">
+        <AnimatedGrid />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {careers.map((c, i) => (
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-16">
+            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Example</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              Inside a <br />
+              <span className="text-slate-500">career simulation.</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <motion.div
-              key={c.title}
-              variants={fadeUp}
-              custom={i + 2}
-              whileHover={{ y: -4, scale: 1.01 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:sticky lg:top-32"
             >
-              <Link href="/simulations">
-                <div
-                  className="relative rounded-2xl p-8 h-64 flex flex-col justify-between overflow-hidden cursor-pointer group"
-                  style={{
-                    background: `radial-gradient(circle at 70% 20%, ${c.color}22, transparent 60%), rgba(255,255,255,0.03)`,
-                    border: "1px solid rgba(255,255,255,0.08)",
-                  }}
-                >
-                  <motion.div
-                    className="absolute inset-0 rounded-2xl"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    style={{ background: `radial-gradient(circle at 50% 50%, ${c.color}18, transparent 70%)` }}
-                  />
-                  <div className="relative">
-                    <div
-                      className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider"
-                      style={{ background: `${c.color}25`, color: c.color }}
-                    >
-                      {c.tag}
-                    </div>
-                    <h3 className="text-2xl font-bold text-white leading-tight">{c.title}</h3>
-                  </div>
-                  <div className="relative flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-xs text-white/35">
-                      <span>{c.stages} stages</span>
-                      <span>·</span>
-                      <span>{c.time}</span>
-                    </div>
-                    <motion.div
-                      className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white/40 transition-colors"
-                      whileHover={{ backgroundColor: "rgba(255,255,255,0.1)" }}
-                    >
-                      <ArrowUpRight className="w-3.5 h-3.5 text-white/50 group-hover:text-white transition-colors" />
-                    </motion.div>
-                  </div>
-                </div>
-              </Link>
+              <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-8">
+                <SimulationPreview />
+              </div>
             </motion.div>
-          ))}
-        </div>
-      </Section>
 
-      {/* ── CTA ── */}
-      <Section className="py-32 px-8 md:px-20">
-        <motion.div
-          variants={fadeUp}
-          className="relative rounded-3xl overflow-hidden p-16 md:p-24 text-center"
-          style={{ background: "radial-gradient(circle at 50% 0%, rgba(139,92,246,0.25) 0%, transparent 60%), rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
-        >
-          {/* Animated gradient pulse */}
-          <motion.div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(139,92,246,0.35), transparent 70%)", filter: "blur(24px)" }}
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <div className="relative z-10">
-            <motion.div variants={fadeUp} className="mb-3">
-              <span className="text-xs uppercase tracking-widest text-white/30 font-medium">Ready to begin?</span>
-            </motion.div>
-            <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Don't guess your future.<br />
-              <span style={{ color: "#a78bfa" }}>Experience it.</span>
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-base text-white/45 max-w-lg mx-auto mb-10 leading-relaxed">
-              Join students who discovered their career fit through simulation — not assumption. It takes under 30 minutes. The insight lasts a lifetime.
-            </motion.p>
-            <motion.div variants={fadeUp} custom={3} className="flex items-center justify-center gap-4">
-              <Link href="/onboarding">
-                <motion.button
-                  whileHover={{ scale: 1.04, boxShadow: "0 0 50px rgba(139,92,246,0.6)" }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-white font-semibold text-[15px] transition-all duration-200"
-                  style={{ boxShadow: "0 0 30px rgba(139,92,246,0.4)" }}
-                >
-                  Start for free <ArrowRight className="w-4 h-4" />
-                </motion.button>
-              </Link>
-              <Link href="/simulations">
-                <motion.button
-                  whileHover={{ color: "rgba(255,255,255,1)" }}
-                  className="text-[15px] text-white/45 font-medium transition-colors flex items-center gap-1.5"
-                >
-                  Preview a simulation <ChevronRight className="w-4 h-4" />
-                </motion.button>
-              </Link>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 mb-4">
+                  <Brain className="w-3.5 h-3.5 text-indigo-400" />
+                  <span className="text-xs text-indigo-300 font-medium">Behavioral Analysis</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3">You're not answering a quiz.</h3>
+                <p className="text-slate-400 leading-relaxed">
+                  Every decision you make in a simulation is analyzed against thousands of data points. The system doesn't ask "What do you prefer?" It observes "How did you actually decide?"
+                </p>
+              </div>
+
+              <div className="border-t border-slate-700/50 pt-6">
+                <h4 className="text-lg font-semibold text-white mb-3">What we measure:</h4>
+                <ul className="space-y-2 text-slate-400">
+                  <li className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
+                    <span>Risk tolerance in high-pressure decisions</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
+                    <span>Analytical vs. intuitive thinking patterns</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
+                    <span>Leadership style under uncertainty</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
+                    <span>Creative vs. systematic problem-solving</span>
+                  </li>
+                </ul>
+              </div>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </Section>
 
-      {/* ── FOOTER ── */}
-      <footer className="px-8 md:px-20 py-10 border-t border-white/8 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-primary/80 flex items-center justify-center text-white font-bold text-xs">P</div>
-          <span className="text-sm font-medium text-white/40">PathPilot</span>
+      {/* ══════════════════════════════════════════════════════════════════
+          RESULTS SECTION
+          ══════════════════════════════════════════════════════════════════ */}
+      <Section className="relative py-32 px-8 md:px-20 bg-gradient-to-b from-indigo-500/5 via-transparent to-transparent">
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-16">
+            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Outcomes</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              Your career <br />
+              <span className="text-slate-500">blueprint.</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 mb-4">
+                  <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
+                  <span className="text-xs text-indigo-300 font-medium">Results-Driven</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3">Data-backed career recommendations.</h3>
+                <p className="text-slate-400 leading-relaxed">
+                  No generic personality types. No vague percentages. You get ranked career matches based on how you actually performed in realistic scenarios.
+                </p>
+              </div>
+
+              <div className="border-t border-slate-700/50 pt-6">
+                <h4 className="text-lg font-semibold text-white mb-4">You'll receive:</h4>
+                <div className="space-y-3">
+                  {[
+                    "Top 5 career matches ranked by fit",
+                    "Detailed trait analysis (radar chart)",
+                    "Personalized learning roadmap",
+                    "Internship & project recommendations",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 text-slate-400">
+                      <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:sticky lg:top-32"
+            >
+              <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-8">
+                <ResultsPreview />
+              </div>
+            </motion.div>
+          </div>
         </div>
-        <p className="text-xs text-white/20">Career discovery through simulation</p>
+      </Section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          FINAL CTA SECTION
+          ══════════════════════════════════════════════════════════════════ */}
+      <Section className="relative py-32 px-8 md:px-20">
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative rounded-2xl overflow-hidden p-12 md:p-16 text-center"
+            style={{
+              background: "radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 60%), rgba(99, 102, 241, 0.05)",
+              border: "1px solid rgba(99, 102, 241, 0.2)",
+            }}
+          >
+            <motion.div
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 4, repeat: Infinity }}
+              className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none"
+            />
+
+            <div className="relative z-10">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Ready to discover <br />
+                <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                  your career fit
+                </span>
+                <span className="text-slate-500">?</span>
+              </h2>
+              <p className="text-lg text-slate-400 max-w-xl mx-auto mb-10 leading-relaxed">
+                18 minutes. Real scenarios. Data-backed insights. Join 2,400+ students who already know their next move.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/onboarding">
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(99, 102, 241, 0.5)" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-[15px] transition-all duration-200 shadow-lg"
+                  >
+                    Start Simulation
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.button>
+                </Link>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="px-6 py-4 rounded-lg border border-slate-700 text-white font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
+                >
+                  Learn more
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </Section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          FOOTER
+          ══════════════════════════════════════════════════════════════════ */}
+      <footer className="relative z-10 border-t border-slate-800/50 px-8 md:px-20 py-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-bold text-white">PathPilot</span>
+          </div>
+          <p className="text-sm text-slate-500">Career discovery through behavioral simulation.</p>
+          <p className="text-xs text-slate-600">© 2024. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );
