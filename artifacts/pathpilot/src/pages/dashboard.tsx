@@ -3,14 +3,36 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { AreaChart, Area, ResponsiveContainer, Tooltip } from "recharts";
 import { motion } from "framer-motion";
-import { ArrowUpRight, ArrowDownRight, Zap, Target, TrendingUp, Briefcase, RotateCcw, ChevronRight, Clock, Award } from "lucide-react";
+import {
+  ArrowUpRight,
+  ArrowDownRight,
+  Zap,
+  Target,
+  TrendingUp,
+  Briefcase,
+  RotateCcw,
+  ChevronRight,
+  Clock,
+  Award,
+  Play,
+} from "lucide-react";
 import { useMemo } from "react";
+import {
+  SystemCard,
+  SystemCardHeader,
+  SystemCardTitle,
+  SystemCardDescription,
+  SystemCardContent,
+  SystemCardActions,
+} from "@/components/system-card";
+import { StateLabel } from "@/components/state-label";
 
+// ─── Sparkline data ───────────────────────────────────────────────────────────
 function generateSparklineData(seed: number, points = 12, trend: "up" | "down" | "flat" = "up") {
   const data = [];
   let value = 30 + (seed % 20);
   for (let i = 0; i < points; i++) {
-    const noise = (Math.sin(seed * i * 0.7) * 8) + (Math.random() * 6 - 3);
+    const noise = Math.sin(seed * i * 0.7) * 8 + (Math.random() * 6 - 3);
     if (trend === "up") value += 1.5 + noise * 0.5;
     else if (trend === "down") value -= 0.8 + noise * 0.3;
     else value += noise * 0.4;
@@ -19,6 +41,7 @@ function generateSparklineData(seed: number, points = 12, trend: "up" | "down" |
   return data;
 }
 
+// ─── SparkCard ────────────────────────────────────────────────────────────────
 function SparkCard({
   label,
   value,
@@ -45,31 +68,37 @@ function SparkCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: seed * 0.06 }}
       className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0d0d0d] flex flex-col"
     >
-      <div className="p-5 pb-2 flex-1">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-2 text-xs font-medium text-zinc-500 uppercase tracking-widest">
+      <div className="p-4 pb-2 flex-1">
+        <div className="flex items-start justify-between mb-2">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
             <Icon className="w-3.5 h-3.5" style={{ color }} />
             {label}
           </div>
           {delta !== undefined && (
-            <div className={`flex items-center gap-0.5 text-xs font-semibold ${isPositive ? "text-emerald-400" : "text-red-400"}`}>
-              {isPositive ? <ArrowUpRight className="w-3.5 h-3.5" /> : <ArrowDownRight className="w-3.5 h-3.5" />}
+            <div
+              className={`flex items-center gap-0.5 text-xs font-semibold ${
+                isPositive ? "text-emerald-400" : "text-red-400"
+              }`}
+            >
+              {isPositive ? (
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              ) : (
+                <ArrowDownRight className="w-3.5 h-3.5" />
+              )}
               {Math.abs(delta)}%
             </div>
           )}
         </div>
-        <div className="text-4xl font-bold tracking-tight text-white font-mono mb-0.5">{value}</div>
-        {sub && <div className="text-xs text-zinc-600">{sub}</div>}
-        {deltaLabel && (
-          <div className="text-xs text-zinc-500 mt-1">{deltaLabel}</div>
-        )}
+        <div className="text-3xl font-bold tracking-tight text-white font-mono mb-0.5">{value}</div>
+        {sub && <div className="text-[11px] text-zinc-600">{sub}</div>}
+        {deltaLabel && <div className="text-[11px] text-zinc-500 mt-1">{deltaLabel}</div>}
       </div>
-      <div className="h-16 w-full">
+      <div className="h-12 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
             <defs>
@@ -87,10 +116,7 @@ function SparkCard({
               dot={false}
               isAnimationActive={false}
             />
-            <Tooltip
-              content={() => null}
-              cursor={false}
-            />
+            <Tooltip content={() => null} cursor={false} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -98,17 +124,34 @@ function SparkCard({
   );
 }
 
-function SessionRow({ session, index }: { session: { id: number; simulationTitle?: string | null; status: string; score: number; completedAt?: string | null }; index: number }) {
+// ─── Session row ──────────────────────────────────────────────────────────────
+function SessionRow({
+  session,
+  index,
+}: {
+  session: {
+    id: number;
+    simulationTitle?: string | null;
+    status: string;
+    score: number;
+    completedAt?: string | null;
+  };
+  index: number;
+}) {
   const isCompleted = session.status === "completed";
   return (
     <motion.div
       initial={{ opacity: 0, x: -8 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: index * 0.07 }}
-      className="flex items-center justify-between py-4 border-b border-white/[0.04] last:border-0 group"
+      className="flex items-center justify-between py-3 border-b border-white/[0.04] last:border-0 group"
     >
       <div className="flex items-center gap-3 min-w-0">
-        <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${isCompleted ? "bg-emerald-500/10" : "bg-primary/10"}`}>
+        <div
+          className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+            isCompleted ? "bg-emerald-500/10" : "bg-primary/10"
+          }`}
+        >
           {isCompleted ? (
             <Award className="w-4 h-4 text-emerald-400" />
           ) : (
@@ -116,7 +159,9 @@ function SessionRow({ session, index }: { session: { id: number; simulationTitle
           )}
         </div>
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-white truncate">{session.simulationTitle || "Simulation"}</p>
+          <p className="text-sm font-semibold text-white truncate">
+            {session.simulationTitle || "Simulation"}
+          </p>
           <p className="text-xs text-zinc-500 mt-0.5 capitalize">
             {isCompleted ? `Completed · Score ${session.score}` : "In progress"}
           </p>
@@ -124,10 +169,10 @@ function SessionRow({ session, index }: { session: { id: number; simulationTitle
       </div>
       <div className="flex items-center gap-3 flex-shrink-0">
         {isCompleted && (
-          <div className="text-right hidden sm:block">
-            <div className="text-lg font-bold font-mono text-white">{session.score}</div>
-            <div className="text-xs text-zinc-600">pts</div>
-          </div>
+          <StateLabel variant="completed" className="hidden sm:inline-flex" />
+        )}
+        {!isCompleted && (
+          <StateLabel variant="active" label="In Progress" className="hidden sm:inline-flex" />
         )}
         {isCompleted ? (
           <Link href={`/analysis/${session.id}`}>
@@ -147,6 +192,7 @@ function SessionRow({ session, index }: { session: { id: number; simulationTitle
   );
 }
 
+// ─── Dashboard ────────────────────────────────────────────────────────────────
 export default function Dashboard() {
   const { data: dashboard, isLoading, refetch } = useGetDashboard();
 
@@ -167,23 +213,29 @@ export default function Dashboard() {
   const sims = dashboard.simulationsCompleted ?? 0;
   const opps = dashboard.activeOpportunities ?? 0;
   const roadmap = dashboard.roadmapProgress ?? 0;
-  const confidencePct = dashboard.topCareerConfidence ? Math.round(dashboard.topCareerConfidence) : null;
+  const confidencePct = dashboard.topCareerConfidence
+    ? Math.round(dashboard.topCareerConfidence)
+    : null;
+
+  // Determine overall system state
+  const systemState =
+    sims === 0 ? "evolving" : confidencePct && confidencePct >= 80 ? "stable" : "evolving";
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* Header */}
+    <div className="space-y-6 pb-16">
+
+      {/* ── ZONE 1: Hero / Continue section ─────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         className="flex items-start justify-between"
       >
         <div>
-          <div className="flex items-center gap-2 text-xs font-medium text-zinc-500 uppercase tracking-widest mb-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            Career Intelligence
+          <div className="flex items-center gap-2 mb-2">
+            <StateLabel variant={systemState} label={systemState === "stable" ? "Career Stable" : "Building Profile"} />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight text-white">PathPilot Dashboard</h1>
-          <p className="text-zinc-500 mt-1.5 text-sm">Your career performance at a glance</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">PathPilot Dashboard</h1>
+          <p className="text-zinc-500 mt-1 text-sm">Your career intelligence at a glance</p>
         </div>
         <button
           onClick={() => refetch()}
@@ -194,24 +246,56 @@ export default function Dashboard() {
         </button>
       </motion.div>
 
-      {/* Profile incomplete banner */}
-      {!dashboard.profileComplete && (
+      {/* ── ZONE 2: Primary action — Continue / Start simulation ─────────── */}
+      {!dashboard.profileComplete ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="rounded-2xl border border-primary/20 bg-primary/5 px-6 py-4 flex items-center justify-between"
+          transition={{ delay: 0.1 }}
         >
-          <div>
-            <p className="font-semibold text-primary">Complete your profile to unlock personalized insights</p>
-            <p className="text-sm text-zinc-500 mt-0.5">Takes under 2 minutes. Tailors every simulation to your background.</p>
-          </div>
-          <Link href="/onboarding">
-            <Button size="sm" className="flex-shrink-0">Get Started</Button>
-          </Link>
+          <SystemCard variant="elevated">
+            <SystemCardHeader badge={<StateLabel variant="evolving" label="Action Required" />}>
+              <SystemCardTitle className="text-base">Complete your profile to unlock insights</SystemCardTitle>
+              <SystemCardDescription>
+                Takes under 2 minutes. Tailors every simulation to your background.
+              </SystemCardDescription>
+            </SystemCardHeader>
+            <SystemCardActions>
+              <Link href="/onboarding">
+                <Button size="sm">
+                  <Play className="w-3.5 h-3.5 mr-2" />
+                  Get Started
+                </Button>
+              </Link>
+            </SystemCardActions>
+          </SystemCard>
         </motion.div>
-      )}
+      ) : sims === 0 ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+        >
+          <SystemCard variant="elevated">
+            <SystemCardHeader badge={<StateLabel variant="active" label="Recommended Next Step" />}>
+              <SystemCardTitle className="text-base">Run your first simulation</SystemCardTitle>
+              <SystemCardDescription>
+                Experience a real-world career scenario and unlock your behavioral profile.
+              </SystemCardDescription>
+            </SystemCardHeader>
+            <SystemCardActions>
+              <Link href="/simulations">
+                <Button size="sm">
+                  <Zap className="w-3.5 h-3.5 mr-2" />
+                  Browse Simulations
+                </Button>
+              </Link>
+            </SystemCardActions>
+          </SystemCard>
+        </motion.div>
+      ) : null}
 
-      {/* Metric sparkline grid */}
+      {/* ── ZONE 3: Metric sparkline grid ────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <SparkCard
           label="Simulations"
@@ -225,7 +309,7 @@ export default function Dashboard() {
           icon={Zap}
         />
         <SparkCard
-          label="Performance Score"
+          label="Score"
           value={totalScore > 0 ? `${totalScore}` : "—"}
           sub="cumulative points"
           delta={totalScore > 0 ? Math.min(99, Math.round(totalScore / 5)) : undefined}
@@ -259,120 +343,145 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Roadmap progress bar — full width premium */}
+      {/* ── ZONE 4: Roadmap progress ─────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="rounded-2xl border border-white/[0.06] bg-[#0d0d0d] p-6"
       >
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <p className="text-xs font-medium text-zinc-500 uppercase tracking-widest mb-1">Roadmap Completion</p>
-            <p className="text-2xl font-bold font-mono text-white">{roadmap}%</p>
-          </div>
-          <Link href="/roadmap">
-            <button className="text-sm text-primary hover:text-primary/80 flex items-center gap-1.5 transition-colors font-medium">
-              View Roadmap <ChevronRight className="w-4 h-4" />
-            </button>
-          </Link>
-        </div>
-        <div className="w-full bg-white/[0.04] rounded-full h-2">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${roadmap}%` }}
-            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="h-2 rounded-full"
-            style={{ background: "linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4)" }}
-          />
-        </div>
-        <div className="flex justify-between mt-2">
-          <span className="text-xs text-zinc-600">Foundation</span>
-          <span className="text-xs text-zinc-600">Career Ready</span>
-        </div>
+        <SystemCard>
+          <SystemCardHeader badge={<StateLabel variant={roadmap >= 80 ? "stable" : roadmap > 0 ? "evolving" : "locked"} />}>
+            <SystemCardTitle>Roadmap Completion</SystemCardTitle>
+            <SystemCardDescription>Your progress toward career readiness</SystemCardDescription>
+          </SystemCardHeader>
+          <SystemCardContent className="pt-2">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-2xl font-bold font-mono text-white">{roadmap}%</span>
+              <Link href="/roadmap">
+                <button className="text-sm text-primary hover:text-primary/80 flex items-center gap-1.5 transition-colors font-medium">
+                  View Roadmap <ChevronRight className="w-4 h-4" />
+                </button>
+              </Link>
+            </div>
+            <div className="w-full bg-white/[0.04] rounded-full h-2">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${roadmap}%` }}
+                transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+                className="h-2 rounded-full"
+                style={{ background: "linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4)" }}
+              />
+            </div>
+            <div className="flex justify-between mt-2">
+              <span className="text-[11px] text-zinc-600">Foundation</span>
+              <span className="text-[11px] text-zinc-600">Career Ready</span>
+            </div>
+          </SystemCardContent>
+        </SystemCard>
       </motion.div>
 
-      {/* Two-col bottom section */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        {/* Recent sessions — wider */}
+      {/* ── ZONE 5: Recent sessions + Quick actions ───────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        {/* Recent sessions */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
-          className="lg:col-span-3 rounded-2xl border border-white/[0.06] bg-[#0d0d0d] p-6"
+          className="lg:col-span-3"
         >
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-bold text-white text-lg">Recent Sessions</h2>
-            <Link href="/simulations">
-              <button className="text-xs text-zinc-500 hover:text-white transition-colors flex items-center gap-1">
-                All <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </Link>
-          </div>
-          {dashboard.recentSessions?.length === 0 ? (
-            <div className="py-12 text-center">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                <Zap className="w-6 h-6 text-primary/60" />
-              </div>
-              <p className="text-sm font-medium text-zinc-400 mb-1">No sessions yet</p>
-              <p className="text-xs text-zinc-600 mb-4">Start a simulation to see your results here.</p>
+          <SystemCard className="h-full">
+            <SystemCardHeader>
+              <SystemCardTitle>Recent Sessions</SystemCardTitle>
+              <SystemCardDescription>Your latest simulation activity</SystemCardDescription>
+            </SystemCardHeader>
+            <SystemCardContent>
+              {dashboard.recentSessions?.length === 0 ? (
+                <div className="py-8 text-center">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                    <Zap className="w-5 h-5 text-primary/60" />
+                  </div>
+                  <p className="text-sm font-medium text-zinc-400 mb-1">No sessions yet</p>
+                  <p className="text-xs text-zinc-600 mb-4">
+                    Start a simulation to see your results here.
+                  </p>
+                  <Link href="/simulations">
+                    <Button size="sm">Browse Simulations</Button>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  {dashboard.recentSessions?.map((session, i) => (
+                    <SessionRow key={session.id} session={session} index={i} />
+                  ))}
+                </div>
+              )}
+            </SystemCardContent>
+            <SystemCardActions className="justify-start">
               <Link href="/simulations">
-                <Button size="sm">Browse Simulations</Button>
+                <button className="text-xs text-zinc-500 hover:text-white transition-colors flex items-center gap-1">
+                  All simulations <ChevronRight className="w-3.5 h-3.5" />
+                </button>
               </Link>
-            </div>
-          ) : (
-            <div>
-              {dashboard.recentSessions?.map((session, i) => (
-                <SessionRow key={session.id} session={session} index={i} />
-              ))}
-            </div>
-          )}
+            </SystemCardActions>
+          </SystemCard>
         </motion.div>
 
-        {/* Quick actions — narrower */}
+        {/* Quick actions */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="lg:col-span-2 rounded-2xl border border-white/[0.06] bg-[#0d0d0d] p-6 flex flex-col gap-4"
+          className="lg:col-span-2"
         >
-          <h2 className="font-bold text-white text-lg">Quick Actions</h2>
-
-          <Link href="/simulations" className="block">
-            <div className="rounded-xl border border-white/[0.06] hover:border-primary/30 p-4 transition-all hover:bg-primary/5 cursor-pointer group">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-primary" />
+          <SystemCard className="h-full">
+            <SystemCardHeader>
+              <SystemCardTitle>Quick Actions</SystemCardTitle>
+              <SystemCardDescription>Jump to key features</SystemCardDescription>
+            </SystemCardHeader>
+            <SystemCardContent className="flex flex-col gap-3">
+              <Link href="/simulations" className="block">
+                <div className="rounded-xl border border-white/[0.06] hover:border-primary/30 p-4 transition-all hover:bg-primary/5 cursor-pointer group">
+                  <div className="flex items-center gap-3 mb-1.5">
+                    <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Zap className="w-3.5 h-3.5 text-primary" />
+                    </div>
+                    <p className="font-semibold text-white text-sm">Run Simulation</p>
+                  </div>
+                  <p className="text-xs text-zinc-500 leading-relaxed">
+                    Real incidents, real stakes.
+                  </p>
                 </div>
-                <p className="font-semibold text-white text-sm">Run Simulation</p>
-              </div>
-              <p className="text-xs text-zinc-500 leading-relaxed">Put yourself in the shoes of a professional. Real incidents, real stakes.</p>
-            </div>
-          </Link>
+              </Link>
 
-          <Link href="/roadmap" className="block">
-            <div className="rounded-xl border border-white/[0.06] hover:border-violet-500/30 p-4 transition-all hover:bg-violet-500/5 cursor-pointer group">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-violet-500/10 flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-violet-400" />
+              <Link href="/roadmap" className="block">
+                <div className="rounded-xl border border-white/[0.06] hover:border-violet-500/30 p-4 transition-all hover:bg-violet-500/5 cursor-pointer group">
+                  <div className="flex items-center gap-3 mb-1.5">
+                    <div className="w-7 h-7 rounded-lg bg-violet-500/10 flex items-center justify-center flex-shrink-0">
+                      <TrendingUp className="w-3.5 h-3.5 text-violet-400" />
+                    </div>
+                    <p className="font-semibold text-white text-sm">Build Roadmap</p>
+                  </div>
+                  <p className="text-xs text-zinc-500 leading-relaxed">
+                    Accept AI milestones or add your own.
+                  </p>
                 </div>
-                <p className="font-semibold text-white text-sm">Build Roadmap</p>
-              </div>
-              <p className="text-xs text-zinc-500 leading-relaxed">Accept AI milestones or add your own. Track your path to your career.</p>
-            </div>
-          </Link>
+              </Link>
 
-          <Link href="/opportunities" className="block">
-            <div className="rounded-xl border border-white/[0.06] hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5 cursor-pointer group">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                  <Briefcase className="w-4 h-4 text-emerald-400" />
+              <Link href="/opportunities" className="block">
+                <div className="rounded-xl border border-white/[0.06] hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5 cursor-pointer group">
+                  <div className="flex items-center gap-3 mb-1.5">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                      <Briefcase className="w-3.5 h-3.5 text-emerald-400" />
+                    </div>
+                    <p className="font-semibold text-white text-sm">Explore Opportunities</p>
+                  </div>
+                  <p className="text-xs text-zinc-500 leading-relaxed">
+                    Scholarships, programs, and internships.
+                  </p>
                 </div>
-                <p className="font-semibold text-white text-sm">Explore Opportunities</p>
-              </div>
-              <p className="text-xs text-zinc-500 leading-relaxed">Scholarships, programs, and internships matched to your profile.</p>
-            </div>
-          </Link>
+              </Link>
+            </SystemCardContent>
+          </SystemCard>
         </motion.div>
       </div>
     </div>

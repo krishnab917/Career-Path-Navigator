@@ -5,6 +5,16 @@ import { ExternalLink, Calendar, MapPin, Sparkles } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
+import {
+  SystemCard,
+  SystemCardHeader,
+  SystemCardTitle,
+  SystemCardDescription,
+  SystemCardContent,
+  SystemCardMeta,
+  SystemCardActions,
+} from "@/components/system-card";
+import { StateLabel } from "@/components/state-label";
 
 const CATEGORIES = [
   { label: "All", value: null },
@@ -27,11 +37,12 @@ const CATEGORY_LABELS: Record<string, string> = {
   summer_program: "Summer Program",
 };
 
-const DIFFICULTY_COLORS: Record<string, { text: string; bg: string }> = {
-  high: { text: "#ef4444", bg: "rgba(239,68,68,0.1)" },
-  medium: { text: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
-  low: { text: "#10b981", bg: "rgba(16,185,129,0.1)" },
-};
+// Map difficulty to state label
+function difficultyToState(d: string): "stable" | "evolving" | "high-risk" {
+  if (d === "low") return "stable";
+  if (d === "medium") return "evolving";
+  return "high-risk";
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -44,28 +55,33 @@ const fadeUp = {
 
 export default function Opportunities() {
   const [category, setCategory] = useState<string | null>(null);
-  const { data: opportunities, isLoading } = useListOpportunities(category ? { category } : undefined);
+  const { data: opportunities, isLoading } = useListOpportunities(
+    category ? { category } : undefined
+  );
   const { data: profile } = useGetProfile();
 
   const location = profile?.country;
   const interests = profile?.careerInterests ?? [];
 
   return (
-    <motion.div initial="hidden" animate="visible" className="space-y-8 max-w-5xl mx-auto pb-12">
+    <motion.div initial="hidden" animate="visible" className="space-y-8 pb-12">
       {/* Header */}
       <motion.div variants={fadeUp} className="space-y-2 pt-2">
         <div className="flex items-center gap-2 text-xs font-medium text-primary uppercase tracking-widest">
           <Sparkles className="w-3.5 h-3.5" /> Personalized for you
         </div>
-        <h1 className="text-4xl font-bold tracking-tight">Opportunities</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-3xl font-bold tracking-tight text-white">Opportunities</h1>
+        <p className="text-zinc-500 text-sm">
           Curated programs, internships, and competitions matched to your career analysis
           {location ? ` and your location in ${location}` : ""}.
         </p>
         {interests.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-1">
             {interests.slice(0, 5).map((interest) => (
-              <span key={interest} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary/80 font-medium capitalize">
+              <span
+                key={interest}
+                className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary/80 font-medium capitalize"
+              >
                 {interest}
               </span>
             ))}
@@ -94,91 +110,81 @@ export default function Opportunities() {
 
       {/* Grid */}
       {isLoading ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-64 rounded-2xl bg-card border border-border animate-pulse" />
+            <div key={i} className="h-56 rounded-2xl bg-white/[0.03] border border-white/[0.05] animate-pulse" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {opportunities?.map((opp, i) => {
-            const diff = DIFFICULTY_COLORS[opp.difficulty] ?? DIFFICULTY_COLORS.medium;
-            return (
-              <motion.div
-                key={opp.id}
-                variants={fadeUp}
-                custom={i + 2}
-                whileHover={{ y: -3 }}
-                transition={{ duration: 0.2 }}
-                className="rounded-2xl border border-border/60 bg-card flex flex-col overflow-hidden group"
-              >
-                {/* Top color bar */}
-                <div className="h-1 bg-primary/60 w-0 group-hover:w-full transition-all duration-500" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {opportunities?.map((opp, i) => (
+            <motion.div key={opp.id} variants={fadeUp} custom={i + 2} whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+              <SystemCard className="h-full hover:border-primary/20 transition-colors group">
+                {/* Top accent bar */}
+                <div className="h-1 w-0 group-hover:w-full bg-primary/60 transition-all duration-500 flex-shrink-0" />
 
-                <div className="p-6 flex-1 space-y-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-secondary text-secondary-foreground">
-                          {CATEGORY_LABELS[opp.category] ?? opp.category}
-                        </span>
-                        <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full"
-                          style={{ color: diff.text, background: diff.bg }}>
-                          {opp.difficulty}
-                        </span>
-                      </div>
-                    </div>
+                <SystemCardHeader
+                  badge={<StateLabel variant={difficultyToState(opp.difficulty)} />}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.05] text-zinc-400">
+                      {CATEGORY_LABELS[opp.category] ?? opp.category}
+                    </span>
                   </div>
+                  <SystemCardTitle className="text-base">{opp.title}</SystemCardTitle>
+                  <SystemCardDescription>{opp.organization}</SystemCardDescription>
+                </SystemCardHeader>
 
-                  <div>
-                    <h3 className="text-lg font-bold text-foreground leading-snug mb-0.5">{opp.title}</h3>
-                    <p className="text-sm text-muted-foreground">{opp.organization}</p>
-                  </div>
-
+                <SystemCardContent className="space-y-4">
                   {/* Match score */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-muted-foreground font-medium">Relevance match</span>
+                      <span className="text-zinc-500 font-medium">Relevance match</span>
                       <span className="font-mono font-bold text-primary">{opp.relevanceScore}%</span>
                     </div>
                     <Progress value={opp.relevanceScore} className="h-1.5" />
-                    <p className="text-xs text-muted-foreground italic">{opp.whyItMatches}</p>
+                    <p className="text-[11px] text-zinc-500 italic">{opp.whyItMatches}</p>
                   </div>
 
-                  <p className="text-sm text-foreground/70 line-clamp-2">{opp.description}</p>
+                  <p className="text-sm text-zinc-400 line-clamp-2">{opp.description}</p>
+                </SystemCardContent>
 
-                  <div className="flex flex-wrap gap-4 text-xs text-muted-foreground pt-1">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {new Date(opp.applicationDeadline).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                    </div>
-                    {opp.location && (
-                      <div className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5" /> {opp.location}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <SystemCardMeta>
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5" />
+                    {new Date(opp.applicationDeadline).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </span>
+                  {opp.location && (
+                    <span className="flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5" /> {opp.location}
+                    </span>
+                  )}
+                </SystemCardMeta>
 
-                <div className="px-6 py-4 border-t border-border/40">
+                <SystemCardActions>
                   {opp.url ? (
-                    <a href={opp.url} target="_blank" rel="noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-border text-sm font-semibold text-foreground hover:bg-accent hover:border-primary/30 transition-all">
-                      Apply now <ExternalLink className="w-3.5 h-3.5" />
+                    <a href={opp.url} target="_blank" rel="noreferrer" className="flex-1">
+                      <button className="flex items-center justify-center gap-2 w-full py-2 rounded-xl border border-white/[0.08] text-sm font-semibold text-white hover:bg-white/[0.04] hover:border-primary/30 transition-all">
+                        Apply now <ExternalLink className="w-3.5 h-3.5" />
+                      </button>
                     </a>
                   ) : (
-                    <div className="w-full py-2.5 rounded-xl bg-muted text-sm font-semibold text-muted-foreground text-center">
+                    <div className="flex-1 py-2 rounded-xl bg-white/[0.03] text-sm font-semibold text-zinc-600 text-center">
                       Applications closed
                     </div>
                   )}
-                </div>
-              </motion.div>
-            );
-          })}
+                </SystemCardActions>
+              </SystemCard>
+            </motion.div>
+          ))}
 
           {opportunities?.length === 0 && (
-            <div className="col-span-full flex flex-col items-center justify-center py-20 text-center text-muted-foreground gap-3">
-              <p className="text-lg font-medium">No opportunities in this category yet.</p>
+            <div className="col-span-full flex flex-col items-center justify-center py-20 text-center text-zinc-500 gap-3">
+              <p className="text-base font-medium">No opportunities in this category yet.</p>
               <p className="text-sm">Try a different filter or check back soon.</p>
             </div>
           )}
@@ -186,27 +192,26 @@ export default function Opportunities() {
       )}
 
       {/* Roadmap CTA */}
-      <motion.div
-        variants={fadeUp}
-        custom={12}
-        className="rounded-2xl border border-border/60 bg-card p-7 flex flex-col sm:flex-row items-center justify-between gap-5"
-      >
-        <div>
-          <h3 className="text-lg font-bold">Ready for your roadmap?</h3>
-          <p className="text-sm text-muted-foreground mt-1">
-            Get a personalized, step-by-step action plan built around your career match, location, and age.
-          </p>
-        </div>
-        <Link href="/roadmap">
-          <motion.button
-            whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(139,92,246,0.4)" }}
-            whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm whitespace-nowrap shrink-0"
-            style={{ boxShadow: "0 0 20px rgba(139,92,246,0.3)" }}
-          >
-            View my roadmap <ArrowRight className="w-4 h-4" />
-          </motion.button>
-        </Link>
+      <motion.div variants={fadeUp} custom={12}>
+        <SystemCard variant="elevated">
+          <SystemCardHeader badge={<StateLabel variant="active" label="Recommended" />}>
+            <SystemCardTitle className="text-base">Ready for your roadmap?</SystemCardTitle>
+            <SystemCardDescription>
+              Get a personalized, step-by-step action plan built around your career match, location, and age.
+            </SystemCardDescription>
+          </SystemCardHeader>
+          <SystemCardActions>
+            <Link href="/roadmap">
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 px-6 py-2 rounded-xl bg-primary text-white font-semibold text-sm"
+              >
+                View my roadmap <ArrowRight className="w-4 h-4" />
+              </motion.button>
+            </Link>
+          </SystemCardActions>
+        </SystemCard>
       </motion.div>
     </motion.div>
   );

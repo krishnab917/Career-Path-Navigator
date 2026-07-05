@@ -31,6 +31,14 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { StateLabel } from "@/components/state-label";
+import {
+  SystemCard,
+  SystemCardHeader,
+  SystemCardTitle,
+  SystemCardDescription,
+  SystemCardContent,
+} from "@/components/system-card";
 
 const iconMap: Record<string, React.ReactNode> = {
   course: <Book className="w-4 h-4 text-blue-400" />,
@@ -464,13 +472,14 @@ export default function Roadmap() {
 
       <motion.div initial="hidden" animate="visible" className="max-w-4xl mx-auto space-y-8 pb-20">
         {/* Header */}
-        <motion.div variants={fadeUp} className="space-y-4 pt-2">
-          <div className="inline-flex items-center gap-1.5 text-xs font-medium text-primary/80 uppercase tracking-wider bg-primary/10 px-3 py-1 rounded-full">
-            <Sparkles className="w-3 h-3" /> Interactive Roadmap Builder
+        <motion.div variants={fadeUp} className="space-y-3 pt-2">
+          <div className="flex items-center gap-2">
+            <StateLabel variant={progress >= 80 ? "stable" : progress > 0 ? "evolving" : "active"} label={progress >= 80 ? "On Track" : progress > 0 ? "In Progress" : "Getting Started"} />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Interactive Roadmap Builder</span>
           </div>
           <div>
-            <p className="text-sm text-primary font-semibold uppercase tracking-widest mb-1">Your path to</p>
-            <h1 className="text-5xl font-bold tracking-tight">{roadmap.targetCareer}</h1>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Your path to</p>
+            <h1 className="text-3xl font-bold tracking-tight text-white">{roadmap.targetCareer}</h1>
           </div>
 
           {/* Personalization context */}
@@ -498,22 +507,27 @@ export default function Roadmap() {
 
         {/* Progress bar */}
         {totalMy > 0 && (
-          <motion.div variants={fadeUp} custom={0.5} className="rounded-2xl border border-border/60 bg-card p-5">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <p className="font-bold text-foreground">Your Progress</p>
-                <p className="text-sm text-muted-foreground">{completedCount} of {totalMy} milestones completed</p>
-              </div>
-              <div className="text-3xl font-bold font-mono text-primary">{progress}%</div>
-            </div>
-            <div className="w-full bg-muted/50 rounded-full h-2">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="h-2 rounded-full bg-primary"
-              />
-            </div>
+          <motion.div variants={fadeUp} custom={0.5}>
+            <SystemCard>
+              <SystemCardHeader badge={<StateLabel variant={progress >= 80 ? "stable" : "evolving"} />}>
+                <SystemCardTitle>Your Progress</SystemCardTitle>
+                <SystemCardDescription>{completedCount} of {totalMy} milestones completed</SystemCardDescription>
+              </SystemCardHeader>
+              <SystemCardContent className="pt-2">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-2xl font-bold font-mono text-white">{progress}%</span>
+                </div>
+                <div className="w-full bg-white/[0.04] rounded-full h-2">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="h-2 rounded-full"
+                    style={{ background: "linear-gradient(90deg, #6366f1, #8b5cf6)" }}
+                  />
+                </div>
+              </SystemCardContent>
+            </SystemCard>
           </motion.div>
         )}
 

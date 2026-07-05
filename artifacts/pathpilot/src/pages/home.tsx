@@ -1,125 +1,10 @@
 import { Link } from "wouter";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef, useEffect } from "react";
-import { ArrowRight, Zap, Brain, TrendingUp, Code2 } from "lucide-react";
+import { useRef } from "react";
+import { ArrowRight, Zap, Brain, TrendingUp, Code2, CheckCircle } from "lucide-react";
+import { StateLabel } from "@/components/state-label";
 
-// ============================================================================
-// SIMULATION PREVIEW COMPONENT
-// ============================================================================
-function SimulationPreview() {
-  const scenario = {
-    title: "Market Downturn Response",
-    situation: "Your startup's funding is cut by 40%. Your team is waiting for direction.",
-    decisions: [
-      { id: 1, action: "Cut costs aggressively", consequence: "Short-term survival, but potential talent loss" },
-      { id: 2, action: "Pivot to new market", consequence: "High risk, potential breakthrough opportunity" },
-      { id: 3, action: "Seek new funding rounds", consequence: "Time-consuming but maintains team morale" },
-    ],
-  };
-
-  return (
-    <div className="space-y-6">
-      <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-6">
-        <p className="text-xs uppercase tracking-widest text-slate-400 mb-3">Scenario</p>
-        <h3 className="text-lg font-semibold text-white mb-3">{scenario.title}</h3>
-        <p className="text-slate-300 text-sm leading-relaxed">{scenario.situation}</p>
-      </div>
-
-      <div className="space-y-3">
-        <p className="text-xs uppercase tracking-widest text-slate-400">Decision Options</p>
-        {scenario.decisions.map((decision) => (
-          <motion.div
-            key={decision.id}
-            whileHover={{ backgroundColor: "rgba(88, 107, 197, 0.15)" }}
-            className="bg-slate-800/30 border border-slate-700/50 rounded-lg p-4 cursor-default transition-colors"
-          >
-            <div className="flex items-start gap-3 mb-2">
-              <div className="w-6 h-6 rounded-full bg-indigo-500/30 flex items-center justify-center text-indigo-300 text-xs font-bold shrink-0">
-                {decision.id}
-              </div>
-              <div className="flex-1">
-                <p className="text-white text-sm font-medium">{decision.action}</p>
-              </div>
-            </div>
-            <p className="text-slate-400 text-xs ml-9">{decision.consequence}</p>
-          </motion.div>
-        ))}
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="bg-gradient-to-r from-indigo-500/10 to-transparent border border-indigo-500/30 rounded-lg p-4"
-      >
-        <p className="text-xs uppercase tracking-widest text-indigo-300 mb-2">Consequence Reveal</p>
-        <p className="text-slate-200 text-sm">
-          Your decision to pivot was analyzed against 42 similar scenarios. Risk tolerance +22%, Strategic thinking +18%.
-        </p>
-      </motion.div>
-    </div>
-  );
-}
-
-// ============================================================================
-// RESULTS PREVIEW COMPONENT
-// ============================================================================
-function ResultsPreview() {
-  const traits = [
-    { name: "Risk Tolerance", value: 78, color: "#6366f1" },
-    { name: "Analytical Thinking", value: 85, color: "#8b5cf6" },
-    { name: "Leadership", value: 72, color: "#a78bfa" },
-    { name: "Creativity", value: 68, color: "#c4b5fd" },
-  ];
-
-  return (
-    <div className="space-y-8">
-      <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-6">
-        <p className="text-xs uppercase tracking-widest text-slate-400 mb-4">Career Match</p>
-        <div className="flex items-end gap-3">
-          <div>
-            <p className="text-3xl font-bold text-white">Software Engineer</p>
-            <p className="text-slate-400 text-sm mt-1">92% compatibility based on your decisions</p>
-          </div>
-          <div className="ml-auto text-right">
-            <div className="text-4xl font-bold text-indigo-400">92%</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-6">
-        <p className="text-xs uppercase tracking-widest text-slate-400 mb-6">Trait Profile</p>
-        <div className="space-y-4">
-          {traits.map((trait) => (
-            <div key={trait.name}>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-white font-medium">{trait.name}</span>
-                <span className="text-xs text-slate-400">{trait.value}%</span>
-              </div>
-              <div className="w-full bg-slate-800/50 rounded-full h-2 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${trait.value}%` }}
-                  transition={{ duration: 1, delay: 0.2 }}
-                  style={{ backgroundColor: trait.color }}
-                  className="h-full rounded-full"
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <p className="text-sm text-slate-400 italic">
-        "Your decisions in high-pressure scenarios showed strong analytical patterns, with a preference for data-driven trade-offs."
-      </p>
-    </div>
-  );
-}
-
-// ============================================================================
-// ANIMATED BACKGROUND GRID
-// ============================================================================
+// ─── Animated background grid ─────────────────────────────────────────────────
 function AnimatedGrid() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -135,24 +20,11 @@ function AnimatedGrid() {
           backgroundSize: "60px 60px",
         }}
       />
-      <motion.div
-        animate={{
-          background: [
-            "radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)",
-            "radial-gradient(circle at 70% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)",
-            "radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)",
-          ],
-        }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute inset-0"
-      />
     </div>
   );
 }
 
-// ============================================================================
-// SECTION WRAPPER
-// ============================================================================
+// ─── Section wrapper with fade-in ────────────────────────────────────────────
 function Section({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -170,9 +42,111 @@ function Section({ children, className = "", id }: { children: React.ReactNode; 
   );
 }
 
-// ============================================================================
-// MAIN HOME PAGE
-// ============================================================================
+// ─── Simulation preview (mini) ────────────────────────────────────────────────
+function SimulationPreview() {
+  const decisions = [
+    { id: 1, action: "Cut costs aggressively", consequence: "Short-term survival, potential talent loss", risk: "medium" },
+    { id: 2, action: "Pivot to new market", consequence: "High risk, potential breakthrough", risk: "high" },
+    { id: 3, action: "Seek new funding rounds", consequence: "Time-consuming but maintains morale", risk: "low" },
+  ];
+
+  const riskColors: Record<string, string> = {
+    low: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+    medium: "text-amber-400 bg-amber-500/10 border-amber-500/20",
+    high: "text-red-400 bg-red-500/10 border-red-500/20",
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between mb-2">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Live Scenario</p>
+        <StateLabel variant="time-pressure" label="Time Pressure" />
+      </div>
+      <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
+        <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Situation Briefing</p>
+        <h3 className="text-sm font-bold text-white mb-2">Market Downturn Response</h3>
+        <p className="text-zinc-400 text-xs leading-relaxed">
+          Your startup's funding is cut by 40%. Your team is waiting for direction.
+        </p>
+      </div>
+      <div className="space-y-2">
+        <p className="text-[10px] uppercase tracking-widest text-zinc-500">Select your course of action</p>
+        {decisions.map((d) => (
+          <div
+            key={d.id}
+            className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-3 flex items-start justify-between gap-3"
+          >
+            <div className="flex items-start gap-2 flex-1">
+              <div className="w-5 h-5 rounded-md bg-white/[0.06] flex items-center justify-center text-[10px] font-bold text-zinc-500 flex-shrink-0 mt-0.5">
+                {d.id}
+              </div>
+              <div>
+                <p className="text-xs font-medium text-zinc-200">{d.action}</p>
+                <p className="text-[11px] text-zinc-500 mt-0.5">{d.consequence}</p>
+              </div>
+            </div>
+            <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-full border flex-shrink-0 ${riskColors[d.risk]}`}>
+              {d.risk}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Results preview ──────────────────────────────────────────────────────────
+function ResultsPreview() {
+  const traits = [
+    { name: "Risk Tolerance", value: 78, color: "#6366f1" },
+    { name: "Analytical Thinking", value: 85, color: "#8b5cf6" },
+    { name: "Leadership", value: 72, color: "#a78bfa" },
+    { name: "Creativity", value: 68, color: "#c4b5fd" },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between mb-2">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Analysis Output</p>
+        <StateLabel variant="completed" label="Completed" />
+      </div>
+      <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
+        <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-3">Career Match</p>
+        <div className="flex items-end gap-3">
+          <div>
+            <p className="text-xl font-bold text-white">Software Engineer</p>
+            <p className="text-zinc-500 text-xs mt-1">92% compatibility based on your decisions</p>
+          </div>
+          <div className="ml-auto text-3xl font-bold text-indigo-400">92%</div>
+        </div>
+      </div>
+      <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
+        <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-4">Trait Profile</p>
+        <div className="space-y-3">
+          {traits.map((trait) => (
+            <div key={trait.name}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs text-white font-medium">{trait.name}</span>
+                <span className="text-[11px] text-zinc-500 font-mono">{trait.value}%</span>
+              </div>
+              <div className="w-full bg-white/[0.05] rounded-full h-1.5 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${trait.value}%` }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  style={{ backgroundColor: trait.color }}
+                  className="h-full rounded-full"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main home page ───────────────────────────────────────────────────────────
 export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
@@ -181,28 +155,27 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="relative bg-slate-950 text-white overflow-hidden">
-      {/* ══════════════════════════════════════════════════════════════════
-          NAVIGATION
-          ══════════════════════════════════════════════════════════════════ */}
+
+      {/* ── Navigation ───────────────────────────────────────────────────── */}
       <motion.nav
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 h-16"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 h-14"
         style={{
-          background: "rgba(15, 23, 42, 0.8)",
+          background: "rgba(15, 23, 42, 0.85)",
           backdropFilter: "blur(16px)",
           borderBottom: "1px solid rgba(99, 102, 241, 0.1)",
         }}
       >
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-            <Zap className="w-5 h-5 text-white" />
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+            <Zap className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-[16px] tracking-tight">PathPilot</span>
+          <span className="font-bold text-[15px] tracking-tight">PathPilot</span>
         </div>
 
-        <nav className="hidden lg:flex items-center gap-12">
+        <nav className="hidden lg:flex items-center gap-8">
           {[
             { label: "Overview", href: "#overview" },
             { label: "How it works", href: "#how-it-works" },
@@ -222,24 +195,22 @@ export default function Home() {
           <motion.button
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
-            className="px-5 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 transition-colors duration-200"
+            className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 transition-colors duration-200"
           >
             Launch
           </motion.button>
         </Link>
       </motion.nav>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          HERO SECTION
-          ══════════════════════════════════════════════════════════════════ */}
+      {/* ── HERO — Primary action zone ───────────────────────────────────── */}
       <motion.div
         style={{ opacity: heroOpacity, y: heroY }}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-14"
       >
         <AnimatedGrid />
 
         <div className="relative z-10 max-w-4xl mx-auto px-8 text-center">
-          {/* Tagline */}
+          {/* System badge */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -248,11 +219,11 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30">
               <Code2 className="w-3.5 h-3.5 text-indigo-400" />
-              <span className="text-xs uppercase tracking-widest text-indigo-300 font-semibold">Simulation Engine</span>
+              <span className="text-xs uppercase tracking-widest text-indigo-300 font-semibold">Simulation Engine v2</span>
             </div>
           </motion.div>
 
-          {/* Main Headline */}
+          {/* Headline — ONE primary message */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -267,17 +238,17 @@ export default function Home() {
             before you commit.
           </motion.h1>
 
-          {/* Subheading */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.8 }}
             className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Experience realistic career scenarios. Make high-stakes decisions. Receive behavioral analysis based on your actual choices—not preferences.
+            Experience realistic career scenarios. Make high-stakes decisions. Receive behavioral
+            analysis based on your actual choices — not preferences.
           </motion.p>
 
-          {/* CTAs */}
+          {/* ONE primary CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -294,12 +265,14 @@ export default function Home() {
                 <ArrowRight className="w-4 h-4" />
               </motion.button>
             </Link>
-            <motion.button
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(99, 102, 241, 0.15)" }}
-              className="px-8 py-4 rounded-lg border border-slate-700 text-white font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
-            >
-              Watch demo
-            </motion.button>
+            <a href="#how-it-works">
+              <motion.button
+                whileHover={{ scale: 1.05, backgroundColor: "rgba(99, 102, 241, 0.15)" }}
+                className="px-8 py-4 rounded-lg border border-slate-700 text-white font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
+              >
+                How it works
+              </motion.button>
+            </a>
           </motion.div>
 
           {/* Trust indicators */}
@@ -327,41 +300,47 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          PROBLEM SECTION
-          ══════════════════════════════════════════════════════════════════ */}
-      <Section id="overview" className="relative py-32 px-8 md:px-20">
+      {/* ── OVERVIEW — Problem section ───────────────────────────────────── */}
+      <Section id="overview" className="relative py-24 px-8 md:px-20">
         <AnimatedGrid />
-
         <div className="relative z-10 max-w-5xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">The Problem</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8">
-              Career choices are made <br />
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+              Career choices are made{" "}
               <span className="text-slate-500">without lived experience.</span>
             </h2>
             <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
-              Students spend years preparing for futures they've never experienced. They choose based on salary expectations, parental pressure, or social media—not on how they actually perform under real constraints.
+              Students spend years preparing for futures they've never experienced. They choose based
+              on salary expectations, parental pressure, or social media — not on how they actually
+              perform under real constraints.
             </p>
           </motion.div>
 
-          {/* Problem stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-16">
+          {/* Problem stats — SystemCard-style */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
             {[
               {
                 stat: "73%",
                 label: "of graduates regret their major",
                 detail: "Federal Reserve data shows most students chose without understanding the work.",
+                state: "high-risk" as const,
               },
               {
                 stat: "$127K",
                 label: "average cost of wrong choice",
                 detail: "Tuition + debt + lost opportunity cost in a field you abandon.",
+                state: "high-risk" as const,
               },
               {
                 stat: "27%",
                 label: "work in their field of study",
                 detail: "Most spend years preparing for careers they never pursue.",
+                state: "evolving" as const,
               },
             ].map((item, i) => (
               <motion.div
@@ -369,67 +348,61 @@ export default function Home() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="bg-slate-900/50 border border-slate-800/50 rounded-lg p-6 hover:bg-slate-900/70 transition-colors"
+                className="bg-slate-900/50 border border-slate-800/50 rounded-2xl p-6 hover:bg-slate-900/70 transition-colors"
               >
-                <div className="text-4xl font-bold text-indigo-400 mb-2">{item.stat}</div>
-                <p className="text-white font-medium text-sm mb-2">{item.label}</p>
-                <p className="text-slate-500 text-sm leading-relaxed">{item.detail}</p>
+                <div className="flex items-start justify-between mb-3">
+                  <div className="text-4xl font-bold text-indigo-400">{item.stat}</div>
+                  <StateLabel variant={item.state} />
+                </div>
+                <p className="text-white font-semibold text-sm mb-2">{item.label}</p>
+                <p className="text-slate-500 text-xs leading-relaxed">{item.detail}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </Section>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          HOW IT WORKS SECTION
-          ══════════════════════════════════════════════════════════════════ */}
-      <Section id="how-it-works" className="relative py-32 px-8 md:px-20 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent">
+      {/* ── HOW IT WORKS ─────────────────────────────────────────────────── */}
+      <Section
+        id="how-it-works"
+        className="relative py-24 px-8 md:px-20 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent"
+      >
         <div className="relative z-10 max-w-5xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Process</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              4 steps to <br />
-              <span className="text-slate-500">career clarity.</span>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              4 steps to <span className="text-slate-500">career clarity.</span>
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              {
-                step: "01",
-                title: "Initialize profile",
-                description: "Tell us your interests, strengths, and goals. Under 3 minutes.",
-              },
-              {
-                step: "02",
-                title: "Enter simulation",
-                description: "Experience realistic career scenarios. Make real-time decisions under pressure.",
-              },
-              {
-                step: "03",
-                title: "Process behavioral data",
-                description: "AI analyzes your decisions: risk tolerance, thinking patterns, leadership style.",
-              },
-              {
-                step: "04",
-                title: "Generate career map",
-                description: "Receive ranked career matches and a personalized roadmap to success.",
-              },
+              { step: "01", title: "Initialize profile", description: "Tell us your interests, strengths, and goals. Under 3 minutes." },
+              { step: "02", title: "Enter simulation", description: "Experience realistic career scenarios. Make real-time decisions under pressure." },
+              { step: "03", title: "Process behavioral data", description: "AI analyzes your decisions: risk tolerance, thinking patterns, leadership style." },
+              { step: "04", title: "Generate career map", description: "Receive ranked career matches and a personalized roadmap to success." },
             ].map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="group"
+                className="bg-slate-900/30 border border-slate-800/50 rounded-2xl p-6 hover:border-indigo-500/30 transition-colors duration-300 group"
               >
-                <div className="bg-slate-900/30 border border-slate-800/50 rounded-lg p-8 h-full group-hover:border-indigo-500/30 transition-colors duration-300">
-                  <div className="flex items-start gap-6">
-                    <div className="text-4xl font-bold text-indigo-500/40 group-hover:text-indigo-500/60 transition-colors">{item.step}</div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-indigo-300 transition-colors">{item.title}</h3>
-                      <p className="text-slate-400 leading-relaxed">{item.description}</p>
-                    </div>
+                <div className="flex items-start gap-5">
+                  <div className="text-3xl font-bold text-indigo-500/40 group-hover:text-indigo-500/60 transition-colors font-mono">
+                    {item.step}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-base font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </motion.div>
@@ -438,29 +411,30 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          SIMULATION PREVIEW SECTION
-          ══════════════════════════════════════════════════════════════════ */}
-      <Section id="simulation" className="relative py-32 px-8 md:px-20">
+      {/* ── SIMULATION PREVIEW ───────────────────────────────────────────── */}
+      <Section id="simulation" className="relative py-24 px-8 md:px-20">
         <AnimatedGrid />
-
-        <div className="relative z-10 max-w-6xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-16">
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Example</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Inside a <br />
-              <span className="text-slate-500">career simulation.</span>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              Inside a <span className="text-slate-500">career simulation.</span>
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:sticky lg:top-32"
+              className="lg:sticky lg:top-24"
             >
-              <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-8">
+              <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl p-6">
                 <SimulationPreview />
               </div>
             </motion.div>
@@ -476,31 +450,30 @@ export default function Home() {
                   <Brain className="w-3.5 h-3.5 text-indigo-400" />
                   <span className="text-xs text-indigo-300 font-medium">Behavioral Analysis</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">You're not answering a quiz.</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Every decision you make in a simulation is analyzed against thousands of data points. The system doesn't ask "What do you prefer?" It observes "How did you actually decide?"
+                <h3 className="text-2xl font-bold text-white mb-3">
+                  You're not answering a quiz.
+                </h3>
+                <p className="text-slate-400 leading-relaxed text-sm">
+                  Every decision you make in a simulation is analyzed against thousands of data
+                  points. The system doesn't ask "What do you prefer?" It observes "How did you
+                  actually decide?"
                 </p>
               </div>
 
               <div className="border-t border-slate-700/50 pt-6">
-                <h4 className="text-lg font-semibold text-white mb-3">What we measure:</h4>
-                <ul className="space-y-2 text-slate-400">
-                  <li className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
-                    <span>Risk tolerance in high-pressure decisions</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
-                    <span>Analytical vs. intuitive thinking patterns</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
-                    <span>Leadership style under uncertainty</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-indigo-400" />
-                    <span>Creative vs. systematic problem-solving</span>
-                  </li>
+                <h4 className="text-base font-bold text-white mb-4">What we measure:</h4>
+                <ul className="space-y-3">
+                  {[
+                    "Risk tolerance in high-pressure decisions",
+                    "Analytical vs. intuitive thinking patterns",
+                    "Leadership style under uncertainty",
+                    "Creative vs. systematic problem-solving",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-slate-400 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-indigo-400 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </motion.div>
@@ -508,20 +481,22 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          RESULTS SECTION
-          ══════════════════════════════════════════════════════════════════ */}
-      <Section className="relative py-32 px-8 md:px-20 bg-gradient-to-b from-indigo-500/5 via-transparent to-transparent">
-        <div className="relative z-10 max-w-6xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-16">
+      {/* ── RESULTS ──────────────────────────────────────────────────────── */}
+      <Section className="relative py-24 px-8 md:px-20 bg-gradient-to-b from-indigo-500/5 via-transparent to-transparent">
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Outcomes</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Your career <br />
-              <span className="text-slate-500">blueprint.</span>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+              Your career <span className="text-slate-500">blueprint.</span>
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -533,14 +508,16 @@ export default function Home() {
                   <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
                   <span className="text-xs text-indigo-300 font-medium">Results-Driven</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">Data-backed career recommendations.</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  No generic personality types. No vague percentages. You get ranked career matches based on how you actually performed in realistic scenarios.
+                <h3 className="text-2xl font-bold text-white mb-3">
+                  Data-backed career recommendations.
+                </h3>
+                <p className="text-slate-400 leading-relaxed text-sm">
+                  No generic personality types. No vague percentages. You get ranked career matches
+                  based on how you actually performed in realistic scenarios.
                 </p>
               </div>
-
               <div className="border-t border-slate-700/50 pt-6">
-                <h4 className="text-lg font-semibold text-white mb-4">You'll receive:</h4>
+                <h4 className="text-base font-bold text-white mb-4">You'll receive:</h4>
                 <div className="space-y-3">
                   {[
                     "Top 5 career matches ranked by fit",
@@ -548,9 +525,9 @@ export default function Home() {
                     "Personalized learning roadmap",
                     "Internship & project recommendations",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 text-slate-400">
-                      <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-                      <span>{item}</span>
+                    <div key={i} className="flex items-center gap-3 text-slate-400 text-sm">
+                      <CheckCircle className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+                      {item}
                     </div>
                   ))}
                 </div>
@@ -561,9 +538,9 @@ export default function Home() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:sticky lg:top-32"
+              className="lg:sticky lg:top-24"
             >
-              <div className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-8">
+              <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl p-6">
                 <ResultsPreview />
               </div>
             </motion.div>
@@ -571,18 +548,17 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          FINAL CTA SECTION
-          ══════════════════════════════════════════════════════════════════ */}
-      <Section className="relative py-32 px-8 md:px-20">
-        <div className="relative z-10 max-w-4xl mx-auto">
+      {/* ── FINAL CTA — ONE primary action ───────────────────────────────── */}
+      <Section className="relative py-24 px-8 md:px-20">
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-2xl overflow-hidden p-12 md:p-16 text-center"
+            className="relative rounded-2xl overflow-hidden p-12 md:p-16"
             style={{
-              background: "radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 60%), rgba(99, 102, 241, 0.05)",
+              background:
+                "radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 60%), rgba(99, 102, 241, 0.05)",
               border: "1px solid rgba(99, 102, 241, 0.2)",
             }}
           >
@@ -591,52 +567,42 @@ export default function Home() {
               transition={{ duration: 4, repeat: Infinity }}
               className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none"
             />
-
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Ready to discover <br />
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                Ready to discover{" "}
                 <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
                   your career fit
                 </span>
                 <span className="text-slate-500">?</span>
               </h2>
-              <p className="text-lg text-slate-400 max-w-xl mx-auto mb-10 leading-relaxed">
-                18 minutes. Real scenarios. Data-backed insights. Join 2,400+ students who already know their next move.
+              <p className="text-lg text-slate-400 max-w-xl mx-auto mb-8 leading-relaxed">
+                18 minutes. Real scenarios. Data-backed insights. Join 2,400+ students who already
+                know their next move.
               </p>
-
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/onboarding">
-                  <motion.button
-                    whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(99, 102, 241, 0.5)" }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-[15px] transition-all duration-200 shadow-lg"
-                  >
-                    Start Simulation
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                </Link>
+              {/* Single primary CTA */}
+              <Link href="/onboarding">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  className="px-6 py-4 rounded-lg border border-slate-700 text-white font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(99, 102, 241, 0.5)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-[15px] transition-all duration-200 shadow-lg"
                 >
-                  Learn more
+                  Start Simulation
+                  <ArrowRight className="w-4 h-4" />
                 </motion.button>
-              </div>
+              </Link>
             </div>
           </motion.div>
         </div>
       </Section>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          FOOTER
-          ══════════════════════════════════════════════════════════════════ */}
-      <footer className="relative z-10 border-t border-slate-800/50 px-8 md:px-20 py-12">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex items-center gap-3">
+      {/* ── Footer ───────────────────────────────────────────────────────── */}
+      <footer className="relative z-10 border-t border-slate-800/50 px-8 md:px-20 py-8">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
             <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
+              <Zap className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-bold text-white">PathPilot</span>
+            <span className="font-bold text-white text-sm">PathPilot</span>
           </div>
           <p className="text-sm text-slate-500">Career discovery through behavioral simulation.</p>
           <p className="text-xs text-slate-600">© 2024. All rights reserved.</p>

@@ -2,6 +2,7 @@ import { useParams, Link } from "wouter";
 import { useGetSessionAnalysis, getGetSessionAnalysisQueryKey } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, TrendingDown, Sparkles } from "lucide-react";
+import { StateLabel } from "@/components/state-label";
 import { RadialBarChart, RadialBar, ResponsiveContainer, PolarAngleAxis } from "recharts";
 
 const fadeUp = {
@@ -36,10 +37,10 @@ export default function Analysis() {
     <motion.div initial="hidden" animate="visible" className="max-w-5xl mx-auto space-y-8 pb-12">
       {/* Header */}
       <motion.div variants={fadeUp} className="text-center space-y-3 pt-4">
-        <div className="inline-flex items-center gap-1.5 text-xs font-medium text-primary/80 uppercase tracking-wider bg-primary/10 px-3 py-1 rounded-full">
-          <Sparkles className="w-3 h-3" /> Simulation complete
+        <div className="flex items-center justify-center gap-2">
+          <StateLabel variant="completed" label="Simulation Complete" />
         </div>
-        <h1 className="text-4xl font-bold tracking-tight">Your career analysis</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-white">Your career analysis</h1>
         <p className="text-muted-foreground max-w-xl mx-auto">
           Based on your decisions and behavioral patterns across all stages of the simulation.
         </p>
@@ -55,7 +56,10 @@ export default function Analysis() {
           <div className="absolute top-0 right-0 w-48 h-48 opacity-20 rounded-full"
             style={{ background: "radial-gradient(circle, hsl(var(--primary)), transparent)", transform: "translate(25%,-25%)" }} />
           <div className="relative">
-            <p className="text-xs font-bold text-primary uppercase tracking-widest mb-2">Primary match</p>
+            <div className="flex items-center gap-2 mb-2">
+            <p className="text-xs font-bold text-primary uppercase tracking-widest">Primary match</p>
+            <StateLabel variant={score >= 80 ? "stable" : score >= 65 ? "evolving" : "high-risk"} label={score >= 80 ? "High Confidence" : score >= 65 ? "Good Fit" : "Explore More"} />
+          </div>
             <h2 className="text-3xl font-bold text-foreground mb-3">{analysis.primaryCareer}</h2>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">{analysis.summary}</p>
             <div className="border-t border-border/40 pt-4">
