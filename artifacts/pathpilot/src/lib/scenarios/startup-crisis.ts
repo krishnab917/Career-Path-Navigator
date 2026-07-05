@@ -20,7 +20,7 @@ import {
   SimulationScenario,
   SimulationNode,
   DecisionOption,
-} from "./simulation-engine";
+} from "../simulation-engine";
 
 // ============================================================================
 // SCENARIO SETUP

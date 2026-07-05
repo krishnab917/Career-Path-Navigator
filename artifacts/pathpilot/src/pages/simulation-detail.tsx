@@ -1,5 +1,5 @@
 import { useParams, useLocation } from "wouter";
-import { useGetSimulation, useCreateSimulationSession } from "@workspace/api-client-react";
+import { useGetSimulation, useCreateSimulationSession, getGetSimulationQueryKey } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Clock, Play, BarChart } from "lucide-react";
 
@@ -9,7 +9,7 @@ export default function SimulationDetail() {
   const [, setLocation] = useLocation();
 
   const { data: simulation, isLoading } = useGetSimulation(numericId, {
-    query: { enabled: !!numericId }
+    query: { enabled: !!numericId, queryKey: getGetSimulationQueryKey(numericId) }
   });
 
   const createSession = useCreateSimulationSession();

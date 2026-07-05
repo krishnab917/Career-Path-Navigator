@@ -153,7 +153,7 @@ function AnimatedGrid() {
 // ============================================================================
 // SECTION WRAPPER
 // ============================================================================
-function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function Section({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   return (
@@ -162,6 +162,7 @@ function Section({ children, className = "" }: { children: React.ReactNode; clas
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.6 }}
+      id={id}
       className={className}
     >
       {children}

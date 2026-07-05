@@ -7,7 +7,8 @@
  * - Decision history tracking
  */
 
-import { BranchingScenario, Choice } from "./schema/simulations";
+import { BranchingScenario } from "./schema/simulations";
+import { Choice } from "./schema/scenarios";
 
 export interface SimulationState {
   currentScenarioKey: string;

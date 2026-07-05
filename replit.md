@@ -1,6 +1,6 @@
-# [Project name]
+# PathPilot
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A simulation-first career discovery platform that lets users experience real careers through interactive branching scenarios and behavioral analysis.
 
 ## Run & Operate
 

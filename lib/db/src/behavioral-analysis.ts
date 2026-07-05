@@ -32,7 +32,7 @@ export interface CareerMatch {
  * Analyze behavioral profile from simulation session
  */
 export function analyzeBehavioralProfile(simulationState: SimulationState): BehavioralProfile {
-  return simulationState.behavioralMetrics as BehavioralProfile;
+  return simulationState.behavioralMetrics as unknown as BehavioralProfile;
 }
 
 /**
@@ -261,7 +261,7 @@ function calculateCareerScore(
   let totalWeight = 0;
 
   for (const [trait, weight] of Object.entries(weights)) {
-    const traitValue = (profile as Record<string, number>)[trait] || 50;
+    const traitValue = (profile as unknown as Record<string, number>)[trait] || 50;
     score += traitValue * weight;
     totalWeight += weight;
   }

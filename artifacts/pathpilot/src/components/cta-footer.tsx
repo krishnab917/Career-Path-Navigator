@@ -57,6 +57,7 @@ const CtaFooter = () => {
         // Handle autoplay restriction
       });
     }
+    return undefined;
   }, []);
 
   return (

@@ -49,7 +49,7 @@ const slide = {
   exit: (dir: number) => ({ opacity: 0, x: -dir * 40 }),
 };
 
-const transition = { duration: 0.35, ease: [0.22, 1, 0.36, 1] };
+const transition = { duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] };
 
 export default function Onboarding() {
   const [step, setStep] = useState(0);

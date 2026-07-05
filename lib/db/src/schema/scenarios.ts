@@ -41,7 +41,7 @@ export const choiceSchema = z.object({
   nextScenarioKey: z.string(), // Key of the next scenario, or "end" for final scenarios
   consequence: z.string().optional(),
   riskLevel: z.enum(["low", "medium", "high"]).optional(),
-  metricsImpact: z.record(z.number()).optional(), // e.g., { "Product Quality": -10, "Team Morale": 5 }
+  metricsImpact: z.record(z.string(), z.number()).optional(), // e.g., { "Product Quality": -10, "Team Morale": 5 }
 });
 
 export type Choice = z.infer<typeof choiceSchema>;

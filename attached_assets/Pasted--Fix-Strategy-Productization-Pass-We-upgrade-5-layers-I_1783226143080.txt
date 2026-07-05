@@ -1,0 +1,130 @@
+🧱 Fix Strategy: “Productization Pass”
+
+We upgrade 5 layers. In order.
+
+1. 🧭 Information Architecture (MOST IMPORTANT)
+
+Before visuals.
+
+Your app needs 3 clear zones:
+Explore Layer → discovery of careers/simulations
+Simulation Layer → active decision-making
+Profile Layer → traits, history, analytics
+
+If users can’t instantly answer:
+
+“Where am I and what am I doing?”
+
+…it will feel like a toy.
+
+2. 🎨 Design System (kill randomness)
+
+You need constraints, not creativity here.
+
+Define globally:
+8pt spacing system (8, 16, 24, 32…)
+2 font sizes for body max
+1 primary accent color
+1 neutral palette (gray scale only)
+1 card style only (no variants chaos)
+Rule:
+
+If it doesn’t follow a system rule, delete it.
+
+3. 🧩 Component Upgrade (stop “default UI syndrome”)
+
+Replace generic components with purpose-built ones:
+
+Cards
+
+Instead of:
+
+basic shadcn card
+
+Build:
+
+ScenarioCard
+time pressure badge ⏱️
+risk indicator ⚖️
+info density control (collapsed/expanded)
+Buttons
+
+Instead of:
+
+“default primary button”
+
+You need:
+
+DecisionButton
+shows consequence hint on hover
+changes intensity based on risk
+Progress UI
+
+Replace:
+
+boring progress bar
+
+With:
+
+Trajectory Map
+shows decision path through simulation nodes
+4. ⚡ Add “Data Presence” (this is what removes vibecode feel)
+
+Vibecode = static UI
+
+You need:
+
+dynamic state changes
+visible system feedback
+Examples:
+“Your risk profile is shifting → Medium → High”
+“Confidence score updating in real time”
+“Branch probability recalculated”
+
+Even if simplified, this feels real.
+
+5. 🧠 Simulation Depth Layer (your moat)
+
+Right now you said:
+
+“too simple”
+
+That usually means:
+
+Missing:
+trade-offs
+hidden variables
+delayed consequences
+Fix:
+
+Every scenario must include:
+
+Known info 🟢
+Unknown info ⚫
+Future reveal 🔮
+
+Example structure:
+
+You choose option A
+System silently updates:
+trust score
+time penalty
+opportunity loss
+Later reveal explains consequences
+🎯 Quick UI Overhaul Checklist (do this first)
+Must fix in 48 hours:
+ Remove unused UI elements
+ Standardize spacing scale
+ Redesign homepage hierarchy
+ Convert all cards to one system
+ Add scenario depth (hidden consequences)
+🧪 “Anti-vibecode test”
+
+Open your app and ask:
+
+Would a teacher think this is a real tool?
+Does anything update dynamically?
+Is there a system or just screens?
+Can I explain the entire UI in 10 seconds?
+
+If any answer is “no” → it’s still vibecoded.

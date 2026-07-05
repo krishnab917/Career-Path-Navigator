@@ -40,7 +40,7 @@ export const decisionHistoryEntrySchema = z.object({
   choiceId: z.string(),
   choiceText: z.string(),
   consequence: z.string().optional(),
-  metricsImpactApplied: z.record(z.number()).optional(),
+  metricsImpactApplied: z.record(z.string(), z.number()).optional(),
   timestamp: z.string().datetime(),
 });
 

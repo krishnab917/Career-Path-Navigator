@@ -1,5 +1,5 @@
 import { useParams, Link } from "wouter";
-import { useGetSessionAnalysis } from "@workspace/api-client-react";
+import { useGetSessionAnalysis, getGetSessionAnalysisQueryKey } from "@workspace/api-client-react";
 import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, TrendingDown, Sparkles } from "lucide-react";
 import { RadialBarChart, RadialBar, ResponsiveContainer, PolarAngleAxis } from "recharts";
@@ -9,14 +9,14 @@ const fadeUp = {
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   }),
 };
 
 export default function Analysis() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const id = parseInt(sessionId || "0", 10);
-  const { data: analysis, isLoading } = useGetSessionAnalysis(id, { query: { enabled: !!id } });
+  const { data: analysis, isLoading } = useGetSessionAnalysis(id, { query: { enabled: !!id, queryKey: getGetSessionAnalysisQueryKey(id) } });
 
   if (isLoading) return (
     <div className="flex items-center justify-center h-64">
@@ -75,7 +75,7 @@ export default function Analysis() {
             <ResponsiveContainer width="100%" height="100%">
               <RadialBarChart cx="50%" cy="50%" innerRadius="70%" outerRadius="100%" barSize={16} data={chartData} startAngle={90} endAngle={-270}>
                 <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
-                <RadialBar background clockWise dataKey="value" cornerRadius={8} />
+                <RadialBar background={{ fill: "#1e293b" }} dataKey="value" cornerRadius={8} />
               </RadialBarChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center">

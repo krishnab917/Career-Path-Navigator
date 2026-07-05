@@ -317,7 +317,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
                                 : "bg-red-500/20 text-red-300"
                             }`}
                           >
-                            {key.replace(/_/g, " ")} {(value as number) > 0 ? "+" : ""}{value}
+                            {key.replace(/_/g, " ")} {(value as number) > 0 ? "+" : ""}{String(value)}
                           </span>
                         ))}
                     </div>
