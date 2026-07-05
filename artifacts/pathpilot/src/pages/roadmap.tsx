@@ -475,11 +475,11 @@ export default function Roadmap() {
         <motion.div variants={fadeUp} className="space-y-3 pt-2">
           <div className="flex items-center gap-2">
             <StateLabel variant={progress >= 80 ? "stable" : progress > 0 ? "evolving" : "active"} label={progress >= 80 ? "On Track" : progress > 0 ? "In Progress" : "Getting Started"} />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Interactive Roadmap Builder</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Interactive Roadmap Builder</span>
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Your path to</p>
-            <h1 className="text-3xl font-bold tracking-tight text-white">{roadmap.targetCareer}</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">{roadmap.targetCareer}</h1>
           </div>
 
           {/* Personalization context */}
@@ -515,9 +515,9 @@ export default function Roadmap() {
               </SystemCardHeader>
               <SystemCardContent className="pt-2">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl font-bold font-mono text-white">{progress}%</span>
+                  <span className="text-2xl font-bold font-mono text-foreground">{progress}%</span>
                 </div>
-                <div className="w-full bg-white/[0.04] rounded-full h-2">
+                <div className="w-full bg-primary/3 rounded-full h-2">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}

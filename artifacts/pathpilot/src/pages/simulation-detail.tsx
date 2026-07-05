@@ -63,28 +63,28 @@ export default function SimulationDetail() {
       {/* Title block */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white/[0.05] text-zinc-400">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-primary/5 text-muted-foreground">
             {simulation.careerCategory}
           </span>
           <StateLabel variant={difficultyState(simulation.difficulty)} />
         </div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">{simulation.title}</h1>
-        <p className="text-zinc-400 text-base">{simulation.tagline}</p>
+        <h1 className="text-3xl font-bold text-foreground tracking-tight">{simulation.title}</h1>
+        <p className="text-muted-foreground text-base">{simulation.tagline}</p>
       </div>
 
       {/* Stats row */}
-      <div className="flex items-center gap-6 py-4 border-y border-white/[0.06]">
-        <div className="flex items-center gap-2 text-sm text-zinc-300">
+      <div className="flex items-center gap-6 py-4 border-y border-border/40">
+        <div className="flex items-center gap-2 text-sm text-foreground">
           <Clock className="w-4 h-4 text-primary" />
           <span className="font-medium">{simulation.estimatedMinutes} mins</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-zinc-300">
+        <div className="flex items-center gap-2 text-sm text-foreground">
           <BarChart className="w-4 h-4 text-primary" />
           <span className="font-medium capitalize">{simulation.difficulty}</span>
         </div>
-        <div className="flex items-center gap-2 text-sm text-zinc-300">
+        <div className="flex items-center gap-2 text-sm text-foreground">
           <Zap className="w-4 h-4 text-primary" />
-          <span className="font-mono text-xs bg-white/[0.05] px-2 py-1 rounded">{simulation.stages} Stages</span>
+          <span className="font-mono text-xs bg-primary/5 px-2 py-1 rounded">{simulation.stages} Stages</span>
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export default function SimulationDetail() {
           <SystemCardTitle>About this simulation</SystemCardTitle>
         </SystemCardHeader>
         <SystemCardContent>
-          <p className="text-sm text-zinc-400 leading-relaxed whitespace-pre-wrap">
+          <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
             {simulation.description}
           </p>
         </SystemCardContent>
@@ -111,7 +111,7 @@ export default function SimulationDetail() {
             {simulation.skills.map((skill) => (
               <span
                 key={skill}
-                className="text-xs border border-white/[0.08] px-3 py-1.5 rounded-lg text-zinc-300"
+                className="text-xs border border-white/[0.08] px-3 py-1.5 rounded-lg text-foreground"
               >
                 {skill}
               </span>

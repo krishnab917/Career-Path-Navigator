@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -67,102 +67,55 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Base Light Mode - Not really used as PathPilot is naturally dark, but provided for completeness */
+/* PATHPILOT LIGHT MODE - Clean White/Light Blue "Resilience" Theme */
 :root {
-  --background: 220 50% 98%;
-  --foreground: 220 50% 5%;
-  --border: 220 20% 90%;
-  --input: 220 20% 90%;
-  --ring: 255 85% 65%;
+  --background: 210 40% 98%;        /* Very light blue-tinted white */
+  --foreground: 210 20% 15%;        /* Deep blue-gray text */
+  --border: 210 30% 90%;            /* Soft light blue border */
+  --input: 210 30% 95%;             /* Very light blue input */
+  --ring: 210 100% 50%;             /* Bright blue focus ring */
 
-  --card: 0 0% 100%;
-  --card-foreground: 220 50% 5%;
-  --card-border: 220 20% 90%;
+  --card: 0 0% 100%;                /* Pure white cards */
+  --card-foreground: 210 20% 15%;   /* Deep blue-gray text */
+  --card-border: 210 30% 88%;       /* Soft light blue border */
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 220 50% 5%;
-  --popover-border: 220 20% 90%;
+  --popover: 0 0% 100%;             /* Pure white popover */
+  --popover-foreground: 210 20% 15%;
+  --popover-border: 210 30% 88%;
 
-  --primary: 255 85% 65%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 210 100% 50%;          /* Bright, confident blue */
+  --primary-foreground: 0 0% 100%;  /* White text on primary */
 
-  --secondary: 220 20% 90%;
-  --secondary-foreground: 220 50% 5%;
+  --secondary: 210 30% 92%;         /* Light blue secondary */
+  --secondary-foreground: 210 20% 15%;
 
-  --muted: 220 20% 94%;
-  --muted-foreground: 220 20% 40%;
+  --muted: 210 20% 92%;             /* Light muted gray-blue */
+  --muted-foreground: 210 20% 45%;  /* Medium gray-blue text */
 
-  --accent: 220 20% 94%;
-  --accent-foreground: 220 50% 5%;
+  --accent: 210 100% 50%;           /* Same as primary for consistency */
+  --accent-foreground: 0 0% 100%;
 
-  --destructive: 0 84% 60%;
+  --destructive: 0 84% 60%;         /* Red for errors */
   --destructive-foreground: 0 0% 100%;
 
-  --sidebar: 0 0% 100%;
-  --sidebar-foreground: 220 50% 5%;
-  --sidebar-border: 220 20% 90%;
-  --sidebar-primary: 255 85% 65%;
+  --sidebar: 210 40% 96%;           /* Very light blue sidebar */
+  --sidebar-foreground: 210 20% 15%;
+  --sidebar-border: 210 30% 88%;
+  --sidebar-primary: 210 100% 50%;  /* Bright blue */
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 220 20% 94%;
-  --sidebar-accent-foreground: 220 50% 5%;
-  --sidebar-ring: 255 85% 65%;
+  --sidebar-accent: 210 30% 92%;
+  --sidebar-accent-foreground: 210 20% 15%;
+  --sidebar-ring: 210 100% 50%;
 
-  --chart-1: 255 85% 65%;
-  --chart-2: 190 90% 50%;
-  --chart-3: 160 80% 40%;
-  --chart-4: 30 80% 55%;
-  --chart-5: 340 80% 60%;
+  --chart-1: 210 100% 50%;          /* Blue */
+  --chart-2: 190 100% 45%;          /* Cyan */
+  --chart-3: 160 100% 45%;          /* Teal */
+  --chart-4: 30 100% 50%;           /* Orange */
+  --chart-5: 340 100% 50%;          /* Pink */
 
   --app-font-sans: 'Outfit', sans-serif;
   --app-font-mono: 'Space Mono', monospace;
   --radius: 0.5rem;
-}
-
-/* PATHPILOT DARK MODE - Deep Navy with Vivid Indigo Accents */
-.dark {
-  --background: 220 50% 4%; /* #050a14 */
-  --foreground: 220 20% 98%;
-  --border: 220 30% 14%;
-  --input: 220 30% 14%;
-  --ring: 255 85% 65%;
-
-  --card: 220 45% 6%;
-  --card-foreground: 220 20% 98%;
-  --card-border: 220 30% 14%;
-
-  --popover: 220 45% 6%;
-  --popover-foreground: 220 20% 98%;
-  --popover-border: 220 30% 14%;
-
-  --primary: 255 85% 65%; /* #8b5cf6 -> more vivid -> #9d4edd approx */
-  --primary-foreground: 0 0% 100%;
-
-  --secondary: 220 30% 12%;
-  --secondary-foreground: 220 20% 98%;
-
-  --muted: 220 30% 12%;
-  --muted-foreground: 220 20% 60%;
-
-  --accent: 255 85% 65%;
-  --accent-foreground: 0 0% 100%;
-
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-
-  --sidebar: 220 50% 3%;
-  --sidebar-foreground: 220 20% 98%;
-  --sidebar-border: 220 30% 14%;
-  --sidebar-primary: 255 85% 65%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 220 30% 12%;
-  --sidebar-accent-foreground: 220 20% 98%;
-  --sidebar-ring: 255 85% 65%;
-
-  --chart-1: 255 85% 65%;
-  --chart-2: 190 90% 50%;
-  --chart-3: 160 80% 40%;
-  --chart-4: 30 80% 55%;
-  --chart-5: 340 80% 60%;
 }
 
 @layer base {
@@ -171,13 +124,18 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-primary/30;
+    @apply font-sans antialiased bg-background text-foreground selection:bg-primary/20;
   }
 }
 
-/* Grid overlay pattern */
+/* Light gradient background pattern for subtle visual interest */
+.bg-light-gradient {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 50%, #f0f7ff 100%);
+}
+
+/* Grid overlay pattern - subtle light blue */
 .bg-grid-pattern {
   background-size: 40px 40px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(210, 230, 255, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(210, 230, 255, 0.3) 1px, transparent 1px);
 }

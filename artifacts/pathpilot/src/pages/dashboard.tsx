@@ -71,11 +71,11 @@ function SparkCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: seed * 0.06 }}
-      className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0d0d0d] flex flex-col"
+      className="relative overflow-hidden rounded-2xl border border-border/40 bg-card flex flex-col"
     >
       <div className="p-4 pb-2 flex-1">
         <div className="flex items-start justify-between mb-2">
-          <div className="flex items-center gap-2 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
             <Icon className="w-3.5 h-3.5" style={{ color }} />
             {label}
           </div>
@@ -94,9 +94,9 @@ function SparkCard({
             </div>
           )}
         </div>
-        <div className="text-3xl font-bold tracking-tight text-white font-mono mb-0.5">{value}</div>
-        {sub && <div className="text-[11px] text-zinc-600">{sub}</div>}
-        {deltaLabel && <div className="text-[11px] text-zinc-500 mt-1">{deltaLabel}</div>}
+        <div className="text-3xl font-bold tracking-tight text-foreground font-mono mb-0.5">{value}</div>
+        {sub && <div className="text-[11px] text-muted-foreground">{sub}</div>}
+        {deltaLabel && <div className="text-[11px] text-muted-foreground mt-1">{deltaLabel}</div>}
       </div>
       <div className="h-12 w-full">
         <ResponsiveContainer width="100%" height="100%">
@@ -144,7 +144,7 @@ function SessionRow({
       initial={{ opacity: 0, x: -8 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3, delay: index * 0.07 }}
-      className="flex items-center justify-between py-3 border-b border-white/[0.04] last:border-0 group"
+      className="flex items-center justify-between py-3 border-b border-border/40 last:border-0 group"
     >
       <div className="flex items-center gap-3 min-w-0">
         <div
@@ -159,10 +159,10 @@ function SessionRow({
           )}
         </div>
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-white truncate">
+          <p className="text-sm font-semibold text-foreground truncate">
             {session.simulationTitle || "Simulation"}
           </p>
-          <p className="text-xs text-zinc-500 mt-0.5 capitalize">
+          <p className="text-xs text-muted-foreground mt-0.5 capitalize">
             {isCompleted ? `Completed · Score ${session.score}` : "In progress"}
           </p>
         </div>
@@ -176,7 +176,7 @@ function SessionRow({
         )}
         {isCompleted ? (
           <Link href={`/analysis/${session.id}`}>
-            <button className="text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1 group-hover:text-primary">
+            <button className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group-hover:text-primary">
               View <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </Link>
@@ -201,7 +201,7 @@ export default function Dashboard() {
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-center space-y-3">
           <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mx-auto" />
-          <p className="text-xs font-mono text-zinc-600 uppercase tracking-widest">Loading dashboard…</p>
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Loading dashboard…</p>
         </div>
       </div>
     );
@@ -234,12 +234,12 @@ export default function Dashboard() {
           <div className="flex items-center gap-2 mb-2">
             <StateLabel variant={systemState} label={systemState === "stable" ? "Career Stable" : "Building Profile"} />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">PathPilot Dashboard</h1>
-          <p className="text-zinc-500 mt-1 text-sm">Your career intelligence at a glance</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">PathPilot Dashboard</h1>
+          <p className="text-muted-foreground mt-1 text-sm">Your career intelligence at a glance</p>
         </div>
         <button
           onClick={() => refetch()}
-          className="flex items-center gap-2 text-xs text-zinc-500 hover:text-white transition-colors border border-white/[0.06] rounded-lg px-3 py-2 hover:border-white/20"
+          className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors border border-border/40 rounded-lg px-3 py-2 hover:border-white/20"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           Refresh
@@ -356,14 +356,14 @@ export default function Dashboard() {
           </SystemCardHeader>
           <SystemCardContent className="pt-2">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-2xl font-bold font-mono text-white">{roadmap}%</span>
+              <span className="text-2xl font-bold font-mono text-foreground">{roadmap}%</span>
               <Link href="/roadmap">
                 <button className="text-sm text-primary hover:text-primary/80 flex items-center gap-1.5 transition-colors font-medium">
                   View Roadmap <ChevronRight className="w-4 h-4" />
                 </button>
               </Link>
             </div>
-            <div className="w-full bg-white/[0.04] rounded-full h-2">
+            <div className="w-full bg-primary/3 rounded-full h-2">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${roadmap}%` }}
@@ -373,8 +373,8 @@ export default function Dashboard() {
               />
             </div>
             <div className="flex justify-between mt-2">
-              <span className="text-[11px] text-zinc-600">Foundation</span>
-              <span className="text-[11px] text-zinc-600">Career Ready</span>
+              <span className="text-[11px] text-muted-foreground">Foundation</span>
+              <span className="text-[11px] text-muted-foreground">Career Ready</span>
             </div>
           </SystemCardContent>
         </SystemCard>
@@ -400,8 +400,8 @@ export default function Dashboard() {
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
                     <Zap className="w-5 h-5 text-primary/60" />
                   </div>
-                  <p className="text-sm font-medium text-zinc-400 mb-1">No sessions yet</p>
-                  <p className="text-xs text-zinc-600 mb-4">
+                  <p className="text-sm font-medium text-muted-foreground mb-1">No sessions yet</p>
+                  <p className="text-xs text-muted-foreground mb-4">
                     Start a simulation to see your results here.
                   </p>
                   <Link href="/simulations">
@@ -418,7 +418,7 @@ export default function Dashboard() {
             </SystemCardContent>
             <SystemCardActions className="justify-start">
               <Link href="/simulations">
-                <button className="text-xs text-zinc-500 hover:text-white transition-colors flex items-center gap-1">
+                <button className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
                   All simulations <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </Link>
@@ -440,42 +440,42 @@ export default function Dashboard() {
             </SystemCardHeader>
             <SystemCardContent className="flex flex-col gap-3">
               <Link href="/simulations" className="block">
-                <div className="rounded-xl border border-white/[0.06] hover:border-primary/30 p-4 transition-all hover:bg-primary/5 cursor-pointer group">
+                <div className="rounded-xl border border-border/40 hover:border-primary/30 p-4 transition-all hover:bg-primary/5 cursor-pointer group">
                   <div className="flex items-center gap-3 mb-1.5">
                     <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Zap className="w-3.5 h-3.5 text-primary" />
                     </div>
-                    <p className="font-semibold text-white text-sm">Run Simulation</p>
+                    <p className="font-semibold text-foreground text-sm">Run Simulation</p>
                   </div>
-                  <p className="text-xs text-zinc-500 leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     Real incidents, real stakes.
                   </p>
                 </div>
               </Link>
 
               <Link href="/roadmap" className="block">
-                <div className="rounded-xl border border-white/[0.06] hover:border-violet-500/30 p-4 transition-all hover:bg-violet-500/5 cursor-pointer group">
+                <div className="rounded-xl border border-border/40 hover:border-violet-500/30 p-4 transition-all hover:bg-violet-500/5 cursor-pointer group">
                   <div className="flex items-center gap-3 mb-1.5">
                     <div className="w-7 h-7 rounded-lg bg-violet-500/10 flex items-center justify-center flex-shrink-0">
                       <TrendingUp className="w-3.5 h-3.5 text-violet-400" />
                     </div>
-                    <p className="font-semibold text-white text-sm">Build Roadmap</p>
+                    <p className="font-semibold text-foreground text-sm">Build Roadmap</p>
                   </div>
-                  <p className="text-xs text-zinc-500 leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     Accept AI milestones or add your own.
                   </p>
                 </div>
               </Link>
 
               <Link href="/opportunities" className="block">
-                <div className="rounded-xl border border-white/[0.06] hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5 cursor-pointer group">
+                <div className="rounded-xl border border-border/40 hover:border-emerald-500/30 p-4 transition-all hover:bg-emerald-500/5 cursor-pointer group">
                   <div className="flex items-center gap-3 mb-1.5">
                     <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
                       <Briefcase className="w-3.5 h-3.5 text-emerald-400" />
                     </div>
-                    <p className="font-semibold text-white text-sm">Explore Opportunities</p>
+                    <p className="font-semibold text-foreground text-sm">Explore Opportunities</p>
                   </div>
-                  <p className="text-xs text-zinc-500 leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     Scholarships, programs, and internships.
                   </p>
                 </div>

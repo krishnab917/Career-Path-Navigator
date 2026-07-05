@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 // ─── StateLabel ───────────────────────────────────────────────────────────────
-// Cheap, powerful UI badge that creates "system intelligence" feel.
+// Status badge component for light mode aesthetic.
 // Used on simulation cards, scenario headers, and opportunity cards.
 
 export type StateLabelVariant =
@@ -25,52 +25,52 @@ const VARIANTS: Record<
   { dot: string; text: string; bg: string; border: string; defaultLabel: string }
 > = {
   stable: {
-    dot: "bg-emerald-400",
-    text: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
+    dot: "bg-emerald-500",
+    text: "text-emerald-700",
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
     defaultLabel: "Stable",
   },
   evolving: {
-    dot: "bg-amber-400",
-    text: "text-amber-400",
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/20",
+    dot: "bg-amber-500",
+    text: "text-amber-700",
+    bg: "bg-amber-50",
+    border: "border-amber-200",
     defaultLabel: "Evolving",
   },
   "high-risk": {
-    dot: "bg-red-400",
-    text: "text-red-400",
-    bg: "bg-red-500/10",
-    border: "border-red-500/20",
+    dot: "bg-red-500",
+    text: "text-red-700",
+    bg: "bg-red-50",
+    border: "border-red-200",
     defaultLabel: "High Risk",
   },
   "time-pressure": {
-    dot: "bg-orange-400 animate-pulse",
-    text: "text-orange-400",
-    bg: "bg-orange-500/10",
-    border: "border-orange-500/20",
+    dot: "bg-orange-500 animate-pulse",
+    text: "text-orange-700",
+    bg: "bg-orange-50",
+    border: "border-orange-200",
     defaultLabel: "Time Pressure",
   },
   active: {
-    dot: "bg-indigo-400 animate-pulse",
-    text: "text-indigo-400",
-    bg: "bg-indigo-500/10",
-    border: "border-indigo-500/20",
+    dot: "bg-blue-500 animate-pulse",
+    text: "text-blue-700",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
     defaultLabel: "Active",
   },
   completed: {
-    dot: "bg-emerald-400",
-    text: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
+    dot: "bg-emerald-500",
+    text: "text-emerald-700",
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
     defaultLabel: "Completed",
   },
   locked: {
-    dot: "bg-zinc-500",
-    text: "text-zinc-500",
-    bg: "bg-zinc-500/10",
-    border: "border-zinc-500/20",
+    dot: "bg-gray-400",
+    text: "text-gray-600",
+    bg: "bg-gray-100",
+    border: "border-gray-200",
     defaultLabel: "Locked",
   },
 };

@@ -70,8 +70,8 @@ export default function Opportunities() {
         <div className="flex items-center gap-2 text-xs font-medium text-primary uppercase tracking-widest">
           <Sparkles className="w-3.5 h-3.5" /> Personalized for you
         </div>
-        <h1 className="text-3xl font-bold tracking-tight text-white">Opportunities</h1>
-        <p className="text-zinc-500 text-sm">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Opportunities</h1>
+        <p className="text-muted-foreground text-sm">
           Curated programs, internships, and competitions matched to your career analysis
           {location ? ` and your location in ${location}` : ""}.
         </p>
@@ -99,7 +99,7 @@ export default function Opportunities() {
             onClick={() => setCategory(cat.value)}
             className={`text-xs font-semibold px-4 py-2 rounded-full transition-all border ${
               category === cat.value
-                ? "bg-primary text-white border-primary"
+                ? "bg-primary text-foreground border-primary"
                 : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground bg-transparent"
             }`}
           >
@@ -112,7 +112,7 @@ export default function Opportunities() {
       {isLoading ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-56 rounded-2xl bg-white/[0.03] border border-white/[0.05] animate-pulse" />
+            <div key={i} className="h-56 rounded-2xl bg-primary/5 border border-border/40 animate-pulse" />
           ))}
         </div>
       ) : (
@@ -127,7 +127,7 @@ export default function Opportunities() {
                   badge={<StateLabel variant={difficultyToState(opp.difficulty)} />}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.05] text-zinc-400">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/5 text-muted-foreground">
                       {CATEGORY_LABELS[opp.category] ?? opp.category}
                     </span>
                   </div>
@@ -139,14 +139,14 @@ export default function Opportunities() {
                   {/* Match score */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-zinc-500 font-medium">Relevance match</span>
+                      <span className="text-muted-foreground font-medium">Relevance match</span>
                       <span className="font-mono font-bold text-primary">{opp.relevanceScore}%</span>
                     </div>
                     <Progress value={opp.relevanceScore} className="h-1.5" />
-                    <p className="text-[11px] text-zinc-500 italic">{opp.whyItMatches}</p>
+                    <p className="text-[11px] text-muted-foreground italic">{opp.whyItMatches}</p>
                   </div>
 
-                  <p className="text-sm text-zinc-400 line-clamp-2">{opp.description}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{opp.description}</p>
                 </SystemCardContent>
 
                 <SystemCardMeta>
@@ -168,12 +168,12 @@ export default function Opportunities() {
                 <SystemCardActions>
                   {opp.url ? (
                     <a href={opp.url} target="_blank" rel="noreferrer" className="flex-1">
-                      <button className="flex items-center justify-center gap-2 w-full py-2 rounded-xl border border-white/[0.08] text-sm font-semibold text-white hover:bg-white/[0.04] hover:border-primary/30 transition-all">
+                      <button className="flex items-center justify-center gap-2 w-full py-2 rounded-xl border border-white/[0.08] text-sm font-semibold text-foreground hover:bg-primary/3 hover:border-primary/30 transition-all">
                         Apply now <ExternalLink className="w-3.5 h-3.5" />
                       </button>
                     </a>
                   ) : (
-                    <div className="flex-1 py-2 rounded-xl bg-white/[0.03] text-sm font-semibold text-zinc-600 text-center">
+                    <div className="flex-1 py-2 rounded-xl bg-primary/5 text-sm font-semibold text-muted-foreground text-center">
                       Applications closed
                     </div>
                   )}
@@ -183,7 +183,7 @@ export default function Opportunities() {
           ))}
 
           {opportunities?.length === 0 && (
-            <div className="col-span-full flex flex-col items-center justify-center py-20 text-center text-zinc-500 gap-3">
+            <div className="col-span-full flex flex-col items-center justify-center py-20 text-center text-muted-foreground gap-3">
               <p className="text-base font-medium">No opportunities in this category yet.</p>
               <p className="text-sm">Try a different filter or check back soon.</p>
             </div>
@@ -205,7 +205,7 @@ export default function Opportunities() {
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-6 py-2 rounded-xl bg-primary text-white font-semibold text-sm"
+                className="flex items-center gap-2 px-6 py-2 rounded-xl bg-primary text-foreground font-semibold text-sm"
               >
                 View my roadmap <ArrowRight className="w-4 h-4" />
               </motion.button>

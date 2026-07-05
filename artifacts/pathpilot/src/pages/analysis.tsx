@@ -40,7 +40,7 @@ export default function Analysis() {
         <div className="flex items-center justify-center gap-2">
           <StateLabel variant="completed" label="Simulation Complete" />
         </div>
-        <h1 className="text-3xl font-bold tracking-tight text-white">Your career analysis</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Your career analysis</h1>
         <p className="text-muted-foreground max-w-xl mx-auto">
           Based on your decisions and behavioral patterns across all stages of the simulation.
         </p>
@@ -156,7 +156,7 @@ export default function Analysis() {
               <motion.button
                 whileHover={{ scale: 1.03, boxShadow: "0 0 40px rgba(139,92,246,0.4)" }}
                 whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-foreground font-semibold text-sm"
                 style={{ boxShadow: "0 0 25px rgba(139,92,246,0.3)" }}
               >
                 Explore opportunities <ArrowRight className="w-4 h-4" />

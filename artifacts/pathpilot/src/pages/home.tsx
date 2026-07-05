@@ -59,30 +59,30 @@ function SimulationPreview() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Live Scenario</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Live Scenario</p>
         <StateLabel variant="time-pressure" label="Time Pressure" />
       </div>
-      <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-        <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Situation Briefing</p>
-        <h3 className="text-sm font-bold text-white mb-2">Market Downturn Response</h3>
-        <p className="text-zinc-400 text-xs leading-relaxed">
+      <div className="bg-primary/5 border border-border/40 rounded-xl p-4">
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">Situation Briefing</p>
+        <h3 className="text-sm font-bold text-foreground mb-2">Market Downturn Response</h3>
+        <p className="text-muted-foreground text-xs leading-relaxed">
           Your startup's funding is cut by 40%. Your team is waiting for direction.
         </p>
       </div>
       <div className="space-y-2">
-        <p className="text-[10px] uppercase tracking-widest text-zinc-500">Select your course of action</p>
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Select your course of action</p>
         {decisions.map((d) => (
           <div
             key={d.id}
-            className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-3 flex items-start justify-between gap-3"
+            className="bg-primary/3 border border-border/40 rounded-xl p-3 flex items-start justify-between gap-3"
           >
             <div className="flex items-start gap-2 flex-1">
-              <div className="w-5 h-5 rounded-md bg-white/[0.06] flex items-center justify-center text-[10px] font-bold text-zinc-500 flex-shrink-0 mt-0.5">
+              <div className="w-5 h-5 rounded-md bg-primary/5 flex items-center justify-center text-[10px] font-bold text-muted-foreground flex-shrink-0 mt-0.5">
                 {d.id}
               </div>
               <div>
-                <p className="text-xs font-medium text-zinc-200">{d.action}</p>
-                <p className="text-[11px] text-zinc-500 mt-0.5">{d.consequence}</p>
+                <p className="text-xs font-medium text-foreground">{d.action}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{d.consequence}</p>
               </div>
             </div>
             <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded-full border flex-shrink-0 ${riskColors[d.risk]}`}>
@@ -107,29 +107,29 @@ function ResultsPreview() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Analysis Output</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Analysis Output</p>
         <StateLabel variant="completed" label="Completed" />
       </div>
-      <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-        <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-3">Career Match</p>
+      <div className="bg-primary/5 border border-border/40 rounded-xl p-4">
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-3">Career Match</p>
         <div className="flex items-end gap-3">
           <div>
-            <p className="text-xl font-bold text-white">Software Engineer</p>
-            <p className="text-zinc-500 text-xs mt-1">92% compatibility based on your decisions</p>
+            <p className="text-xl font-bold text-foreground">Software Engineer</p>
+            <p className="text-muted-foreground text-xs mt-1">92% compatibility based on your decisions</p>
           </div>
           <div className="ml-auto text-3xl font-bold text-indigo-400">92%</div>
         </div>
       </div>
-      <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-        <p className="text-[10px] uppercase tracking-widest text-zinc-500 mb-4">Trait Profile</p>
+      <div className="bg-primary/5 border border-border/40 rounded-xl p-4">
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-4">Trait Profile</p>
         <div className="space-y-3">
           {traits.map((trait) => (
             <div key={trait.name}>
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-white font-medium">{trait.name}</span>
-                <span className="text-[11px] text-zinc-500 font-mono">{trait.value}%</span>
+                <span className="text-xs text-foreground font-medium">{trait.name}</span>
+                <span className="text-[11px] text-muted-foreground font-mono">{trait.value}%</span>
               </div>
-              <div className="w-full bg-white/[0.05] rounded-full h-1.5 overflow-hidden">
+              <div className="w-full bg-primary/5 rounded-full h-1.5 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${trait.value}%` }}
@@ -154,7 +154,7 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 0.15], [0, -80]);
 
   return (
-    <div ref={containerRef} className="relative bg-slate-950 text-white overflow-hidden">
+    <div ref={containerRef} className="relative bg-white text-foreground overflow-hidden">
 
       {/* ── Navigation ───────────────────────────────────────────────────── */}
       <motion.nav
@@ -163,14 +163,14 @@ export default function Home() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 h-14"
         style={{
-          background: "rgba(15, 23, 42, 0.85)",
+          background: "rgba(255, 255, 255, 0.9)",
           backdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(99, 102, 241, 0.1)",
+          borderBottom: "1px solid rgba(210, 230, 255, 0.5)",
         }}
       >
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-            <Zap className="w-4 h-4 text-white" />
+            <Zap className="w-4 h-4 text-foreground" />
           </div>
           <span className="font-bold text-[15px] tracking-tight">PathPilot</span>
         </div>
@@ -184,7 +184,7 @@ export default function Home() {
             <a
               key={item.label}
               href={item.href}
-              className="text-sm text-slate-400 hover:text-indigo-300 transition-colors duration-200"
+              className="text-sm text-muted-foreground hover:text-indigo-300 transition-colors duration-200"
             >
               {item.label}
             </a>
@@ -195,7 +195,7 @@ export default function Home() {
           <motion.button
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-500 transition-colors duration-200"
+            className="px-4 py-2 rounded-lg bg-indigo-600 text-foreground text-sm font-medium hover:bg-indigo-500 transition-colors duration-200"
           >
             Launch
           </motion.button>
@@ -242,7 +242,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.8 }}
-            className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Experience realistic career scenarios. Make high-stakes decisions. Receive behavioral
             analysis based on your actual choices — not preferences.
@@ -259,7 +259,7 @@ export default function Home() {
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(99, 102, 241, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-[15px] transition-all duration-200 shadow-lg"
+                className="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-foreground font-semibold text-[15px] transition-all duration-200 shadow-lg"
               >
                 Start Simulation
                 <ArrowRight className="w-4 h-4" />
@@ -268,7 +268,7 @@ export default function Home() {
             <a href="#how-it-works">
               <motion.button
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(99, 102, 241, 0.15)" }}
-                className="px-8 py-4 rounded-lg border border-slate-700 text-white font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
+                className="px-8 py-4 rounded-lg border border-border text-foreground font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
               >
                 How it works
               </motion.button>
@@ -284,17 +284,17 @@ export default function Home() {
           >
             <div>
               <div className="text-3xl font-bold text-indigo-400">2,400+</div>
-              <p className="text-sm text-slate-500 mt-1">Students simulated</p>
+              <p className="text-sm text-muted-foreground mt-1">Students simulated</p>
             </div>
             <div className="hidden md:block w-px h-12 bg-slate-700" />
             <div>
               <div className="text-3xl font-bold text-indigo-400">94%</div>
-              <p className="text-sm text-slate-500 mt-1">Would recommend</p>
+              <p className="text-sm text-muted-foreground mt-1">Would recommend</p>
             </div>
             <div className="hidden md:block w-px h-12 bg-slate-700" />
             <div>
               <div className="text-3xl font-bold text-indigo-400">18 min</div>
-              <p className="text-sm text-slate-500 mt-1">Average completion</p>
+              <p className="text-sm text-muted-foreground mt-1">Average completion</p>
             </div>
           </motion.div>
         </div>
@@ -312,9 +312,9 @@ export default function Home() {
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">The Problem</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
               Career choices are made{" "}
-              <span className="text-slate-500">without lived experience.</span>
+              <span className="text-muted-foreground">without lived experience.</span>
             </h2>
-            <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
               Students spend years preparing for futures they've never experienced. They choose based
               on salary expectations, parental pressure, or social media — not on how they actually
               perform under real constraints.
@@ -348,14 +348,14 @@ export default function Home() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="bg-slate-900/50 border border-slate-800/50 rounded-2xl p-6 hover:bg-slate-900/70 transition-colors"
+                className="bg-white/50 border border-border/50 rounded-2xl p-6 hover:bg-white/70 transition-colors"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="text-4xl font-bold text-indigo-400">{item.stat}</div>
                   <StateLabel variant={item.state} />
                 </div>
-                <p className="text-white font-semibold text-sm mb-2">{item.label}</p>
-                <p className="text-slate-500 text-xs leading-relaxed">{item.detail}</p>
+                <p className="text-foreground font-semibold text-sm mb-2">{item.label}</p>
+                <p className="text-muted-foreground text-xs leading-relaxed">{item.detail}</p>
               </motion.div>
             ))}
           </div>
@@ -376,7 +376,7 @@ export default function Home() {
           >
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Process</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              4 steps to <span className="text-slate-500">career clarity.</span>
+              4 steps to <span className="text-muted-foreground">career clarity.</span>
             </h2>
           </motion.div>
 
@@ -392,17 +392,17 @@ export default function Home() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="bg-slate-900/30 border border-slate-800/50 rounded-2xl p-6 hover:border-indigo-500/30 transition-colors duration-300 group"
+                className="bg-white/30 border border-border/50 rounded-2xl p-6 hover:border-indigo-500/30 transition-colors duration-300 group"
               >
                 <div className="flex items-start gap-5">
                   <div className="text-3xl font-bold text-indigo-500/40 group-hover:text-indigo-500/60 transition-colors font-mono">
                     {item.step}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-base font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">
+                    <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-indigo-300 transition-colors">
                       {item.title}
                     </h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               </motion.div>
@@ -423,7 +423,7 @@ export default function Home() {
           >
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Example</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              Inside a <span className="text-slate-500">career simulation.</span>
+              Inside a <span className="text-muted-foreground">career simulation.</span>
             </h2>
           </motion.div>
 
@@ -434,7 +434,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-24"
             >
-              <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl p-6">
+              <div className="bg-white/40 border border-border/50 rounded-2xl p-6">
                 <SimulationPreview />
               </div>
             </motion.div>
@@ -450,18 +450,18 @@ export default function Home() {
                   <Brain className="w-3.5 h-3.5 text-indigo-400" />
                   <span className="text-xs text-indigo-300 font-medium">Behavioral Analysis</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">
+                <h3 className="text-2xl font-bold text-foreground mb-3">
                   You're not answering a quiz.
                 </h3>
-                <p className="text-slate-400 leading-relaxed text-sm">
+                <p className="text-muted-foreground leading-relaxed text-sm">
                   Every decision you make in a simulation is analyzed against thousands of data
                   points. The system doesn't ask "What do you prefer?" It observes "How did you
                   actually decide?"
                 </p>
               </div>
 
-              <div className="border-t border-slate-700/50 pt-6">
-                <h4 className="text-base font-bold text-white mb-4">What we measure:</h4>
+              <div className="border-t border-border/50 pt-6">
+                <h4 className="text-base font-bold text-foreground mb-4">What we measure:</h4>
                 <ul className="space-y-3">
                   {[
                     "Risk tolerance in high-pressure decisions",
@@ -469,7 +469,7 @@ export default function Home() {
                     "Leadership style under uncertainty",
                     "Creative vs. systematic problem-solving",
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-slate-400 text-sm">
+                    <li key={i} className="flex items-center gap-3 text-muted-foreground text-sm">
                       <div className="w-2 h-2 rounded-full bg-indigo-400 flex-shrink-0" />
                       {item}
                     </li>
@@ -492,7 +492,7 @@ export default function Home() {
           >
             <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Outcomes</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              Your career <span className="text-slate-500">blueprint.</span>
+              Your career <span className="text-muted-foreground">blueprint.</span>
             </h2>
           </motion.div>
 
@@ -508,16 +508,16 @@ export default function Home() {
                   <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
                   <span className="text-xs text-indigo-300 font-medium">Results-Driven</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">
+                <h3 className="text-2xl font-bold text-foreground mb-3">
                   Data-backed career recommendations.
                 </h3>
-                <p className="text-slate-400 leading-relaxed text-sm">
+                <p className="text-muted-foreground leading-relaxed text-sm">
                   No generic personality types. No vague percentages. You get ranked career matches
                   based on how you actually performed in realistic scenarios.
                 </p>
               </div>
-              <div className="border-t border-slate-700/50 pt-6">
-                <h4 className="text-base font-bold text-white mb-4">You'll receive:</h4>
+              <div className="border-t border-border/50 pt-6">
+                <h4 className="text-base font-bold text-foreground mb-4">You'll receive:</h4>
                 <div className="space-y-3">
                   {[
                     "Top 5 career matches ranked by fit",
@@ -525,7 +525,7 @@ export default function Home() {
                     "Personalized learning roadmap",
                     "Internship & project recommendations",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 text-slate-400 text-sm">
+                    <div key={i} className="flex items-center gap-3 text-muted-foreground text-sm">
                       <CheckCircle className="w-4 h-4 text-indigo-400 flex-shrink-0" />
                       {item}
                     </div>
@@ -540,7 +540,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-24"
             >
-              <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl p-6">
+              <div className="bg-white/40 border border-border/50 rounded-2xl p-6">
                 <ResultsPreview />
               </div>
             </motion.div>
@@ -558,8 +558,8 @@ export default function Home() {
             className="relative rounded-2xl overflow-hidden p-12 md:p-16"
             style={{
               background:
-                "radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 60%), rgba(99, 102, 241, 0.05)",
-              border: "1px solid rgba(99, 102, 241, 0.2)",
+                "radial-gradient(circle at 50% 0%, rgba(210, 230, 255, 0.6) 0%, transparent 60%), rgba(99, 102, 241, 0.05)",
+              border: "1px solid rgba(210, 230, 255, 0.6)",
             }}
           >
             <motion.div
@@ -573,9 +573,9 @@ export default function Home() {
                 <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
                   your career fit
                 </span>
-                <span className="text-slate-500">?</span>
+                <span className="text-muted-foreground">?</span>
               </h2>
-              <p className="text-lg text-slate-400 max-w-xl mx-auto mb-8 leading-relaxed">
+              <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
                 18 minutes. Real scenarios. Data-backed insights. Join 2,400+ students who already
                 know their next move.
               </p>
@@ -584,7 +584,7 @@ export default function Home() {
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(99, 102, 241, 0.5)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-[15px] transition-all duration-200 shadow-lg"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-foreground font-semibold text-[15px] transition-all duration-200 shadow-lg"
                 >
                   Start Simulation
                   <ArrowRight className="w-4 h-4" />
@@ -596,16 +596,16 @@ export default function Home() {
       </Section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className="relative z-10 border-t border-slate-800/50 px-8 md:px-20 py-8">
+      <footer className="relative z-10 border-t border-border/50 px-8 md:px-20 py-8">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-              <Zap className="w-3.5 h-3.5 text-white" />
+              <Zap className="w-3.5 h-3.5 text-foreground" />
             </div>
-            <span className="font-bold text-white text-sm">PathPilot</span>
+            <span className="font-bold text-foreground text-sm">PathPilot</span>
           </div>
-          <p className="text-sm text-slate-500">Career discovery through behavioral simulation.</p>
-          <p className="text-xs text-slate-600">© 2024. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">Career discovery through behavioral simulation.</p>
+          <p className="text-xs text-muted-foreground">© 2024. All rights reserved.</p>
         </div>
       </footer>
     </div>

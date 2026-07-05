@@ -2,9 +2,9 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 // ─── SystemCard ───────────────────────────────────────────────────────────────
-// Unified card primitive for PathPilot.
+// Unified card primitive for PathPilot Light Mode.
+// Clean white/light blue aesthetic with subtle shadows and borders.
 // Enforces: title (high contrast) → description (muted) → action row (bottom-right)
-// Spacing follows the 8px grid: p-4 (16px), gap-2 (8px), gap-4 (16px), gap-6 (24px)
 
 interface SystemCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Visual weight: "default" | "elevated" | "ghost" */
@@ -14,9 +14,9 @@ interface SystemCardProps extends React.HTMLAttributes<HTMLDivElement> {
 const SystemCard = React.forwardRef<HTMLDivElement, SystemCardProps>(
   ({ className, variant = "default", ...props }, ref) => {
     const variants = {
-      default: "border border-white/[0.06] bg-[#0d0d0d]",
-      elevated: "border border-primary/20 bg-primary/5",
-      ghost: "border border-white/[0.03] bg-white/[0.01]",
+      default: "border border-border/60 bg-card hover:border-primary/30 hover:shadow-sm",
+      elevated: "border border-primary/20 bg-gradient-to-br from-primary/5 to-primary/2 shadow-md hover:shadow-lg hover:border-primary/40",
+      ghost: "border border-border/20 bg-white/50",
     };
     return (
       <div
@@ -58,7 +58,7 @@ const SystemCardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn("text-sm font-bold text-white leading-snug tracking-tight", className)}
+      className={cn("text-sm font-bold text-foreground leading-snug tracking-tight", className)}
       {...props}
     />
   )
@@ -70,7 +70,7 @@ const SystemCardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLA
   ({ className, ...props }, ref) => (
     <p
       ref={ref}
-      className={cn("text-xs text-zinc-500 mt-1 leading-relaxed", className)}
+      className={cn("text-xs text-muted-foreground mt-1 leading-relaxed", className)}
       {...props}
     />
   )
@@ -94,7 +94,7 @@ const SystemCardMeta = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex items-center gap-3 text-[11px] text-zinc-600 px-6 pb-2", className)}
+      className={cn("flex items-center gap-3 text-[11px] text-muted-foreground px-6 pb-2", className)}
       {...props}
     />
   )
@@ -107,7 +107,7 @@ const SystemCardActions = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
     <div
       ref={ref}
       className={cn(
-        "flex items-center justify-end gap-2 px-6 py-4 border-t border-white/[0.04]",
+        "flex items-center justify-end gap-2 px-6 py-4 border-t border-border/40",
         className
       )}
       {...props}

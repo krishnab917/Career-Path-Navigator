@@ -32,8 +32,8 @@ export default function Simulations() {
           <Zap className="w-3.5 h-3.5" />
           Simulation Library
         </div>
-        <h1 className="text-3xl font-bold tracking-tight text-white">Simulations</h1>
-        <p className="text-zinc-500 text-sm">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Simulations</h1>
+        <p className="text-muted-foreground text-sm">
           Experience different career paths through realistic, high-stakes scenarios.
         </p>
       </div>
@@ -42,7 +42,7 @@ export default function Simulations() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-56 rounded-2xl bg-white/[0.03] border border-white/[0.05] animate-pulse" />
+            <div key={i} className="h-56 rounded-2xl bg-primary/5 border border-border/40 animate-pulse" />
           ))}
         </div>
       ) : (
@@ -65,7 +65,7 @@ export default function Simulations() {
                   badge={<StateLabel variant={difficultyState(sim.difficulty)} />}
                 >
                   {/* Category chip */}
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.05] text-zinc-400 mb-2">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/5 text-muted-foreground mb-2">
                     {sim.careerCategory}
                   </span>
                   <SystemCardTitle className="text-base">{sim.title}</SystemCardTitle>
@@ -80,7 +80,7 @@ export default function Simulations() {
                     {sim.skills.slice(0, 3).map((skill) => (
                       <span
                         key={skill}
-                        className="text-[11px] border border-white/[0.06] px-2 py-0.5 rounded-md text-zinc-400"
+                        className="text-[11px] border border-border/40 px-2 py-0.5 rounded-md text-muted-foreground"
                       >
                         {skill}
                       </span>
