@@ -42,7 +42,7 @@ export default function Simulations() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-56 rounded-2xl bg-primary/5 border border-border/40 animate-pulse" />
+            <div key={i} className="h-56 rounded-xl bg-primary/4 border border-border/40 animate-pulse" />
           ))}
         </div>
       ) : (
@@ -65,7 +65,7 @@ export default function Simulations() {
                   badge={<StateLabel variant={difficultyState(sim.difficulty)} />}
                 >
                   {/* Category chip */}
-                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/5 text-muted-foreground mb-2">
+                  <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/4 text-muted-foreground mb-2">
                     {sim.careerCategory}
                   </span>
                   <SystemCardTitle className="text-base">{sim.title}</SystemCardTitle>

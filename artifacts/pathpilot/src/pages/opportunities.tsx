@@ -80,7 +80,7 @@ export default function Opportunities() {
             {interests.slice(0, 5).map((interest) => (
               <span
                 key={interest}
-                className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary/80 font-medium capitalize"
+                className="text-xs px-2.5 py-1 rounded-full bg-primary/6 text-primary/80 font-medium capitalize"
               >
                 {interest}
               </span>
@@ -112,14 +112,14 @@ export default function Opportunities() {
       {isLoading ? (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-56 rounded-2xl bg-primary/5 border border-border/40 animate-pulse" />
+            <div key={i} className="h-56 rounded-xl bg-primary/4 border border-border/40 animate-pulse" />
           ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {opportunities?.map((opp, i) => (
             <motion.div key={opp.id} variants={fadeUp} custom={i + 2} whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-              <SystemCard className="h-full hover:border-primary/20 transition-colors group">
+              <SystemCard className="h-full hover:border-primary/30 transition-colors group">
                 {/* Top accent bar */}
                 <div className="h-1 w-0 group-hover:w-full bg-primary/60 transition-all duration-500 flex-shrink-0" />
 
@@ -127,7 +127,7 @@ export default function Opportunities() {
                   badge={<StateLabel variant={difficultyToState(opp.difficulty)} />}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/5 text-muted-foreground">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/4 text-muted-foreground">
                       {CATEGORY_LABELS[opp.category] ?? opp.category}
                     </span>
                   </div>
@@ -173,7 +173,7 @@ export default function Opportunities() {
                       </button>
                     </a>
                   ) : (
-                    <div className="flex-1 py-2 rounded-xl bg-primary/5 text-sm font-semibold text-muted-foreground text-center">
+                    <div className="flex-1 py-2 rounded-xl bg-primary/4 text-sm font-semibold text-muted-foreground text-center">
                       Applications closed
                     </div>
                   )}

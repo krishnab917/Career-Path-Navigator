@@ -51,7 +51,7 @@ export default function Analysis() {
         <motion.div
           variants={fadeUp}
           custom={1}
-          className="md:col-span-2 relative rounded-2xl p-7 overflow-hidden border border-primary/25 bg-primary/5"
+          className="md:col-span-2 relative rounded-xl p-7 overflow-hidden border border-primary/25 bg-primary/4"
         >
           <div className="absolute top-0 right-0 w-48 h-48 opacity-20 rounded-full"
             style={{ background: "radial-gradient(circle, hsl(var(--primary)), transparent)", transform: "translate(25%,-25%)" }} />
@@ -72,7 +72,7 @@ export default function Analysis() {
         <motion.div
           variants={fadeUp}
           custom={2}
-          className="rounded-2xl p-6 border border-border/60 bg-card flex flex-col items-center justify-center text-center"
+          className="rounded-xl p-6 border border-border/60 bg-card flex flex-col items-center justify-center text-center"
         >
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Match confidence</p>
           <div className="h-36 w-full relative">
@@ -92,7 +92,7 @@ export default function Analysis() {
 
       {/* Behavioral insights */}
       {analysis.behavioralInsights && analysis.behavioralInsights.length > 0 && (
-        <motion.div variants={fadeUp} custom={3} className="rounded-2xl border border-border/60 bg-card p-6">
+        <motion.div variants={fadeUp} custom={3} className="rounded-xl border border-border/60 bg-card p-6">
           <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-primary" /> Behavioral insights
           </h3>
@@ -111,7 +111,7 @@ export default function Analysis() {
 
       {/* Strengths + Growth */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <motion.div variants={fadeUp} custom={4} className="rounded-2xl border border-border/60 bg-card p-6">
+        <motion.div variants={fadeUp} custom={4} className="rounded-xl border border-border/60 bg-card p-6">
           <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
             <TrendingUp className="w-4 h-4 text-emerald-500" /> Strengths displayed
           </h3>
@@ -125,7 +125,7 @@ export default function Analysis() {
           </ul>
         </motion.div>
 
-        <motion.div variants={fadeUp} custom={5} className="rounded-2xl border border-border/60 bg-card p-6">
+        <motion.div variants={fadeUp} custom={5} className="rounded-xl border border-border/60 bg-card p-6">
           <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
             <TrendingDown className="w-4 h-4 text-amber-500" /> Areas for growth
           </h3>
@@ -144,7 +144,7 @@ export default function Analysis() {
       <motion.div
         variants={fadeUp}
         custom={6}
-        className="relative rounded-2xl p-8 overflow-hidden border border-primary/20 bg-primary/5"
+        className="relative rounded-xl p-8 overflow-hidden border border-primary/30 bg-primary/4"
       >
         <div className="relative z-10">
           <h3 className="text-xl font-bold mb-2">What's next?</h3>

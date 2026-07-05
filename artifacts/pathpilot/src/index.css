@@ -67,51 +67,51 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* PATHPILOT LIGHT MODE - Clean White/Light Blue "Resilience" Theme */
+/* PATHPILOT LIGHT MODE — Linear/Notion Inspired SaaS Design (No Purple) */
 :root {
-  --background: 210 40% 98%;        /* Very light blue-tinted white */
-  --foreground: 210 20% 15%;        /* Deep blue-gray text */
-  --border: 210 30% 90%;            /* Soft light blue border */
-  --input: 210 30% 95%;             /* Very light blue input */
-  --ring: 210 100% 50%;             /* Bright blue focus ring */
+  --background: 0 0% 99%;              /* Near-white background */
+  --foreground: 220 13% 20%;           /* Deep neutral gray text */
+  --border: 220 13% 91%;               /* Subtle neutral border */
+  --input: 220 13% 96%;                /* Light gray input */
+  --ring: 220 90% 56%;                 /* Bright blue focus ring */
 
-  --card: 0 0% 100%;                /* Pure white cards */
-  --card-foreground: 210 20% 15%;   /* Deep blue-gray text */
-  --card-border: 210 30% 88%;       /* Soft light blue border */
+  --card: 0 0% 100%;                   /* Pure white cards */
+  --card-foreground: 220 13% 20%;      /* Deep text */
+  --card-border: 220 13% 88%;          /* Subtle border */
 
-  --popover: 0 0% 100%;             /* Pure white popover */
-  --popover-foreground: 210 20% 15%;
-  --popover-border: 210 30% 88%;
+  --popover: 0 0% 100%;                /* Pure white */
+  --popover-foreground: 220 13% 20%;
+  --popover-border: 220 13% 88%;
 
-  --primary: 210 100% 50%;          /* Bright, confident blue */
-  --primary-foreground: 0 0% 100%;  /* White text on primary */
+  --primary: 220 90% 56%;              /* Confident blue (no purple) */
+  --primary-foreground: 0 0% 100%;     /* White text */
 
-  --secondary: 210 30% 92%;         /* Light blue secondary */
-  --secondary-foreground: 210 20% 15%;
+  --secondary: 220 13% 92%;            /* Light neutral secondary */
+  --secondary-foreground: 220 13% 20%;
 
-  --muted: 210 20% 92%;             /* Light muted gray-blue */
-  --muted-foreground: 210 20% 45%;  /* Medium gray-blue text */
+  --muted: 220 13% 94%;                /* Muted light gray */
+  --muted-foreground: 220 13% 45%;     /* Medium gray text */
 
-  --accent: 210 100% 50%;           /* Same as primary for consistency */
+  --accent: 220 90% 56%;               /* Same as primary */
   --accent-foreground: 0 0% 100%;
 
-  --destructive: 0 84% 60%;         /* Red for errors */
+  --destructive: 0 84% 60%;            /* Red for errors */
   --destructive-foreground: 0 0% 100%;
 
-  --sidebar: 210 40% 96%;           /* Very light blue sidebar */
-  --sidebar-foreground: 210 20% 15%;
-  --sidebar-border: 210 30% 88%;
-  --sidebar-primary: 210 100% 50%;  /* Bright blue */
+  --sidebar: 220 13% 97%;              /* Very light sidebar */
+  --sidebar-foreground: 220 13% 20%;
+  --sidebar-border: 220 13% 88%;
+  --sidebar-primary: 220 90% 56%;      /* Bright blue */
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 210 30% 92%;
-  --sidebar-accent-foreground: 210 20% 15%;
-  --sidebar-ring: 210 100% 50%;
+  --sidebar-accent: 220 13% 92%;
+  --sidebar-accent-foreground: 220 13% 20%;
+  --sidebar-ring: 220 90% 56%;
 
-  --chart-1: 210 100% 50%;          /* Blue */
-  --chart-2: 190 100% 45%;          /* Cyan */
-  --chart-3: 160 100% 45%;          /* Teal */
-  --chart-4: 30 100% 50%;           /* Orange */
-  --chart-5: 340 100% 50%;          /* Pink */
+  --chart-1: 220 90% 56%;              /* Blue */
+  --chart-2: 190 100% 45%;             /* Cyan */
+  --chart-3: 160 100% 45%;             /* Teal */
+  --chart-4: 30 100% 50%;              /* Orange */
+  --chart-5: 340 100% 50%;             /* Pink */
 
   --app-font-sans: 'Outfit', sans-serif;
   --app-font-mono: 'Space Mono', monospace;
@@ -128,14 +128,14 @@
   }
 }
 
-/* Light gradient background pattern for subtle visual interest */
-.bg-light-gradient {
-  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 50%, #f0f7ff 100%);
+/* Subtle gradient background for premium feel */
+.bg-subtle-gradient {
+  background: linear-gradient(135deg, #fafbfc 0%, #f5f7fa 50%, #fafbfc 100%);
 }
 
-/* Grid overlay pattern - subtle light blue */
+/* Grid overlay pattern - very subtle */
 .bg-grid-pattern {
   background-size: 40px 40px;
-  background-image: linear-gradient(to right, rgba(210, 230, 255, 0.3) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(210, 230, 255, 0.3) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(220, 230, 240, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 230, 240, 0.2) 1px, transparent 1px);
 }

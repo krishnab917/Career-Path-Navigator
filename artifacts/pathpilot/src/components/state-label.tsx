@@ -2,8 +2,8 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 // ─── StateLabel ───────────────────────────────────────────────────────────────
-// Status badge component for light mode aesthetic.
-// Used on simulation cards, scenario headers, and opportunity cards.
+// Minimal SaaS status indicator inspired by Linear and Notion.
+// Clean, engaging, and purposeful.
 
 export type StateLabelVariant =
   | "stable"
@@ -32,10 +32,10 @@ const VARIANTS: Record<
     defaultLabel: "Stable",
   },
   evolving: {
-    dot: "bg-amber-500",
-    text: "text-amber-700",
-    bg: "bg-amber-50",
-    border: "border-amber-200",
+    dot: "bg-blue-500",
+    text: "text-blue-700",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
     defaultLabel: "Evolving",
   },
   "high-risk": {
@@ -80,7 +80,7 @@ export function StateLabel({ variant, label, className, ...props }: StateLabelPr
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border",
+        "inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-md border",
         v.bg,
         v.border,
         v.text,

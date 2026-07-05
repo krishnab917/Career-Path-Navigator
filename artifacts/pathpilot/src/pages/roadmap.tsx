@@ -43,8 +43,8 @@ import {
 const iconMap: Record<string, React.ReactNode> = {
   course: <Book className="w-4 h-4 text-blue-400" />,
   skill: <Zap className="w-4 h-4 text-yellow-400" />,
-  project: <Code className="w-4 h-4 text-violet-400" />,
-  certification: <Award className="w-4 h-4 text-purple-400" />,
+  project: <Code className="w-4 h-4 text-blue-400" />,
+  certification: <Award className="w-4 h-4 text-blue-400" />,
   competition: <Trophy className="w-4 h-4 text-orange-400" />,
   experience: <Briefcase className="w-4 h-4 text-emerald-400" />,
 };
@@ -88,7 +88,7 @@ function AddMilestoneModal({
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="bg-card border border-border rounded-2xl p-6 w-full max-w-md shadow-2xl"
+        className="bg-card border border-border rounded-xl p-6 w-full max-w-md shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-5">
@@ -196,9 +196,9 @@ function SuggestionCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, height: 0 }}
-      className={`relative rounded-2xl border transition-all duration-300 ${
+      className={`relative rounded-xl border transition-all duration-300 ${
         isAccepted
-          ? "border-primary/40 bg-primary/5"
+          ? "border-primary/40 bg-primary/4"
           : "border-border/60 bg-card hover:border-primary/30"
       }`}
     >
@@ -237,7 +237,7 @@ function SuggestionCard({
               <button
                 onClick={onAccept}
                 disabled={isLoading}
-                className="text-xs text-primary font-semibold hover:text-primary/80 transition-colors px-2 py-1 rounded-lg bg-primary/10 hover:bg-primary/20"
+                className="text-xs text-primary font-semibold hover:text-primary/80 transition-colors px-2 py-1 rounded-lg bg-primary/6 hover:bg-primary/8"
               >
                 + Add
               </button>
@@ -649,9 +649,9 @@ export default function Roadmap() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="rounded-2xl border border-dashed border-border/60 py-16 text-center"
+                  className="rounded-xl border border-dashed border-border/60 py-16 text-center"
                 >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/6 flex items-center justify-center mx-auto mb-4">
                     <Sparkles className="w-6 h-6 text-primary/60" />
                   </div>
                   <p className="font-medium text-foreground mb-1">Your roadmap is empty</p>

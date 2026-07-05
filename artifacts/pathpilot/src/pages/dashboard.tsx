@@ -71,7 +71,7 @@ function SparkCard({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: seed * 0.06 }}
-      className="relative overflow-hidden rounded-2xl border border-border/40 bg-card flex flex-col"
+      className="relative overflow-hidden rounded-xl border border-border/40 bg-card flex flex-col"
     >
       <div className="p-4 pb-2 flex-1">
         <div className="flex items-start justify-between mb-2">
@@ -149,7 +149,7 @@ function SessionRow({
       <div className="flex items-center gap-3 min-w-0">
         <div
           className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-            isCompleted ? "bg-emerald-500/10" : "bg-primary/10"
+            isCompleted ? "bg-emerald-500/10" : "bg-primary/6"
           }`}
         >
           {isCompleted ? (
@@ -397,7 +397,7 @@ export default function Dashboard() {
             <SystemCardContent>
               {dashboard.recentSessions?.length === 0 ? (
                 <div className="py-8 text-center">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/6 flex items-center justify-center mx-auto mb-3">
                     <Zap className="w-5 h-5 text-primary/60" />
                   </div>
                   <p className="text-sm font-medium text-muted-foreground mb-1">No sessions yet</p>
@@ -440,9 +440,9 @@ export default function Dashboard() {
             </SystemCardHeader>
             <SystemCardContent className="flex flex-col gap-3">
               <Link href="/simulations" className="block">
-                <div className="rounded-xl border border-border/40 hover:border-primary/30 p-4 transition-all hover:bg-primary/5 cursor-pointer group">
+                <div className="rounded-xl border border-border/40 hover:border-primary/30 p-4 transition-all hover:bg-primary/4 cursor-pointer group">
                   <div className="flex items-center gap-3 mb-1.5">
-                    <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-primary/6 flex items-center justify-center flex-shrink-0">
                       <Zap className="w-3.5 h-3.5 text-primary" />
                     </div>
                     <p className="font-semibold text-foreground text-sm">Run Simulation</p>
@@ -454,10 +454,10 @@ export default function Dashboard() {
               </Link>
 
               <Link href="/roadmap" className="block">
-                <div className="rounded-xl border border-border/40 hover:border-violet-500/30 p-4 transition-all hover:bg-violet-500/5 cursor-pointer group">
+                <div className="rounded-xl border border-border/40 hover:border-blue-500/30 p-4 transition-all hover:bg-blue-500/5 cursor-pointer group">
                   <div className="flex items-center gap-3 mb-1.5">
-                    <div className="w-7 h-7 rounded-lg bg-violet-500/10 flex items-center justify-center flex-shrink-0">
-                      <TrendingUp className="w-3.5 h-3.5 text-violet-400" />
+                    <div className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                      <TrendingUp className="w-3.5 h-3.5 text-blue-400" />
                     </div>
                     <p className="font-semibold text-foreground text-sm">Build Roadmap</p>
                   </div>

@@ -2,27 +2,26 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 // ─── SystemCard ───────────────────────────────────────────────────────────────
-// Unified card primitive for PathPilot Light Mode.
-// Clean white/light blue aesthetic with subtle shadows and borders.
-// Enforces: title (high contrast) → description (muted) → action row (bottom-right)
+// Dynamic SaaS card inspired by Linear and Notion.
+// Features: subtle borders, refined shadows, smooth hover states, premium feel.
 
 interface SystemCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Visual weight: "default" | "elevated" | "ghost" */
-  variant?: "default" | "elevated" | "ghost";
+  /** Visual variant: "default" | "elevated" | "interactive" */
+  variant?: "default" | "elevated" | "interactive";
 }
 
 const SystemCard = React.forwardRef<HTMLDivElement, SystemCardProps>(
   ({ className, variant = "default", ...props }, ref) => {
     const variants = {
-      default: "border border-border/60 bg-card hover:border-primary/30 hover:shadow-sm",
-      elevated: "border border-primary/20 bg-gradient-to-br from-primary/5 to-primary/2 shadow-md hover:shadow-lg hover:border-primary/40",
-      ghost: "border border-border/20 bg-white/50",
+      default: "border border-border/50 bg-card hover:border-border/70 hover:shadow-sm transition-all duration-200",
+      elevated: "border border-border/60 bg-gradient-to-br from-card to-card/95 shadow-sm hover:shadow-md hover:border-border/80 transition-all duration-200",
+      interactive: "border border-border/40 bg-card hover:border-primary/40 hover:shadow-md hover:bg-card/95 transition-all duration-200 cursor-pointer group",
     };
     return (
       <div
         ref={ref}
         className={cn(
-          "rounded-2xl flex flex-col overflow-hidden transition-all duration-200",
+          "rounded-xl flex flex-col overflow-hidden",
           variants[variant],
           className
         )}
@@ -43,7 +42,7 @@ const SystemCardHeader = React.forwardRef<HTMLDivElement, SystemCardHeaderProps>
   ({ className, badge, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex items-start justify-between gap-4 px-6 pt-6 pb-0", className)}
+      className={cn("flex items-start justify-between gap-4 px-5 pt-5 pb-0", className)}
       {...props}
     >
       <div className="flex-1 min-w-0">{children}</div>
@@ -58,7 +57,7 @@ const SystemCardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn("text-sm font-bold text-foreground leading-snug tracking-tight", className)}
+      className={cn("text-sm font-semibold text-foreground leading-snug tracking-tight", className)}
       {...props}
     />
   )
@@ -82,7 +81,7 @@ const SystemCardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("px-6 py-4 flex-1", className)}
+      className={cn("px-5 py-4 flex-1", className)}
       {...props}
     />
   )
@@ -94,7 +93,7 @@ const SystemCardMeta = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn("flex items-center gap-3 text-[11px] text-muted-foreground px-6 pb-2", className)}
+      className={cn("flex items-center gap-3 text-[11px] text-muted-foreground px-5 pb-2", className)}
       {...props}
     />
   )
@@ -107,7 +106,7 @@ const SystemCardActions = React.forwardRef<HTMLDivElement, React.HTMLAttributes<
     <div
       ref={ref}
       className={cn(
-        "flex items-center justify-end gap-2 px-6 py-4 border-t border-border/40",
+        "flex items-center justify-end gap-2 px-5 py-4 border-t border-border/30",
         className
       )}
       {...props}

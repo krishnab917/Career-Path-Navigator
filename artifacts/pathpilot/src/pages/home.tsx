@@ -62,7 +62,7 @@ function SimulationPreview() {
         <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Live Scenario</p>
         <StateLabel variant="time-pressure" label="Time Pressure" />
       </div>
-      <div className="bg-primary/5 border border-border/40 rounded-xl p-4">
+      <div className="bg-primary/4 border border-border/40 rounded-xl p-4">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">Situation Briefing</p>
         <h3 className="text-sm font-bold text-foreground mb-2">Market Downturn Response</h3>
         <p className="text-muted-foreground text-xs leading-relaxed">
@@ -77,7 +77,7 @@ function SimulationPreview() {
             className="bg-primary/3 border border-border/40 rounded-xl p-3 flex items-start justify-between gap-3"
           >
             <div className="flex items-start gap-2 flex-1">
-              <div className="w-5 h-5 rounded-md bg-primary/5 flex items-center justify-center text-[10px] font-bold text-muted-foreground flex-shrink-0 mt-0.5">
+              <div className="w-5 h-5 rounded-md bg-primary/4 flex items-center justify-center text-[10px] font-bold text-muted-foreground flex-shrink-0 mt-0.5">
                 {d.id}
               </div>
               <div>
@@ -110,17 +110,17 @@ function ResultsPreview() {
         <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Analysis Output</p>
         <StateLabel variant="completed" label="Completed" />
       </div>
-      <div className="bg-primary/5 border border-border/40 rounded-xl p-4">
+      <div className="bg-primary/4 border border-border/40 rounded-xl p-4">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-3">Career Match</p>
         <div className="flex items-end gap-3">
           <div>
             <p className="text-xl font-bold text-foreground">Software Engineer</p>
             <p className="text-muted-foreground text-xs mt-1">92% compatibility based on your decisions</p>
           </div>
-          <div className="ml-auto text-3xl font-bold text-indigo-400">92%</div>
+          <div className="ml-auto text-3xl font-bold text-blue-400">92%</div>
         </div>
       </div>
-      <div className="bg-primary/5 border border-border/40 rounded-xl p-4">
+      <div className="bg-primary/4 border border-border/40 rounded-xl p-4">
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-4">Trait Profile</p>
         <div className="space-y-3">
           {traits.map((trait) => (
@@ -129,7 +129,7 @@ function ResultsPreview() {
                 <span className="text-xs text-foreground font-medium">{trait.name}</span>
                 <span className="text-[11px] text-muted-foreground font-mono">{trait.value}%</span>
               </div>
-              <div className="w-full bg-primary/5 rounded-full h-1.5 overflow-hidden">
+              <div className="w-full bg-primary/4 rounded-full h-1.5 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${trait.value}%` }}
@@ -169,7 +169,7 @@ export default function Home() {
         }}
       >
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
             <Zap className="w-4 h-4 text-foreground" />
           </div>
           <span className="font-bold text-[15px] tracking-tight">PathPilot</span>
@@ -184,7 +184,7 @@ export default function Home() {
             <a
               key={item.label}
               href={item.href}
-              className="text-sm text-muted-foreground hover:text-indigo-300 transition-colors duration-200"
+              className="text-sm text-muted-foreground hover:text-blue-300 transition-colors duration-200"
             >
               {item.label}
             </a>
@@ -195,7 +195,7 @@ export default function Home() {
           <motion.button
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 rounded-lg bg-indigo-600 text-foreground text-sm font-medium hover:bg-indigo-500 transition-colors duration-200"
+            className="px-4 py-2 rounded-lg bg-blue-600 text-foreground text-sm font-medium hover:bg-blue-500 transition-colors duration-200"
           >
             Launch
           </motion.button>
@@ -217,9 +217,9 @@ export default function Home() {
             transition={{ delay: 0.15, duration: 0.6 }}
             className="mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30">
-              <Code2 className="w-3.5 h-3.5 text-indigo-400" />
-              <span className="text-xs uppercase tracking-widest text-indigo-300 font-semibold">Simulation Engine v2</span>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30">
+              <Code2 className="w-3.5 h-3.5 text-blue-400" />
+              <span className="text-xs uppercase tracking-widest text-blue-300 font-semibold">Simulation Engine v2</span>
             </div>
           </motion.div>
 
@@ -259,7 +259,7 @@ export default function Home() {
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(99, 102, 241, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-foreground font-semibold text-[15px] transition-all duration-200 shadow-lg"
+                className="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-foreground font-semibold text-[15px] transition-all duration-200 shadow-sm"
               >
                 Start Simulation
                 <ArrowRight className="w-4 h-4" />
@@ -268,7 +268,7 @@ export default function Home() {
             <a href="#how-it-works">
               <motion.button
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(99, 102, 241, 0.15)" }}
-                className="px-8 py-4 rounded-lg border border-border text-foreground font-medium text-[15px] transition-colors duration-200 hover:border-indigo-500/50"
+                className="px-8 py-4 rounded-lg border border-border text-foreground font-medium text-[15px] transition-colors duration-200 hover:border-blue-500/50"
               >
                 How it works
               </motion.button>
@@ -283,17 +283,17 @@ export default function Home() {
             className="mt-16 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 text-center"
           >
             <div>
-              <div className="text-3xl font-bold text-indigo-400">2,400+</div>
+              <div className="text-3xl font-bold text-blue-400">2,400+</div>
               <p className="text-sm text-muted-foreground mt-1">Students simulated</p>
             </div>
             <div className="hidden md:block w-px h-12 bg-slate-700" />
             <div>
-              <div className="text-3xl font-bold text-indigo-400">94%</div>
+              <div className="text-3xl font-bold text-blue-400">94%</div>
               <p className="text-sm text-muted-foreground mt-1">Would recommend</p>
             </div>
             <div className="hidden md:block w-px h-12 bg-slate-700" />
             <div>
-              <div className="text-3xl font-bold text-indigo-400">18 min</div>
+              <div className="text-3xl font-bold text-blue-400">18 min</div>
               <p className="text-sm text-muted-foreground mt-1">Average completion</p>
             </div>
           </motion.div>
@@ -309,7 +309,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">The Problem</p>
+            <p className="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-4">The Problem</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
               Career choices are made{" "}
               <span className="text-muted-foreground">without lived experience.</span>
@@ -348,10 +348,10 @@ export default function Home() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="bg-white/50 border border-border/50 rounded-2xl p-6 hover:bg-white/70 transition-colors"
+                className="bg-white/50 border border-border/50 rounded-xl p-6 hover:bg-white/70 transition-colors"
               >
                 <div className="flex items-start justify-between mb-3">
-                  <div className="text-4xl font-bold text-indigo-400">{item.stat}</div>
+                  <div className="text-4xl font-bold text-blue-400">{item.stat}</div>
                   <StateLabel variant={item.state} />
                 </div>
                 <p className="text-foreground font-semibold text-sm mb-2">{item.label}</p>
@@ -374,7 +374,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
-            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Process</p>
+            <p className="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-4">Process</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
               4 steps to <span className="text-muted-foreground">career clarity.</span>
             </h2>
@@ -392,14 +392,14 @@ export default function Home() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="bg-white/30 border border-border/50 rounded-2xl p-6 hover:border-indigo-500/30 transition-colors duration-300 group"
+                className="bg-white/30 border border-border/50 rounded-xl p-6 hover:border-blue-500/30 transition-colors duration-300 group"
               >
                 <div className="flex items-start gap-5">
-                  <div className="text-3xl font-bold text-indigo-500/40 group-hover:text-indigo-500/60 transition-colors font-mono">
+                  <div className="text-3xl font-bold text-blue-500/40 group-hover:text-blue-500/60 transition-colors font-mono">
                     {item.step}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-indigo-300 transition-colors">
+                    <h3 className="text-base font-bold text-foreground mb-2 group-hover:text-blue-300 transition-colors">
                       {item.title}
                     </h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
@@ -421,7 +421,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
-            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Example</p>
+            <p className="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-4">Example</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
               Inside a <span className="text-muted-foreground">career simulation.</span>
             </h2>
@@ -434,7 +434,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-24"
             >
-              <div className="bg-white/40 border border-border/50 rounded-2xl p-6">
+              <div className="bg-white/40 border border-border/50 rounded-xl p-6">
                 <SimulationPreview />
               </div>
             </motion.div>
@@ -446,9 +446,9 @@ export default function Home() {
               className="space-y-6"
             >
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 mb-4">
-                  <Brain className="w-3.5 h-3.5 text-indigo-400" />
-                  <span className="text-xs text-indigo-300 font-medium">Behavioral Analysis</span>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 mb-4">
+                  <Brain className="w-3.5 h-3.5 text-blue-400" />
+                  <span className="text-xs text-blue-300 font-medium">Behavioral Analysis</span>
                 </div>
                 <h3 className="text-2xl font-bold text-foreground mb-3">
                   You're not answering a quiz.
@@ -470,7 +470,7 @@ export default function Home() {
                     "Creative vs. systematic problem-solving",
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3 text-muted-foreground text-sm">
-                      <div className="w-2 h-2 rounded-full bg-indigo-400 flex-shrink-0" />
+                      <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -482,7 +482,7 @@ export default function Home() {
       </Section>
 
       {/* ── RESULTS ──────────────────────────────────────────────────────── */}
-      <Section className="relative py-24 px-8 md:px-20 bg-gradient-to-b from-indigo-500/5 via-transparent to-transparent">
+      <Section className="relative py-24 px-8 md:px-20 bg-gradient-to-b from-blue-500/5 via-transparent to-transparent">
         <div className="relative z-10 max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -490,7 +490,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
-            <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-4">Outcomes</p>
+            <p className="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-4">Outcomes</p>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
               Your career <span className="text-muted-foreground">blueprint.</span>
             </h2>
@@ -504,9 +504,9 @@ export default function Home() {
               className="space-y-6"
             >
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 mb-4">
-                  <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
-                  <span className="text-xs text-indigo-300 font-medium">Results-Driven</span>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 mb-4">
+                  <TrendingUp className="w-3.5 h-3.5 text-blue-400" />
+                  <span className="text-xs text-blue-300 font-medium">Results-Driven</span>
                 </div>
                 <h3 className="text-2xl font-bold text-foreground mb-3">
                   Data-backed career recommendations.
@@ -526,7 +526,7 @@ export default function Home() {
                     "Internship & project recommendations",
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 text-muted-foreground text-sm">
-                      <CheckCircle className="w-4 h-4 text-indigo-400 flex-shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -540,7 +540,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="lg:sticky lg:top-24"
             >
-              <div className="bg-white/40 border border-border/50 rounded-2xl p-6">
+              <div className="bg-white/40 border border-border/50 rounded-xl p-6">
                 <ResultsPreview />
               </div>
             </motion.div>
@@ -555,7 +555,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-2xl overflow-hidden p-12 md:p-16"
+            className="relative rounded-xl overflow-hidden p-12 md:p-16"
             style={{
               background:
                 "radial-gradient(circle at 50% 0%, rgba(210, 230, 255, 0.6) 0%, transparent 60%), rgba(99, 102, 241, 0.05)",
@@ -565,7 +565,7 @@ export default function Home() {
             <motion.div
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 4, repeat: Infinity }}
-              className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none"
+              className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 rounded-full bg-blue-500/20 blur-3xl pointer-events-none"
             />
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
@@ -584,7 +584,7 @@ export default function Home() {
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(99, 102, 241, 0.5)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-foreground font-semibold text-[15px] transition-all duration-200 shadow-lg"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-indigo-600 to-indigo-500 text-foreground font-semibold text-[15px] transition-all duration-200 shadow-sm"
                 >
                   Start Simulation
                   <ArrowRight className="w-4 h-4" />
@@ -599,7 +599,7 @@ export default function Home() {
       <footer className="relative z-10 border-t border-border/50 px-8 md:px-20 py-8">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
               <Zap className="w-3.5 h-3.5 text-foreground" />
             </div>
             <span className="font-bold text-foreground text-sm">PathPilot</span>

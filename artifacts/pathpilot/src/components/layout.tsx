@@ -37,8 +37,8 @@ function NavItem({
       <div
         className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer group
           ${active
-            ? "bg-primary/10 text-primary border border-primary/20"
-            : "text-muted-foreground hover:text-foreground hover:bg-primary/5 border border-transparent"
+            ? "bg-primary/8 text-primary border border-primary/20"
+            : "text-muted-foreground hover:text-foreground hover:bg-primary/4 border border-transparent"
           }`}
       >
         <Icon className={`w-4 h-4 flex-shrink-0 transition-colors ${active ? "text-primary" : "group-hover:text-primary/60"}`} />

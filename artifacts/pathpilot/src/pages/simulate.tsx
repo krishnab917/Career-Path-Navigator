@@ -143,7 +143,7 @@ export default function Simulate() {
       {/* Progress bar */}
       <div className="h-0.5 bg-white/[0.04] w-full">
         <motion.div
-          className="h-full bg-gradient-to-r from-primary to-violet-500"
+          className="h-full bg-gradient-to-r from-primary to-blue-500"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.6 }}

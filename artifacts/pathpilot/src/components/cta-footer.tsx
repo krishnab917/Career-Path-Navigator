@@ -119,7 +119,7 @@ const CtaFooter = () => {
         <motion.div
           animate={{ opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-blue-500/20 blur-3xl pointer-events-none"
         />
 
         {/* Main Headline */}
@@ -190,7 +190,7 @@ const CtaFooter = () => {
 
           {/* Secondary Button: Outlined */}
           <button
-            className="group px-8 py-4 rounded-lg text-white font-semibold text-[15px] border border-slate-700 hover:border-indigo-500/50 transition-all duration-300 flex items-center gap-2"
+            className="group px-8 py-4 rounded-lg text-white font-semibold text-[15px] border border-slate-700 hover:border-blue-500/50 transition-all duration-300 flex items-center gap-2"
           >
             View Results
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -208,7 +208,7 @@ const CtaFooter = () => {
         >
           {/* Left: Brand + tagline */}
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
               <Zap className="w-4 h-4 text-white" />
             </div>
             <div className="text-left">

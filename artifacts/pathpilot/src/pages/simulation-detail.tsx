@@ -56,14 +56,14 @@ export default function SimulationDetail() {
     >
       {/* Cover accent */}
       <div
-        className="w-full h-32 rounded-2xl opacity-20"
+        className="w-full h-32 rounded-xl opacity-20"
         style={{ backgroundColor: simulation.coverColor || "var(--color-primary)" }}
       />
 
       {/* Title block */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-primary/5 text-muted-foreground">
+          <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-primary/4 text-muted-foreground">
             {simulation.careerCategory}
           </span>
           <StateLabel variant={difficultyState(simulation.difficulty)} />
@@ -84,7 +84,7 @@ export default function SimulationDetail() {
         </div>
         <div className="flex items-center gap-2 text-sm text-foreground">
           <Zap className="w-4 h-4 text-primary" />
-          <span className="font-mono text-xs bg-primary/5 px-2 py-1 rounded">{simulation.stages} Stages</span>
+          <span className="font-mono text-xs bg-primary/4 px-2 py-1 rounded">{simulation.stages} Stages</span>
         </div>
       </div>
 

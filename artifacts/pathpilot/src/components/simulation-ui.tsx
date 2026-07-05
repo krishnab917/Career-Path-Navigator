@@ -190,7 +190,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
           <motion.div
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-12 h-12 rounded-full border-2 border-indigo-500/30 border-t-indigo-500 mx-auto mb-4"
+            className="w-12 h-12 rounded-full border-2 border-blue-500/30 border-t-indigo-500 mx-auto mb-4"
           />
           <p className="text-slate-400">Initializing simulation...</p>
         </motion.div>
@@ -220,7 +220,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
         >
           <div className="flex items-start justify-between mb-4">
             <div>
-              <p className="text-xs uppercase tracking-widest text-indigo-400 font-semibold mb-2">
+              <p className="text-xs uppercase tracking-widest text-blue-400 font-semibold mb-2">
                 Decision Node {decisionCount + 1}
               </p>
               <h2 className="text-3xl font-bold text-white">{currentNode.title}</h2>
@@ -240,7 +240,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
                       ? "bg-red-500"
                       : timePressure > 0.5
                       ? "bg-amber-500"
-                      : "bg-indigo-500"
+                      : "bg-blue-500"
                   }`}
                 />
               </div>
@@ -277,7 +277,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
               }`}
             >
               <div
-                className={`bg-slate-900/60 border border-slate-700/50 rounded-lg p-5 hover:bg-slate-900/80 hover:border-indigo-500/50 transition-all ${
+                className={`bg-slate-900/60 border border-slate-700/50 rounded-lg p-5 hover:bg-slate-900/80 hover:border-blue-500/50 transition-all ${
                   isProcessing && selectedOption !== option.id
                     ? "opacity-50 cursor-not-allowed"
                     : ""
@@ -287,8 +287,8 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold text-sm ${
                       selectedOption === option.id
-                        ? "bg-indigo-500 text-white"
-                        : "bg-slate-800 text-slate-400 group-hover:bg-indigo-500/20 group-hover:text-indigo-400"
+                        ? "bg-blue-500 text-white"
+                        : "bg-slate-800 text-slate-400 group-hover:bg-blue-500/20 group-hover:text-blue-400"
                     }`}
                   >
                     {idx + 1}
@@ -329,7 +329,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                       className="shrink-0"
                     >
-                      <Zap className="w-5 h-5 text-indigo-400" />
+                      <Zap className="w-5 h-5 text-blue-400" />
                     </motion.div>
                   )}
                 </div>
@@ -351,7 +351,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
           className="bg-slate-900/40 border border-slate-700/50 rounded-lg p-5 sticky top-8"
         >
           <div className="flex items-center gap-2 mb-4">
-            <BarChart3 className="w-4 h-4 text-indigo-400" />
+            <BarChart3 className="w-4 h-4 text-blue-400" />
             <h3 className="text-sm font-semibold text-white">Trait Model</h3>
           </div>
 
@@ -370,7 +370,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
                       initial={{ width: "50%" }}
                       animate={{ width: `${value}%` }}
                       transition={{ duration: 0.6, delay: 0.1 }}
-                      className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                      className="h-full bg-gradient-to-r from-blue-500 to-blue-500"
                     />
                   </div>
                 </div>
@@ -455,7 +455,7 @@ export default function SimulationUI({ scenario, onComplete }: SimulationUIProps
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="w-6 h-6 rounded-full border-2 border-indigo-500/30 border-t-indigo-500 mx-auto"
+                className="w-6 h-6 rounded-full border-2 border-blue-500/30 border-t-indigo-500 mx-auto"
               />
             </motion.div>
           </motion.div>
